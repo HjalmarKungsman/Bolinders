@@ -1,0 +1,16 @@
+﻿@model Vehicle
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>@Model.Model</h2>
+                <p>@Model.RegistrationNumber</p>
+                <p>@Model.ModelDescription</p>
+                <span>@($"Pris: {Model.Price}")</span>
+            </div>
+            <div class="col-md-6">
+                <img src="http://via.placeholder.com/150x150" class="pull-right" />
+            </div>
+        </div>
+    </div>
+</div>
