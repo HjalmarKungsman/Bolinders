@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bolinders.Tests", "Bolinder
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bolinders.Web", "Bolinders.Web\Bolinders.Web.csproj", "{8C104A1D-AC47-48D7-9688-0D2D4F38C540}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bolinders.core", "Bolinders.core\Bolinders.core.csproj", "{965877A2-A06B-40F8-9C3C-1B80444BAC4F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bolinders.Core", "Bolinders.Core\Bolinders.Core.csproj", "{965877A2-A06B-40F8-9C3C-1B80444BAC4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

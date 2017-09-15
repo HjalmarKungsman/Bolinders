@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bolinders.core
+namespace Bolinders.Core
 {
     public class Class1
     {
