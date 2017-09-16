@@ -43,7 +43,7 @@ namespace Bolinders.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Facilites");
+                    b.ToTable("Facilities");
                 });
 
             modelBuilder.Entity("Bolinders.Web.Models.Make", b =>

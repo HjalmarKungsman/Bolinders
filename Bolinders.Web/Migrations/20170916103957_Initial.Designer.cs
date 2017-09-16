@@ -11,7 +11,7 @@ using System;
 namespace Bolinders.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170916094714_Initial")]
+    [Migration("20170916103957_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace Bolinders.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Facilites");
+                    b.ToTable("Facilities");
                 });
 
             modelBuilder.Entity("Bolinders.Web.Models.Make", b =>

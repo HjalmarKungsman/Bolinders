@@ -11,11 +11,11 @@ namespace Bolinders.Web.DataAccess
     {
         internal static void FillIfEmpty(ApplicationDbContext ctx)
         {
-            if (!ctx.Facilites.Any())
+            if (!ctx.Facilities.Any())
             {
-                ctx.Facilites.Add(new Facility { Id = "BB1", Name = "Jönköping", Address = "Gata 1", ZipCode="12345", City = "Jönköping", Email = "jonkoping@bolinder.se", PhoneNumber = "036-102030", Longitude = "54,12345", Latitude = "10,12345" });
-                ctx.Facilites.Add(new Facility { Id = "BB2", Name = "Värnamo", Address = "Gata 1", ZipCode = "12345", City = "Jönköping", Email = "jonkoping@bolinder.se", PhoneNumber = "036-102030", Longitude = "54,12345", Latitude = "10,12345" });
-                ctx.Facilites.Add(new Facility { Id = "BB3", Name = "Göteborg", Address = "Gata 1", ZipCode = "12345", City = "Jönköping", Email = "jonkoping@bolinder.se", PhoneNumber = "036-102030", Longitude = "54,12345", Latitude = "10,12345" });
+                ctx.Facilities.Add(new Facility { Id = "BB1", Name = "Jönköping", Address = "Gata 1", ZipCode="12345", City = "Jönköping", Email = "jonkoping@bolinder.se", PhoneNumber = "036-102030", Longitude = "54,12345", Latitude = "10,12345" });
+                ctx.Facilities.Add(new Facility { Id = "BB2", Name = "Värnamo", Address = "Gata 1", ZipCode = "12345", City = "Jönköping", Email = "jonkoping@bolinder.se", PhoneNumber = "036-102030", Longitude = "54,12345", Latitude = "10,12345" });
+                ctx.Facilities.Add(new Facility { Id = "BB3", Name = "Göteborg", Address = "Gata 1", ZipCode = "12345", City = "Jönköping", Email = "jonkoping@bolinder.se", PhoneNumber = "036-102030", Longitude = "54,12345", Latitude = "10,12345" });
             }
 
             if (!ctx.Make.Any())

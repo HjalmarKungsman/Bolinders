@@ -15,6 +15,6 @@ namespace Bolinders.Web.DataAccess
         }
         public DbSet<Vehicle> Vehicles {  get; set; }
         public DbSet<Make> Make { get; set; }
-        public DbSet<Facility> Facilites { get; set; }
+        public DbSet<Facility> Facilities { get; set; }
     }
 }

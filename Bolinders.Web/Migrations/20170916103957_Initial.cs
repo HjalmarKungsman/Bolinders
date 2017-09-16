@@ -10,7 +10,7 @@ namespace Bolinders.Web.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Facilites",
+                name: "Facilities",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -25,7 +25,7 @@ namespace Bolinders.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Facilites", x => x.Id);
+                    table.PrimaryKey("PK_Facilities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,9 +72,9 @@ namespace Bolinders.Web.Migrations
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Facilites_FacilityId",
+                        name: "FK_Vehicles_Facilities_FacilityId",
                         column: x => x.FacilityId,
-                        principalTable: "Facilites",
+                        principalTable: "Facilities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -102,7 +102,7 @@ namespace Bolinders.Web.Migrations
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "Facilites");
+                name: "Facilities");
 
             migrationBuilder.DropTable(
                 name: "Make");
