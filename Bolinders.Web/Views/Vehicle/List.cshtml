@@ -2,7 +2,7 @@
 
 @foreach (var p in Model.Vehicles)
 {
-@Html.Partial("VehicleBlock", p)
+@Html.Partial("_VehicleBlock", p)
 }
 <div page-model="@Model.Pager" page-action="List"
      enable-page-classes="true"
