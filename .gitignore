@@ -7,6 +7,7 @@
 appsettings.json
 appsettings.production.json
 appsettings.development.json
+Bolinders.Web/appsettings.json
 **/DataAccess/ApplicationDbContextFactory.cs
 
 # User-specific files
@@ -292,3 +293,4 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
