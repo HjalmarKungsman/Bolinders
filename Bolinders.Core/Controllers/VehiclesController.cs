@@ -8,12 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
-<<<<<<< HEAD
 using Microsoft.AspNetCore.Http;
-=======
 using Bolinders.Core.ViewModels;
 using Bolinders.Core.Models.PagingViewModels;
->>>>>>> origin/dev-Identity
 
 namespace Bolinders.Core.Controllers
 {
