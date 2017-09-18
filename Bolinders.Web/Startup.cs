@@ -8,10 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Bolinders.Web.Data;
-using Bolinders.Web.Models;
-using Bolinders.Web.Services;
-using Bolinders.Web.DataAccess;
+using Bolinders.Core.Models;
+using Bolinders.Core.DataAccess;
+using Bolinders.Core.Services;
 
 namespace Bolinders.Web
 {
