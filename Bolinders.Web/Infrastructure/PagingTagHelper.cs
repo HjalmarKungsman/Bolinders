@@ -8,8 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bolinders.Core.ViewModels;
+using Bolinders.Core.Models.PagingViewModels;
 
-namespace Bolinders.Core.Infrastructure
+namespace Bolinders.Web.Infrastructure
 {
     [HtmlTargetElement("div", Attributes = "page-model,page-action")]
     public class PagingTagHelper : TagHelper
