@@ -180,6 +180,7 @@ namespace Bolinders.Core.Controllers
             }
             await _context.SaveChangesAsync();
 
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Vehicles/Delete/5
