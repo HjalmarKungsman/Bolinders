@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
+using Microsoft.AspNetCore.Http;
 
 namespace Bolinders.Core.Controllers
 {
@@ -163,6 +164,22 @@ namespace Bolinders.Core.Controllers
             }
 
             return View(vehicle);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteSelected(List<int> selectedVehicles)
+        {
+            if (selectedVehicles == null)
+            {
+                return NotFound();
+            }
+            foreach(var i in selectedVehicles)
+            {
+                var vehicle = await _context.Vehicles.SingleOrDefaultAsync(m => m.Id == i);
+                _context.Vehicles.Remove(vehicle);             
+            }
+            await _context.SaveChangesAsync();
+
         }
 
         // POST: Vehicles/Delete/5
