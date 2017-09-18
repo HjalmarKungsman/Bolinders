@@ -5,22 +5,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
 using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
 using Bolinders.Core.ViewModels;
 using Bolinders.Core.Models.PagingViewModels;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Bolinders.Core.Controllers
 {
     public class VehiclesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _environment;
 
-        public VehiclesController(ApplicationDbContext context)
+        public VehiclesController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
+
+
+
 
         //private IVehicleRepository repo;
         //public int PageLimit = 4;
@@ -92,7 +99,7 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated,Images")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -189,6 +196,32 @@ namespace Bolinders.Core.Controllers
             _context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadImages(List<IFormFile> files)
+        {
+            if (files.Any())
+            {
+                var uploads = Path.Combine(_environment.WebRootPath, "images/uploads");
+                List<string> filenames = new List<string>();
+                foreach (var file in files)
+                {
+                    if (file.Length > 0)
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                            fileStream.Close();
+                        }
+                    }
+                    filenames.Add(file.FileName);
+                }
+
+                return Ok(filenames);
+            }
+
+            return Ok("Add an item");
         }
 
         private bool VehicleExists(int id)
