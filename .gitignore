@@ -294,3 +294,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
+Bolinders.Web/appsettings.json
+Bolinders.Web/appsettings.json
