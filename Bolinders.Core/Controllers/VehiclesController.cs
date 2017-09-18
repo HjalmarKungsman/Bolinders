@@ -8,7 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
+<<<<<<< HEAD
 using Microsoft.AspNetCore.Http;
+=======
+using Bolinders.Core.ViewModels;
+using Bolinders.Core.Models.PagingViewModels;
+>>>>>>> origin/dev-Identity
 
 namespace Bolinders.Core.Controllers
 {
@@ -37,6 +42,19 @@ namespace Bolinders.Core.Controllers
         ////    //return View("~/Views/Vehicles/List.cshtml", vm);
         ////    return View();
         ////}
+
+        //GET: Vehicles/List
+        public async Task<IActionResult> List(int page = 1, int pageLimit = 8)
+        {
+            var toSkip = (page - 1) * pageLimit;
+            var applicationDbContext = _context.Vehicles.OrderBy(x => x.Id).Skip(toSkip).Take(pageLimit).Include(v => v.Facility).Include(v => v.Make);
+            var vehicleList = await applicationDbContext.ToListAsync();
+
+            var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = vehicleList.Count() };
+            var vm = new VehicleListViewModel { Vehicles = vehicleList, Pager = paging };
+
+            return View(vm);
+        }
 
         //GET: Vehicles
         public async Task<IActionResult> Index()
