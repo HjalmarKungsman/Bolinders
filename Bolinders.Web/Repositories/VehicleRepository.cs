@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bolinders.Web.DataAccess;
 using Bolinders.Web.Models;
+using Bolinders.Web.Data;
 
 namespace Bolinders.Web.Repositories
 {

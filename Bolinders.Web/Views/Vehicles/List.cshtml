@@ -1,0 +1,12 @@
+﻿@model VehicleListViewModel
+
+@foreach (var p in Model.Vehicles)
+{
+@Html.Partial("VehicleBlock", p)
+}
+<div page-model="@Model.Pager" page-action="List"
+     enable-page-classes="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group"></div>
