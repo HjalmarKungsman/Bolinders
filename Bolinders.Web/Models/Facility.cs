@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Bolinders.Web.Models
 {
     public class Facility
     {
+        [Key]
         public string Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }

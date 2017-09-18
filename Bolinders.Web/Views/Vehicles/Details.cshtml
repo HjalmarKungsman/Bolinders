@@ -1,0 +1,121 @@
+﻿@model Bolinders.Web.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModelDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mileage)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mileage)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BodyType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BodyType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Colour)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Colour)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gearbox)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gearbox)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FuelType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FuelType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Horsepowers)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Horsepowers)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Used)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Used)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Leasable)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Leasable)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Updated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Facility)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Facility.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Make)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Make.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
