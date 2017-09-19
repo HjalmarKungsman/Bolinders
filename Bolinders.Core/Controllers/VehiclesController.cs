@@ -9,15 +9,10 @@ using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
 using Microsoft.AspNetCore.Http;
 using Bolinders.Core.ViewModels;
-<<<<<<< HEAD
-using Bolinders.Core.Models.ViewModels;
-using Bolinders.Core.Helpers;
-=======
-using Bolinders.Core.Models.PagingViewModels;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
->>>>>>> 08c5e4054014e3138f3d1491c058322b1ab5ad76
+using Bolinders.Core.Helpers;
+using Bolinders.Core.Models.ViewModels;
+using System.IO;
 
 namespace Bolinders.Core.Controllers
 {
