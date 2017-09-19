@@ -9,7 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
 using Bolinders.Core.ViewModels;
-using Bolinders.Core.Models.PagingViewModels;
+using Bolinders.Core.Models.ViewModels;
+using Bolinders.Core.Helpers;
 
 namespace Bolinders.Core.Controllers
 {
@@ -22,34 +23,26 @@ namespace Bolinders.Core.Controllers
             _context = context;
         }
 
-        //private IVehicleRepository repo;
-        //public int PageLimit = 4;
-        //public VehiclesController(IVehicleRepository vehicleRepository)
-        //{
-        //    repo = vehicleRepository;
-        //}
-        ////public IActionResult List(int page = 1)
-        ////{
-        ////    var toSkip = (page - 1) * PageLimit;
-
-        ////    //var vehicles = repo.Vehicles.OrderBy(x => x.Id).Skip(toSkip).Take(PageLimit);
-        ////    //var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = PageLimit, TotalItems = repo.Vehicles.Count() };
-        ////    //var vm = new VehicleListViewModel { Vehicles = vehicles, Pager = paging };
-        ////    //return View("~/Views/Vehicles/List.cshtml", vm);
-        ////    return View();
-        ////}
-
         //GET: Vehicles/List
-        public async Task<IActionResult> List(int page = 1, int pageLimit = 8)
+        public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
         {
             var toSkip = (page - 1) * pageLimit;
-            var applicationDbContext = _context.Vehicles.OrderBy(x => x.Id).Skip(toSkip).Take(pageLimit).Include(v => v.Facility).Include(v => v.Make);
-            var vehicleList = await applicationDbContext.ToListAsync();
 
-            var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = vehicleList.Count() };
-            var vm = new VehicleListViewModel { Vehicles = vehicleList, Pager = paging };
+            var itemsAll = _context.Vehicles.OrderBy(x => x.Id).AsQueryable();
+            var result = SearchHelpers.SearchVehicles(itemsAll, formData);
 
-            return View(vm);
+            var itemsOnThisPage = result.Skip(toSkip).Take(pageLimit).Include(v => v.Facility).Include(v => v.Make);
+            var itemsFinal = await itemsOnThisPage.ToListAsync();
+
+            var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = result.Count() };
+            var vm = new VehicleListViewModel { Vehicles = itemsFinal, Pager = paging };
+
+            return View("~/Views/Vehicles/List.cshtml", vm);
+        }
+
+        private object VehicleSearchHelper()
+        {
+            throw new NotImplementedException();
         }
 
         //GET: Vehicles

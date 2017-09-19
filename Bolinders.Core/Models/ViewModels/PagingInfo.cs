@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bolinders.Core.Models.PagingViewModels
+namespace Bolinders.Core.Models.ViewModels
 {
     public class PagingInfo
     {
