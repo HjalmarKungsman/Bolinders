@@ -97,6 +97,11 @@ namespace Bolinders.Web
                     defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
+                    name: "Vehicles-routing",
+                    template: "Bilar/{action}/{id?}",
+                    defaults: new { Controller = "Vehicles", action = "Index" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
