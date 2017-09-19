@@ -13,6 +13,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th></th>
                 <th>
                     @Html.DisplayNameFor(model => model.RegistrationNumber)
                 </th>
@@ -70,6 +71,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                <input type="checkbox" name="selectedVehicles" value="@item.Id">
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RegistrationNumber)
             </td>
@@ -130,3 +134,29 @@
 }
     </tbody>
 </table>
+<p>
+    <a onclick="collect()" class="btn btn-danger">Delete Selected</a>
+</p>
+<script>
+    function collect() {
+        var arrayId = new Array();
+        var checkboxes = document.querySelectorAll('input[name=selectedVehicles]:checked')
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            arrayId.push(checkboxes[i].value)
+        }       
+        $.ajax({
+            url: '@Url.Action("DeleteSelected", "Vehicles")',
+            type: 'POST',
+            traditional: true,
+            data: { selectedVehicles: arrayId },
+            error: function () {
+                console.log("error");
+            }
+        }).done(function () {
+            console.log(arrayId + " it is done");
+            location.reload();
+        });
+        
+    }
+</script>
