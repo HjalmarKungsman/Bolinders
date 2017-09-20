@@ -107,24 +107,10 @@ namespace Bolinders.Web
 
                 routes.MapRoute(
                     name: "pagination",
-                    template: "bilar/sida/{page}",
+                    template: "vehicles/page/{page}",
                     defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
-<<<<<<< HEAD
-=======
-                    name: "Vehicles-routing",
-                    template: "bilar/{action}/{id?}",
-                    defaults: new { Controller = "Vehicles", action = "List" });
-
-
-                routes.MapRoute(
-                    name: "Contact",
-                    template: "kontakt",
-                    defaults: new { Controller = "Home", Action = "Contact" });
-
-                routes.MapRoute(
->>>>>>> 9a221fffd4712f67e01c2f69f81fe9901abb4ff4
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
