@@ -93,7 +93,7 @@ namespace Bolinders.Web
                 routes.MapRoute(
                     name: "Vehicles-routing",
                     template: "Bilar/{action}/{id?}",
-                    defaults: new { Controller = "Vehicles", action = "Index" });
+                    defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
                     name: "Vehicles-new",
@@ -107,7 +107,7 @@ namespace Bolinders.Web
 
                 routes.MapRoute(
                     name: "pagination",
-                    template: "vehicles/page/{page}",
+                    template: "bilar/sida/{page}",
                     defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
