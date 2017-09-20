@@ -6,46 +6,46 @@
     <form method="post" asp-action="list" asp-controller="vehicles">
         <div class="row">
             <div class="col-md-12">
-                <label for="SearchText">Söktext</label>
-                <input type="text" class="form-control" id="SearchText" name="SearchText" placeholder="Söktext" value="" />
+                <label for="searchText">Söktext</label>
+                <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Söktext" value="@ViewBag.SearchText" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <label for="priceFrom">Pris från</label>
-                <input type="number" class="form-control" id="priceFrom" name="priceFrom" placeholder="Pris från" value="" />
+                <input type="number" class="form-control" id="priceFrom" name="priceFrom" placeholder="Pris från" value="@ViewBag.PriceFrom" />
             </div>
             <div class="col-md-4">
                 <label for="mileFrom">Mil från</label>
-                <input type="number" class="form-control" id="mileFrom" name="mileFrom" placeholder="Mil från" value="" />
+                <input type="number" class="form-control" id="mileFrom" name="mileFrom" placeholder="Mil från" value="@ViewBag.MileFrom" />
             </div>
             <div class="col-md-4">
                 <label for="yearFrom">År från</label>
-                <input type="number" class="form-control" id="yearFrom" name="yearFrom" placeholder="År från" value="" />
+                <input type="number" class="form-control" id="yearFrom" name="yearFrom" placeholder="År från" value="@ViewBag.YearFrom" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <label for="priceTo">Pris till</label>
-                <input type="number" class="form-control" id="priceTo" name="priceTo" placeholder="Pris till" value="" />
+                <input type="number" class="form-control" id="priceTo" name="priceTo" placeholder="Pris till" value="@ViewBag.PriceTo" />
             </div>
             <div class="col-md-4">
                 <label for="mileTo">Mil till</label>
-                <input type="number" class="form-control" id="mileTo" name="mileTo" placeholder="Mil till" value="" />
+                <input type="number" class="form-control" id="mileTo" name="mileTo" placeholder="Mil till" value="@ViewBag.MileTo" />
             </div>
             <div class="col-md-4">
                 <label for="yearTo">År till</label>
-                <input type="number" class="form-control" id="yearTo" name="yearTo" placeholder="År till" value="" />
+                <input type="number" class="form-control" id="yearTo" name="yearTo" placeholder="År till" value="@ViewBag.YearTo" />
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <label for="bodyType">Kaross</label>
-                <input type="text" class="form-control" id="bodyType" name="bodyType" placeholder="Kaross" value="" />
+                <input type="text" class="form-control" id="bodyType" name="bodyType" placeholder="Kaross" value="@ViewBag.BodyType" />
             </div>
             <div class="col-md-4">
                 <label for="gearBox">Växellåda</label>
-                <input type="text" class="form-control" id="gearBox" name="gearBox" placeholder="Växellåda" value="" />
+                <input type="text" class="form-control" id="gearBox" name="gearBox" placeholder="Växellåda" value="@ViewBag.GearBox" />
             </div>
             <div class="col-md-4">
                 <label>&nbsp;</label><br />

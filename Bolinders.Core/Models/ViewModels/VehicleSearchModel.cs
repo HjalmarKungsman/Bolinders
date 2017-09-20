@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bolinders.Core.Models
+namespace Bolinders.Core.Models.ViewModels
 {
     public class VehicleSearchModel
     {

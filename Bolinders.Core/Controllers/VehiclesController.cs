@@ -28,11 +28,27 @@ namespace Bolinders.Core.Controllers
         }
 
         //GET: Vehicles/List
-        public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
+        public async Task<IActionResult> List(bool? used = null, VehicleSearchModel formData = null, int page = 1, int pageLimit = 2)
         {
             var toSkip = (page - 1) * pageLimit;
 
-            var itemsAll = _context.Vehicles.OrderBy(x => x.Id).AsQueryable();
+            IQueryable<Vehicle> itemsAll;
+            if (used != null)
+            {
+                if (used == true)
+                {
+                    itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == true).AsQueryable();
+                }
+                else
+                {
+                    itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == false).AsQueryable();
+                }
+            }
+            else
+            {
+                itemsAll = _context.Vehicles.OrderBy(x => x.Id).AsQueryable();
+            }
+            
             var result = SearchHelpers.SearchVehicles(itemsAll, formData);
 
             var itemsOnThisPage = result.Skip(toSkip).Take(pageLimit).Include(v => v.Facility).Include(v => v.Make);
@@ -41,6 +57,15 @@ namespace Bolinders.Core.Controllers
             var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = result.Count() };
             var vm = new VehicleListViewModel { Vehicles = itemsFinal, Pager = paging };
 
+            ViewBag.SearchText = formData.SearchText;
+            ViewBag.PriceFrom = formData.PriceFrom;
+            ViewBag.PriceTo = formData.PriceTo;
+            ViewBag.MileageFrom = formData.MileageFrom;
+            ViewBag.MileageTo = formData.MileageTo;
+            ViewBag.YearFrom = formData.YearFrom;
+            ViewBag.YearTo = formData.YearTo;
+            ViewBag.BodyType = formData.BodyType;
+            ViewBag.Gearbox = formData.Gearbox;
             return View("~/Views/Vehicles/List.cshtml", vm);
         }
 

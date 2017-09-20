@@ -11,5 +11,6 @@ namespace Bolinders.Core.ViewModels
     {
         public IEnumerable<Vehicle> Vehicles { get; set; }
         public PagingInfo Pager { get; set; }
+        public VehicleSearchModel SeachModel { get; set; }
     }
 }

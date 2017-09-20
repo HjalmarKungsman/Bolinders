@@ -90,16 +90,25 @@ namespace Bolinders.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "Vehicles-routing",
+                    template: "Bilar/{action}/{id?}",
+                    defaults: new { Controller = "Vehicles", action = "Index" });
+
+                routes.MapRoute(
+                    name: "Vehicles-new",
+                    template: "bilar/nya",
+                    defaults: new { Controller = "Vehicles", action = "List", used = false });
+
+                routes.MapRoute(
+                    name: "Vehicles-used",
+                    template: "bilar/begagnade",
+                    defaults: new { Controller = "Vehicles", action = "List", used = true });
 
                 routes.MapRoute(
                     name: "pagination",
                     template: "vehicles/page/{page}",
                     defaults: new { Controller = "Vehicles", action = "List" });
-
-                routes.MapRoute(
-                    name: "Vehicles-routing",
-                    template: "Bilar/{action}/{id?}",
-                    defaults: new { Controller = "Vehicles", action = "Index" });
 
                 routes.MapRoute(
                     name: "default",
