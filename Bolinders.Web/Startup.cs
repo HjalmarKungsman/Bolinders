@@ -93,13 +93,19 @@ namespace Bolinders.Web
 
                 routes.MapRoute(
                     name: "pagination",
-                    template: "vehicles/page/{page}",
+                    template: "bilar/sida/{page}",
                     defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
                     name: "Vehicles-routing",
-                    template: "Bilar/{action}/{id?}",
-                    defaults: new { Controller = "Vehicles", action = "Index" });
+                    template: "bilar/{action}/{id?}",
+                    defaults: new { Controller = "Vehicles", action = "List" });
+
+
+                routes.MapRoute(
+                    name: "Contact",
+                    template: "kontakt",
+                    defaults: new { Controller = "Home", Action = "Contact" });
 
                 routes.MapRoute(
                     name: "default",
