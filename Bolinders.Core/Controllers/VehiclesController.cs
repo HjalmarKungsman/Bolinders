@@ -136,7 +136,7 @@ namespace Bolinders.Core.Controllers
                         }
                         fileNames.Add(file.FileName);      
                     }
-                }         
+                }
 
                 Vehicle newVehicle = new Vehicle {
                     Id = Guid.NewGuid(),
@@ -158,7 +158,8 @@ namespace Bolinders.Core.Controllers
                     Price = vehicle.Price,
                     Updated = DateTime.UtcNow,
                     Used = vehicle.Used,
-                    Year = vehicle.Year
+                    Year = vehicle.Year,
+                    Images = new List<Image>()
                 };
 
                 for (int i = 0; i < fileNames.Count; i++)

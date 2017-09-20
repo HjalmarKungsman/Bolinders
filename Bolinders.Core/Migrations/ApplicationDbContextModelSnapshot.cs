@@ -122,7 +122,7 @@ namespace Bolinders.Core.Migrations
 
             modelBuilder.Entity("Bolinders.Core.Models.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ImageUrl");

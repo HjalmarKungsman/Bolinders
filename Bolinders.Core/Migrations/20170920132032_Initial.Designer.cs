@@ -12,7 +12,7 @@ using System;
 namespace Bolinders.Core.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170920120106_Initial")]
+    [Migration("20170920132032_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,7 +123,7 @@ namespace Bolinders.Core.Migrations
 
             modelBuilder.Entity("Bolinders.Core.Models.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ImageUrl");
