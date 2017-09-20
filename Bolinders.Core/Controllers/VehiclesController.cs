@@ -114,11 +114,62 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated,Images")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated,Images")] VehicleViewModel vehicle)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vehicle);
+                List<string> fileNames = new List<string>();
+
+                if (vehicle.Images.Any())
+                {
+                    var uploads = Path.Combine(_environment.WebRootPath, "images/uploads");
+                    
+                    foreach (var file in vehicle.Images)
+                    {
+                        if (file.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                                fileStream.Close();
+                            }
+                        }
+                        fileNames.Add(file.FileName);      
+                    }
+                }         
+
+                Vehicle newVehicle = new Vehicle {
+                    Id = Guid.NewGuid(),
+                    RegistrationNumber = vehicle.RegistrationNumber,
+                    BodyType = vehicle.BodyType,
+                    Colour = vehicle.Colour,
+                    Created = DateTime.UtcNow,
+                    Facility = vehicle.Facility,
+                    FacilityId = vehicle.FacilityId,
+                    FuelType = vehicle.FuelType,
+                    Gearbox = vehicle.Gearbox,
+                    Horsepowers = vehicle.Horsepowers,
+                    Leasable = vehicle.Leasable,
+                    Make = vehicle.Make,
+                    MakeId = vehicle.MakeId,
+                    Mileage = vehicle.Mileage,
+                    Model = vehicle.Model,
+                    ModelDescription = vehicle.ModelDescription,
+                    Price = vehicle.Price,
+                    Updated = DateTime.UtcNow,
+                    Used = vehicle.Used,
+                    Year = vehicle.Year
+                };
+
+                for (int i = 0; i < fileNames.Count; i++)
+                {
+                    Image newImage = new Image(fileNames[i], newVehicle.Id);
+                    newVehicle.Images.Add(newImage);
+                }
+
+
+
+                _context.Add(newVehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

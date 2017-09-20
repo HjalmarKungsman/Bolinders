@@ -10,12 +10,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th></th>
                 <th>
-                    @Html.DisplayNameFor(model => model.RegistrationNumber)
+                    @Html.DisplayNameFor(model => model.Make)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Model)
@@ -27,9 +27,6 @@
                     @Html.DisplayNameFor(model => model.Year)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Mileage)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Price)
                 </th>
                 <th>
@@ -39,13 +36,7 @@
                     @Html.DisplayNameFor(model => model.Colour)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Gearbox)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.FuelType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Horsepowers)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Used)
@@ -62,75 +53,60 @@
             <th>
                 @Html.DisplayNameFor(model => model.Facility)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Make)
-            </th>
-            <th></th>
+            <th class="table" style="width:83px">Editor</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                <input type="checkbox" name="selectedVehicles" value="@item.Id">
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegistrationNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModelDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mileage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BodyType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Colour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gearbox)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FuelType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Horsepowers)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Used)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Leasable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Facility.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Make.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        <tr onclick="">
+                <td class="table-bordered">
+                    <input type="checkbox" name="selectedVehicles" value="@item.Id">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelDescription)
+                </td>
+                <td style="border-left:solid thin  #e6e6e6">
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BodyType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Colour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuelType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Used)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Leasable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Facility.Name)
+                </td>
+                <td class="table-bordered" ´>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><span title="Edit" class="glyphicon glyphicon-edit"></span></a> |
+                    <a asp-action="Details" asp-route-id="@item.Id"><span title="Details" class="glyphicon glyphicon-list-alt"></span></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><span title="Delete" class="glyphicon glyphicon-trash"></span></a>
+                </td>
+</tr>
 }
     </tbody>
 </table>
@@ -144,7 +120,7 @@
 
         for (var i = 0; i < checkboxes.length; i++) {
             arrayId.push(checkboxes[i].value)
-        }       
+        }
         $.ajax({
             url: '@Url.Action("DeleteSelected", "Vehicles")',
             type: 'POST',
@@ -157,6 +133,6 @@
             console.log(arrayId + " it is done");
             location.reload();
         });
-        
+
     }
 </script>
