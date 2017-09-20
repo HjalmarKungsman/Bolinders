@@ -16,12 +16,10 @@ namespace Bolinders.Core.Models.ViewModels
         public int Year { get; set; }
         public int Mileage { get; set; }
         public Decimal Price { get; set; }
-        //Sedan, Kombi, Halvkombi, Sportkubé, SUV, Cab, Minibuss, Övrigt, Transportbil
-        public string BodyType { get; set; }
+        public BodyType BodyType { get; set; }
         public string Colour { get; set; }
-        public string Gearbox { get; set; }
-        //Bensin, Bensin/el, Bensin/etanol, Bensin/gas, Diesel, Diesel/el, El, Gas
-        public string FuelType { get; set; }
+        public GearBox Gearbox { get; set; }
+        public FuelType FuelType { get; set; }
         public int Horsepowers { get; set; }
         public bool Used { get; set; }
         public string FacilityId { get; set; }
