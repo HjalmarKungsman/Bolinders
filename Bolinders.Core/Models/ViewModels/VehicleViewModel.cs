@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bolinders.Core.Models
+namespace Bolinders.Core.Models.ViewModels
 {
-    public class Vehicle
+    public class VehicleViewModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string RegistrationNumber { get; set; }
         public int MakeId { get; set; }
         public virtual Make Make { get; set; }
@@ -25,7 +26,7 @@ namespace Bolinders.Core.Models
         public bool Used { get; set; }
         public string FacilityId { get; set; }
         public virtual Facility Facility { get; set; }
-        public ICollection<Image> Images { get; set; }
+        public ICollection<IFormFile> Images { get; set; }
         public bool Leasable { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }

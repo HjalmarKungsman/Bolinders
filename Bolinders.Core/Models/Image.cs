@@ -8,18 +8,17 @@ namespace Bolinders.Core.Models
 {
     public class Image
     {
-        public int Id { get; set; }
-        public int VehicleId { get; set; }
+        public Guid Id { get; set; }
+        public Guid VehicleId { get; set; }
         [ForeignKey("VehicleId")]
         public Vehicle Vehicle { get; set; }
         public string ImageUrl { get; set; }
 
-        public Image(string imageUrl, Vehicle vehicle)
+        public Image(string imageUrl, Guid vehicleId)
         {
-            VehicleId = vehicle.Id;
-            Vehicle = vehicle;
+            Id = Guid.NewGuid();
+            VehicleId = vehicleId;
             ImageUrl = imageUrl;
-            
         }
     }
     

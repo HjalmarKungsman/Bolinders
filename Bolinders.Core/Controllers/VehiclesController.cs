@@ -82,7 +82,7 @@ namespace Bolinders.Core.Controllers
         }
 
         // GET: Vehicles/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -114,11 +114,62 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated,Images")] Vehicle vehicle)
+        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated,Images")] VehicleViewModel vehicle)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vehicle);
+                List<string> fileNames = new List<string>();
+
+                if (vehicle.Images.Any())
+                {
+                    var uploads = Path.Combine(_environment.WebRootPath, "images/uploads");
+                    
+                    foreach (var file in vehicle.Images)
+                    {
+                        if (file.Length > 0)
+                        {
+                            using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                            {
+                                await file.CopyToAsync(fileStream);
+                                fileStream.Close();
+                            }
+                        }
+                        fileNames.Add(file.FileName);      
+                    }
+                }         
+
+                Vehicle newVehicle = new Vehicle {
+                    Id = Guid.NewGuid(),
+                    RegistrationNumber = vehicle.RegistrationNumber,
+                    BodyType = vehicle.BodyType,
+                    Colour = vehicle.Colour,
+                    Created = DateTime.UtcNow,
+                    Facility = vehicle.Facility,
+                    FacilityId = vehicle.FacilityId,
+                    FuelType = vehicle.FuelType,
+                    Gearbox = vehicle.Gearbox,
+                    Horsepowers = vehicle.Horsepowers,
+                    Leasable = vehicle.Leasable,
+                    Make = vehicle.Make,
+                    MakeId = vehicle.MakeId,
+                    Mileage = vehicle.Mileage,
+                    Model = vehicle.Model,
+                    ModelDescription = vehicle.ModelDescription,
+                    Price = vehicle.Price,
+                    Updated = DateTime.UtcNow,
+                    Used = vehicle.Used,
+                    Year = vehicle.Year
+                };
+
+                for (int i = 0; i < fileNames.Count; i++)
+                {
+                    Image newImage = new Image(fileNames[i], newVehicle.Id);
+                    newVehicle.Images.Add(newImage);
+                }
+
+
+
+                _context.Add(newVehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -128,7 +179,7 @@ namespace Bolinders.Core.Controllers
         }
 
         // GET: Vehicles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -150,7 +201,7 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {
@@ -183,7 +234,7 @@ namespace Bolinders.Core.Controllers
         }
 
         // GET: Vehicles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -203,7 +254,7 @@ namespace Bolinders.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteSelected(List<int> selectedVehicles)
+        public async Task<IActionResult> DeleteSelected(List<Guid> selectedVehicles)
         {
             if (selectedVehicles == null)
             {
@@ -222,7 +273,7 @@ namespace Bolinders.Core.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var vehicle = await _context.Vehicles.SingleOrDefaultAsync(m => m.Id == id);
             _context.Vehicles.Remove(vehicle);
@@ -256,7 +307,7 @@ namespace Bolinders.Core.Controllers
             return Ok("Add an item");
         }
 
-        private bool VehicleExists(int id)
+        private bool VehicleExists(Guid id)
         {
             return _context.Vehicles.Any(e => e.Id == id);
         }
