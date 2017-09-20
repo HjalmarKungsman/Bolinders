@@ -37,10 +37,10 @@ namespace Bolinders.Core.Helpers
                     result = result.Where(x => x.Year >= formData.YearFrom);
                 if (formData.YearTo.HasValue)
                     result = result.Where(x => x.Year <= formData.YearTo);
-                if (!string.IsNullOrEmpty(formData.BodyType))
-                    result = result.Where(x => x.BodyType.Contains(formData.BodyType));
-                if (!string.IsNullOrEmpty(formData.Gearbox))
-                    result = result.Where(x => x.Gearbox.Contains(formData.Gearbox));
+                //if (!string.IsNullOrEmpty(formData.BodyType))
+                //    result = result.Where(x => x.BodyType.Contains(formData.BodyType));
+                //if (!string.IsNullOrEmpty(formData.Gearbox))
+                //    result = result.Where(x => x.Gearbox.Contains(formData.Gearbox));
             }
 
             return result;

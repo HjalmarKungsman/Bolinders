@@ -9,7 +9,7 @@ namespace Bolinders.Core.Models
     public class Equipment
     {
         public int Id { get; set; }
-        public int VehicledId { get; set; }
+        public Guid VehicledId { get; set; }
         [ForeignKey("VehicledId")]
         public Vehicle Vehicle { get; set; }
         public string Key { get; set; }

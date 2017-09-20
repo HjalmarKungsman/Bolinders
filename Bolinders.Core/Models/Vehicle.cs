@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Bolinders.Core.Models
 {
     public class Vehicle
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UrlId { get; set; }
         public string RegistrationNumber { get; set; }
         public int MakeId { get; set; }
         public virtual Make Make { get; set; }
@@ -15,12 +20,10 @@ namespace Bolinders.Core.Models
         public int Year { get; set; }
         public int Mileage { get; set; }
         public Decimal Price { get; set; }
-        //Sedan, Kombi, Halvkombi, Sportkubé, SUV, Cab, Minibuss, Övrigt, Transportbil
-        public string BodyType { get; set; }
+        public BodyType BodyType { get; set; }
         public string Colour { get; set; }
-        public string Gearbox { get; set; }
-        //Bensin, Bensin/el, Bensin/etanol, Bensin/gas, Diesel, Diesel/el, El, Gas
-        public string FuelType { get; set; }
+        public GearBox Gearbox { get; set; }
+        public FuelType FuelType { get; set; }
         public int Horsepowers { get; set; }
         public bool Used { get; set; }
         public string FacilityId { get; set; }

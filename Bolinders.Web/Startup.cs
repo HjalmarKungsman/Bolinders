@@ -93,7 +93,7 @@ namespace Bolinders.Web
                 routes.MapRoute(
                     name: "Vehicles-routing",
                     template: "Bilar/{action}/{id?}",
-                    defaults: new { Controller = "Vehicles", action = "Index" });
+                    defaults: new { Controller = "Vehicles", action = "List " });
 
                 routes.MapRoute(
                     name: "Vehicles-new",
@@ -103,7 +103,7 @@ namespace Bolinders.Web
                 routes.MapRoute(
                     name: "Vehicles-used",
                     template: "bilar/begagnade",
-                    defaults: new { Controller = "Vehicles", action = "List", used = true });
+                    defaults: new { Controller = "Vehicles", action = "List", used = false });
 
                 routes.MapRoute(
                     name: "pagination",
@@ -111,20 +111,6 @@ namespace Bolinders.Web
                     defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
-<<<<<<< HEAD
-=======
-                    name: "Vehicles-routing",
-                    template: "bilar/{action}/{id?}",
-                    defaults: new { Controller = "Vehicles", action = "List" });
-
-
-                routes.MapRoute(
-                    name: "Contact",
-                    template: "kontakt",
-                    defaults: new { Controller = "Home", Action = "Contact" });
-
-                routes.MapRoute(
->>>>>>> 9a221fffd4712f67e01c2f69f81fe9901abb4ff4
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

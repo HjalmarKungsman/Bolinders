@@ -82,7 +82,7 @@ namespace Bolinders.Core.Controllers
         }
 
         // GET: Vehicles/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -128,7 +128,7 @@ namespace Bolinders.Core.Controllers
         }
 
         // GET: Vehicles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -150,7 +150,7 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {
@@ -183,7 +183,7 @@ namespace Bolinders.Core.Controllers
         }
 
         // GET: Vehicles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -203,7 +203,7 @@ namespace Bolinders.Core.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteSelected(List<int> selectedVehicles)
+        public async Task<IActionResult> DeleteSelected(List<Guid> selectedVehicles)
         {
             if (selectedVehicles == null)
             {
@@ -222,7 +222,7 @@ namespace Bolinders.Core.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var vehicle = await _context.Vehicles.SingleOrDefaultAsync(m => m.Id == id);
             _context.Vehicles.Remove(vehicle);
@@ -256,7 +256,7 @@ namespace Bolinders.Core.Controllers
             return Ok("Add an item");
         }
 
-        private bool VehicleExists(int id)
+        private bool VehicleExists(Guid id)
         {
             return _context.Vehicles.Any(e => e.Id == id);
         }

@@ -113,14 +113,13 @@ namespace Bolinders.Core.Migrations
                 name: "Vehicles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    BodyType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BodyType = table.Column<int>(type: "int", nullable: false),
                     Colour = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FacilityId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FuelType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gearbox = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FuelType = table.Column<int>(type: "int", nullable: false),
+                    Gearbox = table.Column<int>(type: "int", nullable: false),
                     Horsepowers = table.Column<int>(type: "int", nullable: false),
                     Leasable = table.Column<bool>(type: "bit", nullable: false),
                     MakeId = table.Column<int>(type: "int", nullable: false),
@@ -130,6 +129,8 @@ namespace Bolinders.Core.Migrations
                     Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     RegistrationNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UrlId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Used = table.Column<bool>(type: "bit", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false)
                 },
@@ -243,7 +244,7 @@ namespace Bolinders.Core.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VehicledId = table.Column<int>(type: "int", nullable: false)
+                    VehicledId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -263,14 +264,14 @@ namespace Bolinders.Core.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VehicledId = table.Column<int>(type: "int", nullable: false)
+                    VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Images", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Images_Vehicles_VehicledId",
-                        column: x => x.VehicledId,
+                        name: "FK_Images_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -326,9 +327,9 @@ namespace Bolinders.Core.Migrations
                 column: "VehicledId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_VehicledId",
+                name: "IX_Images_VehicleId",
                 table: "Images",
-                column: "VehicledId");
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_FacilityId",
