@@ -123,6 +123,10 @@ namespace Bolinders.Core.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (vehicle.Images == null)
+                {
+                    return View(vehicle);
+                }
 
                 var listOfImages = await ImageUploadHelper.UploadImages(vehicle.Images, _environment);
                    
