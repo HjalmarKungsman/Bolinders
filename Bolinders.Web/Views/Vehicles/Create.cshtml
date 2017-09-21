@@ -68,14 +68,14 @@
                     <label asp-for="BodyType" class="control-label"></label>
                     <select asp-for="BodyType" asp-items="Html.GetEnumSelectList<BodyType>()" class="form-control"> </select>
                     <span asp-validation-for="BodyType" class="text-danger"></span>
-                </div>
+                </div>               
+            </div>
+            <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="Colour" class="control-label"></label>
                     <input asp-for="Colour" class="form-control" />
                     <span asp-validation-for="Colour" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="Gearbox" class="control-label"></label>
                     <select asp-for="Gearbox" asp-items="Html.GetEnumSelectList<GearBox>()" class="form-control"> </select>
@@ -96,6 +96,11 @@
                     <select asp-for="FacilityId" class="form-control" asp-items="ViewBag.FacilityId"></select>
                 </div>
                 <div class="form-group">
+                    <label asp-for="Equipment" class="control-label"></label>
+                    <select asp-for="Equipment" class="form-control equipment" multiple="multiple"></select>
+                </div>
+
+                <div class="form-group">
                     <div class="checkbox">
                         <label>
                             <input asp-for="Used" /> @Html.DisplayNameFor(model => model.Used)
@@ -111,7 +116,7 @@
                 </div>
                 <div class="form-group">
                     <label for="Images">File input</label>
-                    <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple />
+                    <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple accept="image/*"/>
                     <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                 </div>
 
@@ -128,7 +133,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-<style>
+@*<style>
     #image-list {
         display: inline-flex;
         flex-wrap: wrap;
@@ -138,10 +143,37 @@
         #image-list img {
             max-height: 150px;
         }
+</style>*@
+<style>
+    .equipment.form-control {
+        height: auto !important;
+        padding: 1px;
+    }
+
+    .form-control ul.select2-choices {
+        border: 0;
+        background-image: none;
+        margin: 1px;
+        padding: 1px;
+    }
+
+    .form-control.select2-container .select2-choice {
+        height: 38px;
+        line-height: 38px;
+    }
 </style>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
-<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+<script type="text/javascript">
+        $('.equipment').select2({
+            tags: true
+        });
+</script>
+
+
+@*<script>
     $(document).ready(function () {
         $('#imageButton').on('click', function (e) {
 
@@ -171,6 +203,6 @@
             });
         });
      });
-</script>
+</script>*@
 
 

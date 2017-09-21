@@ -104,8 +104,8 @@ namespace Bolinders.Core.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
-            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Id");
-            ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Id");
+            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name");
+            ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Name");
             return View();
         }
 
@@ -114,11 +114,12 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated,Images")] VehicleViewModel vehicle)
+        public async Task<IActionResult> Create([Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated,Images,Equipment")] VehicleViewModel vehicle)
         {
             if (ModelState.IsValid)
             {
                 List<string> fileNames = new List<string>();
+             
 
                 if (vehicle.Images.Any())
                 {
@@ -137,6 +138,9 @@ namespace Bolinders.Core.Controllers
                         fileNames.Add(file.FileName);      
                     }
                 }
+
+
+
 
                 Vehicle newVehicle = new Vehicle {
                     Id = Guid.NewGuid(),
@@ -159,23 +163,38 @@ namespace Bolinders.Core.Controllers
                     Updated = DateTime.UtcNow,
                     Used = vehicle.Used,
                     Year = vehicle.Year,
-                    Images = new List<Image>()
+                    Images = new List<Image>(),
+                    Equipment = new List<Equipment>()
                 };
 
-                for (int i = 0; i < fileNames.Count; i++)
+                if (vehicle.Equipment.Any())
                 {
-                    Image newImage = new Image(fileNames[i], newVehicle.Id);
-                    newVehicle.Images.Add(newImage);
+                    for (int i = 0; i < vehicle.Equipment.Count; i++)
+                    {
+                        Equipment newEquipment = new Equipment
+                        {
+                            VehicledId = newVehicle.Id,
+                            Value = vehicle.Equipment[i]
+                        };
+                        newVehicle.Equipment.Add(newEquipment);
+                    }                  
+                    
                 }
 
-
-
+                if (vehicle.Images.Any())
+                {
+                    for (int i = 0; i < fileNames.Count; i++)
+                    {
+                        Image newImage = new Image(fileNames[i], newVehicle.Id);
+                        newVehicle.Images.Add(newImage);
+                    }
+                }
                 _context.Add(newVehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Id", vehicle.FacilityId);
-            ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Id", vehicle.MakeId);
+            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name", vehicle.FacilityId);
+            ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Name", vehicle.MakeId);
             return View(vehicle);
         }
 

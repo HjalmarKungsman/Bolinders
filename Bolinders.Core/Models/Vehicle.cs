@@ -32,6 +32,6 @@ namespace Bolinders.Core.Models
         public bool Leasable { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
-        public ICollection<Equipment> Equipment { get; set; }
+        public List<Equipment> Equipment { get; set; }
     }
 }

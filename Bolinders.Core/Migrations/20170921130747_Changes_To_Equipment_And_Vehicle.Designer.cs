@@ -12,9 +12,10 @@ using System;
 namespace Bolinders.Core.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170921130747_Changes_To_Equipment_And_Vehicle")]
+    partial class Changes_To_Equipment_And_Vehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
