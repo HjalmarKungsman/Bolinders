@@ -202,18 +202,21 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,Used,FacilityId,Leasable,Created,Updated")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,Used,Leasable,Created,Updated")] Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {
                 return NotFound();
             }
 
+
             if (ModelState.IsValid)
-            {
+            { 
                 try
                 {
-                    _context.Update(vehicle);
+                    vehicle.Updated = DateTime.UtcNow;
+                    _context.Entry(vehicle).State = EntityState.Modified;
+                    _context.Entry(vehicle).Property(x => x.UrlId).IsModified = false;                  
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
