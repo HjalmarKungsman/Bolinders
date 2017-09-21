@@ -118,30 +118,9 @@ namespace Bolinders.Core.Controllers
         {
             if (ModelState.IsValid)
             {
-                List<string> fileNames = new List<string>();
-             
 
-                if (vehicle.Images.Any())
-                {
-                    var uploads = Path.Combine(_environment.WebRootPath, "images/uploads");
-                    
-                    foreach (var file in vehicle.Images)
-                    {
-                        if (file.Length > 0)
-                        {
-                            using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
-                            {
-                                await file.CopyToAsync(fileStream);
-                                fileStream.Close();
-                            }
-                        }
-                        fileNames.Add(file.FileName);      
-                    }
-                }
-
-
-
-
+                var listOfImages = await ImageUploadHelper.UploadImages(vehicle.Images, _environment);
+                   
                 Vehicle newVehicle = new Vehicle {
                     Id = Guid.NewGuid(),
                     RegistrationNumber = vehicle.RegistrationNumber,
@@ -167,28 +146,13 @@ namespace Bolinders.Core.Controllers
                     Equipment = new List<Equipment>()
                 };
 
+                newVehicle = ImageUploadHelper.ImageBuilder(listOfImages, newVehicle);
+
                 if (vehicle.Equipment.Any())
                 {
-                    for (int i = 0; i < vehicle.Equipment.Count; i++)
-                    {
-                        Equipment newEquipment = new Equipment
-                        {
-                            VehicledId = newVehicle.Id,
-                            Value = vehicle.Equipment[i]
-                        };
-                        newVehicle.Equipment.Add(newEquipment);
-                    }                  
-                    
+                    newVehicle = EquipmentHelper.EquipmentBuilder(vehicle.Equipment, newVehicle);                  
                 }
 
-                if (vehicle.Images.Any())
-                {
-                    for (int i = 0; i < fileNames.Count; i++)
-                    {
-                        Image newImage = new Image(fileNames[i], newVehicle.Id);
-                        newVehicle.Images.Add(newImage);
-                    }
-                }
                 _context.Add(newVehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
