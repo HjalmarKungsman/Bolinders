@@ -6,23 +6,6 @@
 }
 
 <h2>Lägg till nytt fordon.</h2>
-    @*<div class="row">
-    <div class="col-md-12">
-        <div class="col-md-12">
-            <form method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="files">File input</label>
-                    <div id="image-list">
-                        @*Dynamically loaded images*@
-@*</div>
-                        <input id="files" class="form-control-file" type="file" aria-describedby="fileHelp" name="files" multiple />
-                        <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-                    </div>
-                    <input id="imageButton" class="btn btn-success pull-left" type="button" value="Upload" />
-                </form>
-            </div>
-        </div>
-    </div>*@
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -161,38 +144,3 @@
             tags: true
         });
 </script>
-
-
-@*<script>
-    $(document).ready(function () {
-        $('#imageButton').on('click', function (e) {
-
-            var fileUpload = $("#files").get(0);
-            var files = fileUpload.files;
-            var data = new FormData();
-
-            for (var i = 0; i < files.length; i++) {
-                data.append("files", files[i]);
-            }
-
-            $.ajax({
-                method: 'POST',
-                url: '@Url.Action("UploadImages","Vehicles")',
-                data: data,
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    $('#images').val(response);
-
-                    var imageList = response;
-                    for (var i = 0; i < imageList.length; i++) {
-                        $('#image-list').append('<div class="col-md-2"><div class="thumbnail"><img class="img-responsive" src="../images/uploads/' + imageList[i] + '" alt="' + imageList[i] + '"/></div></div>');
-                    }
-
-                }
-            });
-        });
-     });
-</script>*@
-
-

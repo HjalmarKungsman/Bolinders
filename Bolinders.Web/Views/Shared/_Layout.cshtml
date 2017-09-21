@@ -27,13 +27,25 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Bolinders.Web</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Bolinders Bil AB</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
                     <li><a asp-area="" asp-controller="Vehicles" asp-action="List">Fordon</a></li>
-                    <li><a asp-area="" asp-controller="Facility" asp-action="Index">Facilities</a></li>
+                    <li><a href="/kontakt">Kontakt</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Administrera
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Vehicles" asp-action="Index">Fordon</a></li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

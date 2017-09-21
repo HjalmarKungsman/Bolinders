@@ -13,9 +13,11 @@ using Microsoft.AspNetCore.Hosting;
 using Bolinders.Core.Helpers;
 using Bolinders.Core.Models.ViewModels;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bolinders.Core.Controllers
 {
+    [Authorize]
     public class VehiclesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,6 +30,7 @@ namespace Bolinders.Core.Controllers
         }
 
         //GET: Vehicles/List
+        [AllowAnonymous]
         public async Task<IActionResult> List(bool? used = null, VehicleSearchModel formData = null, int page = 1, int pageLimit = 2)
         {
             var toSkip = (page - 1) * pageLimit;
@@ -75,6 +78,7 @@ namespace Bolinders.Core.Controllers
         }
 
         //GET: Vehicles
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Vehicles.Include(v => v.Facility).Include(v => v.Make);
@@ -82,6 +86,7 @@ namespace Bolinders.Core.Controllers
         }
 
         // GET: Vehicles/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -266,32 +271,6 @@ namespace Bolinders.Core.Controllers
             _context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UploadImages(List<IFormFile> files)
-        {
-            if (files.Any())
-            {
-                var uploads = Path.Combine(_environment.WebRootPath, "images/uploads");
-                List<string> filenames = new List<string>();
-                foreach (var file in files)
-                {
-                    if (file.Length > 0)
-                    {
-                        using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
-                        {
-                            await file.CopyToAsync(fileStream);
-                            fileStream.Close();
-                        }
-                    }
-                    filenames.Add(file.FileName);
-                }
-
-                return Ok(filenames);
-            }
-
-            return Ok("Add an item");
         }
 
         private bool VehicleExists(Guid id)
