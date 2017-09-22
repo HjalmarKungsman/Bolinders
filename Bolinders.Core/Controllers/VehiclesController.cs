@@ -179,8 +179,8 @@ namespace Bolinders.Core.Controllers
             {
                 return NotFound();
             }
-            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Id", vehicle.FacilityId);
-            ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Id", vehicle.MakeId);
+            ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name");
+            ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Name");
             return View(vehicle);
         }
 
