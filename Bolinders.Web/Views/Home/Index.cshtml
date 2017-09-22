@@ -2,11 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-<ul>
-    @foreach (var m in ViewBag.Makes)
-    {
-        <li>
-            <img src="~/images/vehiclelogotypes/@m.LogotypeFileName" alt="@m.Name" />
-        </li>
-    }
-</ul>
+<div class="col-md-12">
+        <ul class="flex-container">
+            @foreach (var m in ViewBag.Makes)
+            {
+                <li class="flex-item">
+                    <a href="bilar/sida/1?makeid=@m.Id" /><img src="~/images/vehiclelogotypes/@m.LogotypeFileName" alt="@m.Name" /><a />
+
+                </li>
+            }
+        </ul>
+    </div>

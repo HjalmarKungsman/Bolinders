@@ -33,3 +33,23 @@
         display: none;
     }
 }
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.flex-item {    
+    padding: 5px;
+    width: 200px;
+    height: 180px;
+    margin-top: 10px;
+    line-height: 100px;
+}
