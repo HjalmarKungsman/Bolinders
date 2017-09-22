@@ -5,13 +5,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Bolinders.Core.Models;
+using Bolinders.Core.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bolinders.Core.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
+            var logos = _context.Make
+                     .Include(c => c.Vehicles).ToList();
+
+            foreach (Make s in logos.ToList())
+            {
+                if(s.Vehicles.Count < 1)
+                {
+                    logos.Remove(s);
+                }
+            }
+
+            ViewBag.Makes = logos;
+
             return View();
         }
 
