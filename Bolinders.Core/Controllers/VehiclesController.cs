@@ -152,7 +152,7 @@ namespace Bolinders.Core.Controllers
 
                 newVehicle = ImageHelpers.ImageBuilder(listOfImages, newVehicle);
 
-                if (vehicle.Equipment.Any())
+                if (vehicle.Equipment != null)
                 {
                     newVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.Equipment, newVehicle);                  
                 }

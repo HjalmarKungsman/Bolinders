@@ -21,23 +21,25 @@ namespace Bolinders.Core.Helpers
             List<string> fileNames = new List<string>();
 
 
-            if (images.Count > 0)
-            {
-                foreach (var image in images)
+                if (images != null)
                 {
-
-                    using (var fileStream = new FileStream(Path.Combine(directory, image.FileName), FileMode.Create))
+                    foreach (var image in images)
                     {
-                        await image.CopyToAsync(fileStream);
-                        fileStream.Close();
-                    }
 
-                    var resizedImage = ImageResizer(image.FileName, _environment);
-                    fileNames.Add(resizedImage);
-                    await RemoveImage(directory, image.FileName);
+                        using (var fileStream = new FileStream(Path.Combine(directory, image.FileName), FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                            fileStream.Close();
+                        }
+
+                        var resizedImage = ImageResizer(image.FileName, _environment);
+                        fileNames.Add(resizedImage);
+                        await RemoveImage(directory, image.FileName);
+                    }
+                    return fileNames;
                 }
-                return fileNames;
-            }
+            
+            
 
             fileNames.Add("noimage.jpg");
             return fileNames;
