@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bolinders.Core.Helpers
 {
-    public class EquipmentHelper
+    public class EquipmentHelpers
     {
         public static Vehicle EquipmentBuilder(List<string> listOfEquipment, Vehicle vehicle)
         {
