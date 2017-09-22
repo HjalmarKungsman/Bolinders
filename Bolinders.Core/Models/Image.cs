@@ -20,6 +20,11 @@ namespace Bolinders.Core.Models
             VehicleId = vehicleId;
             ImageUrl = imageUrl;
         }
+
+        public Image()
+        {
+
+        }
     }
     
 }

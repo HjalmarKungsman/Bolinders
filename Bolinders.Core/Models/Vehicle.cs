@@ -33,5 +33,11 @@ namespace Bolinders.Core.Models
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public List<Equipment> Equipment { get; set; }
+
+
+        public Vehicle()
+        {
+
+        }
     }
 }

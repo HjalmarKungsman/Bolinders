@@ -34,7 +34,7 @@ namespace Bolinders.Core.Helpers
 
                         var resizedImage = ImageResizer(image.FileName, _environment);
                         fileNames.Add(resizedImage);
-                        await RemoveImage(directory, image.FileName);
+                        await RemoveImageFromDisk(directory, image.FileName);
                     }
                     return fileNames;
                 }
@@ -45,7 +45,7 @@ namespace Bolinders.Core.Helpers
             return fileNames;
         }
 
-        public static Task RemoveImage(string directory, string fileName)
+        public static Task RemoveImageFromDisk(string directory, string fileName)
         {
             File.Delete(Path.Combine(directory, fileName));
             return Task.CompletedTask;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bolinders.Core.Models.ViewModels
 {
-    public class VehicleViewModel
+    public class VehicleEditModel
     {
         public Guid Id { get; set; }
         public string RegistrationNumber { get; set; }
@@ -24,10 +24,12 @@ namespace Bolinders.Core.Models.ViewModels
         public bool Used { get; set; }
         public string FacilityId { get; set; }
         public virtual Facility Facility { get; set; }
+        public List<Image> ImageList { get; set; }
         public ICollection<IFormFile> Images { get; set; }
         public bool Leasable { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
-        public List<string> Equipment { get; set; }
+        public List<string> EquipmentString { get; set; }
+        public List<Equipment> Equipment { get; set; }
     }
 }

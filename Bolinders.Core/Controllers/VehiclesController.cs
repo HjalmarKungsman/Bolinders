@@ -174,14 +174,41 @@ namespace Bolinders.Core.Controllers
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicles.SingleOrDefaultAsync(m => m.Id == id);
+            var vehicle = await _context.Vehicles.Include(x => x.Images).SingleOrDefaultAsync(m => m.Id == id);
+
             if (vehicle == null)
             {
                 return NotFound();
             }
+
+            VehicleEditModel VehicleEditing = new VehicleEditModel
+            {
+                RegistrationNumber = vehicle.RegistrationNumber,
+                Make = vehicle.Make,
+                MakeId = vehicle.MakeId,
+                Model = vehicle.Model,
+                ModelDescription = vehicle.ModelDescription,
+                Year = vehicle.Year,
+                Mileage = vehicle.Mileage,
+                Price = vehicle.Price,
+                BodyType = vehicle.BodyType,
+                Colour = vehicle.Colour,
+                Gearbox = vehicle.Gearbox,
+                FuelType = vehicle.FuelType,
+                Horsepowers = vehicle.Horsepowers,
+                Used = vehicle.Used,
+                FacilityId = vehicle.FacilityId,
+                Facility = vehicle.Facility,
+                ImageList = vehicle.Images.ToList(),
+                Leasable = vehicle.Leasable,
+                Created = vehicle.Created,
+                Updated = vehicle.Updated,
+                Equipment = vehicle.Equipment
+            };
             ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name");
             ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Name");
-            return View(vehicle);
+
+            return View(VehicleEditing);
         }
 
         // POST: Vehicles/Edit/5
@@ -189,7 +216,7 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,Used,Leasable,Created,Updated")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,ImageList,Images,Used,Leasable,Created,Updated,EquipmentString")] VehicleEditModel vehicle)
         {
             if (id != vehicle.Id)
             {
@@ -198,12 +225,12 @@ namespace Bolinders.Core.Controllers
 
 
             if (ModelState.IsValid)
-            { 
+            {
+
                 try
                 {
                     vehicle.Updated = DateTime.UtcNow;
-                    _context.Entry(vehicle).State = EntityState.Modified;
-                    _context.Entry(vehicle).Property(x => x.UrlId).IsModified = false;                  
+                    _context.Entry(vehicle).State = EntityState.Modified;               
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
