@@ -78,7 +78,6 @@ namespace Bolinders.Core.Controllers
         }
 
         //GET: Vehicles
-        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Vehicles.Include(v => v.Facility).Include(v => v.Make);
@@ -124,7 +123,7 @@ namespace Bolinders.Core.Controllers
             if (ModelState.IsValid)
             {
 
-                var listOfImages = await ImageUploadHelper.UploadImages(vehicle.Images, _environment);
+                var listOfImages = await ImageHelpers.UploadImages(vehicle.Images, _environment);
                    
                 Vehicle newVehicle = new Vehicle {
                     Id = Guid.NewGuid(),
@@ -151,11 +150,11 @@ namespace Bolinders.Core.Controllers
                     Equipment = new List<Equipment>()
                 };
 
-                newVehicle = ImageUploadHelper.ImageBuilder(listOfImages, newVehicle);
+                newVehicle = ImageHelpers.ImageBuilder(listOfImages, newVehicle);
 
                 if (vehicle.Equipment.Any())
                 {
-                    newVehicle = EquipmentHelper.EquipmentBuilder(vehicle.Equipment, newVehicle);                  
+                    newVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.Equipment, newVehicle);                  
                 }
 
                 _context.Add(newVehicle);

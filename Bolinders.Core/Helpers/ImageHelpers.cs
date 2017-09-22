@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Bolinders.Core.Helpers
 {
-    public class ImageUploadHelper
+    public class ImageHelpers
     {
         public static async Task<List<string>> UploadImages(ICollection<IFormFile> images, IHostingEnvironment _environment)
         {
