@@ -33,4 +33,8 @@
     <Folder Include="wwwroot\images\uploads\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="appsettings.json" />
+  </ItemGroup>
+
 </Project>

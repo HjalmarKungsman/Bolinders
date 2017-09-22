@@ -28,44 +28,89 @@ namespace Bolinders.Core.Controllers
         }
 
         //GET: Vehicles/List
-        public async Task<IActionResult> List(bool? used = null, VehicleSearchModel formData = null, int page = 1, int pageLimit = 2)
+        public async Task<IActionResult> List(
+            VehicleSearchModel formData = null,
+            int page = 1,
+            int pageLimit = 2,
+            string searchText = null,
+            bool? used = null,
+            int? priceFrom = null,
+            int? priceTo = null,
+            int? mileageFrom = null,
+            int? mileageTo = null,
+            int? yearFrom = null,
+            int? yearTo = null,
+            int? bodyType = null,
+            string gearbox = null)
         {
-            var toSkip = (page - 1) * pageLimit;
 
-            IQueryable<Vehicle> itemsAll;
-            if (used != null)
+            var searchModel = new VehicleSearchModel();
+            if (formData != null)
             {
-                if (used == true)
-                {
-                    itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == true).AsQueryable();
-                }
-                else
-                {
-                    itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == false).AsQueryable();
-                }
+                searchModel = formData;
             }
             else
             {
-                itemsAll = _context.Vehicles.OrderBy(x => x.Id).AsQueryable();
+                searchModel.SearchText = searchText;
+                searchModel.Used = used;
+                searchModel.PriceFrom = priceFrom;
+                searchModel.PriceTo = priceTo;
+                searchModel.MileageFrom = mileageFrom;
+                searchModel.MileageTo = mileageTo;
+                searchModel.YearFrom = yearFrom;
+                searchModel.YearTo = yearTo;
+                searchModel.BodyType = bodyType;
+                searchModel.Gearbox = gearbox;
             }
-            
-            var result = SearchHelpers.SearchVehicles(itemsAll, formData);
 
-            var itemsOnThisPage = result.Skip(toSkip).Take(pageLimit).Include(v => v.Facility).Include(v => v.Make);
-            var itemsFinal = await itemsOnThisPage.ToListAsync();
+            var toSkip = (page - 1) * pageLimit;
 
-            var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = result.Count() };
-            var vm = new VehicleListViewModel { Vehicles = itemsFinal, Pager = paging };
+            var result = _context.Vehicles
+                .OrderBy(x => x.Id)
+                .Where(y => formData.Used == null || y.Used.Equals(formData.Used))
+                .Where(z => formData.PriceFrom == null || z.Price >= formData.PriceFrom)
+                .Skip(toSkip)
+                .Take(pageLimit)
+                .Include(v => v.Facility)   // Do we need to include Facility?
+                .Include(v => v.Make)
+                .AsQueryable();
 
-            ViewBag.SearchText = formData.SearchText;
-            ViewBag.PriceFrom = formData.PriceFrom;
-            ViewBag.PriceTo = formData.PriceTo;
-            ViewBag.MileageFrom = formData.MileageFrom;
-            ViewBag.MileageTo = formData.MileageTo;
-            ViewBag.YearFrom = formData.YearFrom;
-            ViewBag.YearTo = formData.YearTo;
-            ViewBag.BodyType = formData.BodyType;
-            ViewBag.Gearbox = formData.Gearbox;
+            var resultCount = _context.Vehicles
+                .OrderBy(x => x.Id)
+                .Where(y => formData.Used == null || y.Used.Equals(formData.Used))
+                .Where(z => formData.PriceFrom == null || z.Price >= formData.PriceFrom)
+                .Count();
+
+            var testarlite = await result.ToListAsync();
+
+            var paging = new PagingInfo {
+                CurrentPage = page,
+                ItemsPerPage = pageLimit,
+                TotalItems = resultCount
+            };
+
+            var vm = new VehicleListViewModel { Vehicles = result, Pager = paging, SeachModel = searchModel };
+
+
+            //IQueryable<Vehicle> itemsAll;
+            //if (used != null)
+            //{
+            //    if (used == true)
+            //    {
+            //        itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == true).AsQueryable();
+            //    }
+            //    else
+            //    {
+            //        itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == false).AsQueryable();
+            //    }
+            //}
+            //else
+            //{
+            //    itemsAll = _context.Vehicles.OrderBy(x => x.Id).AsQueryable();
+            //}
+
+            //var result = SearchHelpers.SearchVehicles(itemsAll, formData);
+
             return View("~/Views/Vehicles/List.cshtml", vm);
         }
 
