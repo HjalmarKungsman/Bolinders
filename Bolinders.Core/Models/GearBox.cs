@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bolinders.Core.Models
 {
-    public enum GearBox
+    public enum Gearbox
     {
         [Display(Name = "Manuell")]
         G1,

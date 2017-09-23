@@ -52,7 +52,7 @@ namespace Bolinders.Core.Controllers
                 .Where(z => formData.MileageTo == null || z.Mileage <= formData.MileageTo)
                 .Where(z => formData.Make == null || z.MakeId.Equals(formData.Make))
                 .Where(z => formData.BodyType == null || z.BodyType.Equals((BodyType)Enum.Parse(typeof(BodyType), formData.BodyType)))
-                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((GearBox)Enum.Parse(typeof(GearBox), formData.Gearbox)))
+                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((Gearbox)Enum.Parse(typeof(Gearbox), formData.Gearbox)))
                 .Where(z => formData.FuelType == null || z.FuelType.Equals((FuelType)Enum.Parse(typeof(FuelType), formData.FuelType)))
                 .Skip(toSkip)
                 .Take(pageLimit)
@@ -73,7 +73,7 @@ namespace Bolinders.Core.Controllers
                 .Where(z => formData.MileageTo == null || z.Mileage >= formData.MileageTo)
                 .Where(z => formData.Make == null || z.MakeId.Equals(formData.Make))
                 .Where(z => formData.BodyType == null || z.BodyType.Equals((BodyType)Enum.Parse(typeof(BodyType), formData.BodyType)))
-                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((GearBox)Enum.Parse(typeof(GearBox), formData.Gearbox)))
+                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((Gearbox)Enum.Parse(typeof(Gearbox), formData.Gearbox)))
                 .Where(z => formData.FuelType == null || z.FuelType.Equals((FuelType)Enum.Parse(typeof(FuelType), formData.FuelType)))
                 .Count();
 

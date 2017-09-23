@@ -29,7 +29,7 @@ namespace Bolinders.Core.Models.ViewModels
         [Display(Name = "Färg")]
         public string Colour { get; set; }
         [Display(Name = "Växellåda")]
-        public GearBox Gearbox { get; set; }
+        public Gearbox Gearbox { get; set; }
         [Display(Name = "Drivmedel")]
         public FuelType FuelType { get; set; }
         [Display(Name = "Hästkrafter")]

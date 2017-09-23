@@ -18,7 +18,7 @@ namespace Bolinders.Core.Models.ViewModels
         public Decimal Price { get; set; }
         public BodyType BodyType { get; set; }
         public string Colour { get; set; }
-        public GearBox Gearbox { get; set; }
+        public Gearbox Gearbox { get; set; }
         public FuelType FuelType { get; set; }
         public int Horsepowers { get; set; }
         public bool Used { get; set; }
