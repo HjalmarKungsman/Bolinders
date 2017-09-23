@@ -7,7 +7,7 @@
             @foreach (var m in ViewBag.Makes)
             {
                 <li class="flex-item">
-                    <a href="bilar/sida/1?makeid=@m.Id" /><img src="~/images/vehiclelogotypes/@m.LogotypeFileName" alt="@m.Name" /><a />
+                    <a href="bilar/sida/1?make=@m.Id" /><img src="~/images/vehiclelogotypes/@m.LogotypeFileName" alt="@m.Name" /><a />
 
                 </li>
             }
