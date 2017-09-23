@@ -6,6 +6,7 @@ namespace Bolinders.Core.Models.ViewModels
 {
     public class VehicleSearchModel
     {
+        public bool? Used { get; set; }
         public string SearchText { get; set; }
         public int? YearFrom { get; set; }
         public int? YearTo { get; set; }
@@ -15,5 +16,7 @@ namespace Bolinders.Core.Models.ViewModels
         public int? MileageFrom { get; set; }
         public int? MileageTo { get; set; }
         public string Gearbox { get; set; }
+        public string FuelType { get; set; }
+        public int? Make { get; set; }
     }
 }

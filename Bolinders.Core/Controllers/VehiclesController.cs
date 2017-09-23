@@ -31,34 +31,56 @@ namespace Bolinders.Core.Controllers
 
         //GET: Vehicles/List
         [AllowAnonymous]
-        public async Task<IActionResult> List(bool? used = null, VehicleSearchModel formData = null, int page = 1, int pageLimit = 2)
+        public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 2)
         {
             var toSkip = (page - 1) * pageLimit;
 
-            IQueryable<Vehicle> itemsAll;
-            if (used != null)
-            {
-                if (used == true)
-                {
-                    itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == true).AsQueryable();
-                }
-                else
-                {
-                    itemsAll = _context.Vehicles.OrderBy(x => x.Id).Where(x => x.Used == false).AsQueryable();
-                }
-            }
-            else
-            {
-                itemsAll = _context.Vehicles.OrderBy(x => x.Id).AsQueryable();
-            }
-            
-            var result = SearchHelpers.SearchVehicles(itemsAll, formData);
+            var test = formData.PriceFrom;
 
-            var itemsOnThisPage = result.Skip(toSkip).Take(pageLimit).Include(v => v.Facility).Include(v => v.Make);
-            var itemsFinal = await itemsOnThisPage.ToListAsync();
+            var result = _context.Vehicles
+                .OrderBy(x => x.Id)
+                .Where(y => formData.SearchText == null || 
+                    y.Make.Name.Contains(formData.SearchText) || 
+                    y.Model.Contains(formData.SearchText) ||
+                    y.ModelDescription.Contains(formData.SearchText))
+                .Where(y => formData.Used == null || y.Used.Equals(formData.Used))
+                .Where(z => formData.PriceFrom == null || z.Price >= formData.PriceFrom)
+                .Where(z => formData.PriceTo == null || z.Price <= formData.PriceTo)
+                .Where(z => formData.YearFrom == null || z.Year >= formData.YearFrom)
+                .Where(z => formData.YearTo == null || z.Year <= formData.YearTo)
+                .Where(z => formData.MileageFrom == null || z.Mileage >= formData.MileageFrom)
+                .Where(z => formData.MileageTo == null || z.Mileage <= formData.MileageTo)
+                .Where(z => formData.Make == null || z.MakeId.Equals(formData.Make))
+                .Where(z => formData.BodyType == null || z.BodyType.Equals((BodyType)Enum.Parse(typeof(BodyType), formData.BodyType)))
+                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((GearBox)Enum.Parse(typeof(GearBox), formData.Gearbox)))
+                .Where(z => formData.FuelType == null || z.FuelType.Equals((FuelType)Enum.Parse(typeof(FuelType), formData.FuelType)))
+                .Skip(toSkip)
+                .Take(pageLimit)
+                .Include(v => v.Make)
+                .AsQueryable();
 
-            var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = result.Count() };
-            var vm = new VehicleListViewModel { Vehicles = itemsFinal, Pager = paging };
+            var countResult = _context.Vehicles
+                .Where(y => formData.SearchText == null ||
+                    y.Make.Name.Contains(formData.SearchText) ||
+                    y.Model.Contains(formData.SearchText) ||
+                    y.ModelDescription.Contains(formData.SearchText))
+                .Where(y => formData.Used == null || y.Used.Equals(formData.Used))
+                .Where(z => formData.PriceFrom == null || z.Price >= formData.PriceFrom)
+                .Where(z => formData.PriceTo == null || z.Price <= formData.PriceTo)
+                .Where(z => formData.YearFrom == null || z.Year >= formData.YearFrom)
+                .Where(z => formData.YearTo == null || z.Year <= formData.YearTo)
+                .Where(z => formData.MileageFrom == null || z.Mileage >= formData.MileageFrom)
+                .Where(z => formData.MileageTo == null || z.Mileage >= formData.MileageTo)
+                .Where(z => formData.Make == null || z.MakeId.Equals(formData.Make))
+                .Where(z => formData.BodyType == null || z.BodyType.Equals((BodyType)Enum.Parse(typeof(BodyType), formData.BodyType)))
+                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((GearBox)Enum.Parse(typeof(GearBox), formData.Gearbox)))
+                .Where(z => formData.FuelType == null || z.FuelType.Equals((FuelType)Enum.Parse(typeof(FuelType), formData.FuelType)))
+                .Count();
+
+            var itemsFinal = await result.ToListAsync();
+
+            var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = countResult };
+            var vm = new VehicleListViewModel { Vehicles = itemsFinal, Pager = paging, SeachModel = formData };
 
             ViewBag.SearchText = formData.SearchText;
             ViewBag.PriceFrom = formData.PriceFrom;
