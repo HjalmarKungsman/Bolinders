@@ -31,9 +31,8 @@ namespace Bolinders.Core.Controllers
         public async Task<IActionResult> List(
             VehicleSearchModel formData = null,
             int page = 1,
-            int pageLimit = 2,
             string searchText = null,
-            bool? used = null,
+            string usedOrNot = null,
             int? priceFrom = null,
             int? priceTo = null,
             int? mileageFrom = null,
@@ -43,6 +42,31 @@ namespace Bolinders.Core.Controllers
             int? bodyType = null,
             string gearbox = null)
         {
+
+
+            int pageLimit = 2;
+
+            bool? used = null;
+
+            // Checks if its a new or old Vehicle, posted by a link: /bilar/begangade/ or  /bilar/nya/
+            if (usedOrNot != null)
+            {
+                if (usedOrNot == "begagnade")
+                {
+                    used = true;
+                }
+                else if (usedOrNot == "nya")
+                {
+                    used = false;
+                }
+                else
+                {
+                    used = null;
+                }
+            }
+
+
+
 
             var searchModel = new VehicleSearchModel();
             if (formData != null)
@@ -67,7 +91,7 @@ namespace Bolinders.Core.Controllers
 
             var result = _context.Vehicles
                 .OrderBy(x => x.Id)
-                .Where(y => formData.Used == null || y.Used.Equals(formData.Used))
+                .Where(y => used == null || y.Used.Equals(used))
                 .Where(z => formData.PriceFrom == null || z.Price >= formData.PriceFrom)
                 .Skip(toSkip)
                 .Take(pageLimit)
@@ -77,7 +101,7 @@ namespace Bolinders.Core.Controllers
 
             var resultCount = _context.Vehicles
                 .OrderBy(x => x.Id)
-                .Where(y => formData.Used == null || y.Used.Equals(formData.Used))
+                .Where(y => used == null || y.Used.Equals(used))
                 .Where(z => formData.PriceFrom == null || z.Price >= formData.PriceFrom)
                 .Count();
 
@@ -86,6 +110,7 @@ namespace Bolinders.Core.Controllers
             var paging = new PagingInfo {
                 CurrentPage = page,
                 ItemsPerPage = pageLimit,
+                CurrentPath = HttpContext.Request.Path,
                 TotalItems = resultCount
             };
 

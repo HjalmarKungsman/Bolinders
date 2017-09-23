@@ -12,7 +12,7 @@ using System;
 namespace Bolinders.Core.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170920132032_Initial")]
+    [Migration("20170922101257_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -90,32 +90,36 @@ namespace Bolinders.Web
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: null,
-                    template: "bilar/{used}/sida/{page:int}/{searchText}/{priceFrom:int}/{priceTo:int}",
-                    defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
                     name: null,
-                    template: "bilar/sida/{page:int}/{searchText}/{priceFrom:int}/{priceTo:int}",
-                    defaults: new { Controller = "Vehicles", action = "List" });
-
-
-            routes.MapRoute(
-                    name: "pagination",
-                    template: "bilar/sida/{page}",
-                    defaults: new { Controller = "Vehicles", action = "List" });
+                    template: "bilar/sida/{page:int}",
+                    defaults: new { Controller = "Vehicles", action = "List", page = 1 });
 
                 routes.MapRoute(
-                    name: "Vehicles-routing",
-                    template: "bilar/{action}/{id?}",
-                    defaults: new { Controller = "Vehicles", action = "List" });
-
+                    name: null,
+                    template: "bilar/{usedOrNot}/sida/{page:int}",
+                    defaults: new { Controller = "Vehicles", action = "List", page = 1 });
 
                 routes.MapRoute(
-                    name: "Contact",
-                    template: "kontakt",
-                    defaults: new { Controller = "Home", Action = "Contact" });
+                    name: null,
+                    template: "bilar/{usedOrNot}",
+                    defaults: new { Controller = "Vehicles", action = "List", page = 1 });
+
+                //routes.MapRoute(
+                //    name: null,
+                //    template: "bilar/sida/{page}",
+                //    defaults: new { Controller = "Vehicles", action = "List" });
+
+                //routes.MapRoute(
+                //    name: null,
+                //    template: "vehicles/{action}/{id?}",
+                //    defaults: new { Controller = "Vehicles", action = "List" });
+
+                //routes.MapRoute(
+                //    name: "Contact",
+                //    template: "kontakt",
+                //    defaults: new { Controller = "Home", Action = "Contact" });
 
                 routes.MapRoute(
                     name: "default",

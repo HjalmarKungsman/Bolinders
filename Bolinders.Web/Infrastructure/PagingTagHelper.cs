@@ -37,9 +37,11 @@ namespace Bolinders.Web.Infrastructure
             TagBuilder result = new TagBuilder("div");
             for (int i = 1; i <= PageModel.TotalPages; i++)
             {
+                var hrefQuery = "?pricefrom=10&used=false";
+
                 TagBuilder tag = new TagBuilder("a");
                 tag.Attributes["href"] = urlHelper.Action(PageAction,
-                    new { page = i });
+                    new { page = i }) + hrefQuery;
                 if (EnablePageClasses)
                 {
                     tag.AddCssClass(PageClass);
