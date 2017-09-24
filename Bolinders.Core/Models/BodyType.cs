@@ -13,7 +13,7 @@ namespace Bolinders.Core.Models
         B2,
         [Display(Name = "Halvkombi")]
         B3,
-        [Display(Name = "Sportkubé")]
+        [Display(Name = "Sportkupé")]
         B4,
         [Display(Name = "SUV")]
         B5,

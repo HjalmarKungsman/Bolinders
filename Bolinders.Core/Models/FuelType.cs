@@ -22,7 +22,8 @@ namespace Bolinders.Core.Models
         [Display(Name = "El")]
         F7,
         [Display(Name = "Gas")]
-        F8
-
+        F8,
+        [Display(Name = "Övrigt")]
+        F9
     }
 }
