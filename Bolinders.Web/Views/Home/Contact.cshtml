@@ -1,19 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = "Kontakt";
 }
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBnxkppccHzwCOUHci_aLl7M_fYMMJnBOM'></script>
+@{
 
-<div style='overflow:hidden;height:400px;width:520px;'>
-    <div id='gmap_canvas' style='height:400px;width:520px;'></div>
-    <style>
-        #gmap_canvas img {
-            max-width: none !important;
-            background: none !important
-        }
-    </style>
-</div> <a href='https://embed-map.org/'>google map embed</a>
-<script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=7c1fa14bdc2fe0ddafaa3e7f80fbbd1a808087dc'></script>
-<script type='text/javascript'>function init_map() { var myOptions = { zoom: 16, center: new google.maps.LatLng(57.6977857, 14.184925000000021), mapTypeId: google.maps.MapTypeId.ROADMAP }; map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions); marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(57.6977857, 14.184925000000021) }); infowindow = new google.maps.InfoWindow({ content: '<strong>Bolinders​ ​Bil​ ​Jönköping</strong><br>Lovsjövägen 33 <br> jönköping<br>' }); google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); }); infowindow.open(map, marker); } google.maps.event.addDomListener(window, 'load', init_map);</script>
+    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBnxkppccHzwCOUHci_aLl7M_fYMMJnBOM'></script>
+    int canvasId = 1;
+        <div>
+            <ul>
+                @foreach (var c in ViewBag.Contacts)
+                {
+                    <li>
+                        <b>Bolinders bil @c.Name </b>
+                        <p>
+                            @c.Address @c.City
+                            <br>
+                            Telefon: @c.PhoneNumber
+                            <br>
+                            E-post: <a href="mailto:@{@c.Email}">@c.Email</a>
+                        </p>
+                        <div style='overflow:hidden;height:400px;width:520px;'>
+                            <div id='@canvasId' style='height:400px;width:520px;'></div>
+                            <style>
+                                #gmap_canvas img {
+                                    max-width: none !important;
+                                    background: none !important
+                                }
+                            </style>
+                        </div>
+                        <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=7c1fa14bdc2fe0ddafaa3e7f80fbbd1a808087dc'></script>
+                        <script type='text/javascript'>function init_map() {
+                                var myOptions = {
+                                    zoom: 16, center: new google.maps.LatLng(@c.Longitude, @c.Latitude),
+                                    mapTypeId: google.maps.MapTypeId.ROADMAP
+    }; map = new google.maps.Map(document.getElementById(@canvasId), myOptions); marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(@c.Longitude, @c.Latitude) });
+                            infowindow = new google.maps.InfoWindow({ content: '<strong>Bolinders​ ​Bil​ @c.Name</strong><br>@c.Address <br> @c.City<br>' }); google.maps.event.addListener(marker, 'click', function ()
+                            { infowindow.open(map, marker); }); infowindow.open(map, marker);
+                            } google.maps.event.addDomListener(window, 'load', init_map);</script>
+                    </li>
+        canvasId = canvasId + 1;
+    }
+            </ul>
+        </div>
+
+}

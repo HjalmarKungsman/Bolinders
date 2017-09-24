@@ -46,7 +46,8 @@ namespace Bolinders.Core.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            var contacts = _context.Facilities.ToList();
+            ViewBag.Contacts = contacts;
 
             return View();
         }
