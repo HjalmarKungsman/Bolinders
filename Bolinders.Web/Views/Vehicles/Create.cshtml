@@ -51,7 +51,7 @@
                     <label asp-for="BodyType" class="control-label"></label>
                     <select asp-for="BodyType" asp-items="Html.GetEnumSelectList<BodyType>()" class="form-control"> </select>
                     <span asp-validation-for="BodyType" class="text-danger"></span>
-                </div>               
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -61,12 +61,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Gearbox" class="control-label"></label>
-                    <select asp-for="Gearbox" asp-items="Html.GetEnumSelectList<Gearbox>()" class="form-control"> </select>
+                    <select asp-for="Gearbox" asp-items="Html.GetEnumSelectList<Gearbox>()" class="form-control"></select>
                     <span asp-validation-for="Gearbox" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="FuelType" class="control-label"></label>
-                    <select asp-for="FuelType" asp-items="Html.GetEnumSelectList<FuelType>()" class="form-control"> </select>
+                    <select asp-for="FuelType" asp-items="Html.GetEnumSelectList<FuelType>()" class="form-control"></select>
                     <span asp-validation-for="FuelType" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -99,12 +99,12 @@
                 </div>
                 <div class="form-group">
                     <label for="Images">Bilduppladdning</label>
-                    <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple accept="image/*"/>
+                    <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple accept="image/*" />
                     <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-success pull-right"/>
+                    <input type="submit" value="Create" class="btn btn-success pull-right" />
                 </div>
             </div>
         </form>
@@ -140,7 +140,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script type="text/javascript">
-        $('.equipment').select2({
-            tags: true
-        });
+    $('.equipment').select2({
+        tags: true
+    });
 </script>
