@@ -7,7 +7,7 @@
 <div class="col-lg-12">
     @{
 
-        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBnxkppccHzwCOUHci_aLl7M_fYMMJnBOM'></script>
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBk-v4Q-5hiaJeLvNpOAdBwSQsyrCaE-ow'></script>
         int canvasId = 1;
         <div class="col-lg-6">
             <ul>
@@ -39,7 +39,10 @@ function init_map() {
                                     mapTypeId: google.maps.MapTypeId.ROADMAP
     }; map = new google.maps.Map(document.getElementById(@canvasId), myOptions); marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(@c.Latitude, @c.Longitude) });
                             infowindow = new google.maps.InfoWindow({ content: '<strong>Bolinders​ ​Bil​ @c.Name</strong><br>@c.Address <br> @c.City<br>' }); google.maps.event.addListener(marker, 'click', function ()
-                            { infowindow.open(map, marker); }); infowindow.open(map, marker);
+                            {
+                                window.open("https://maps.google.com/?q=" + @c.Latitude + "," + @c.Longitude);                               
+                                infowindow.open(map, marker);
+                            }); infowindow.open(map, marker);
                             } google.maps.event.addDomListener(window, 'load', init_map);</script>
                     </li>
         canvasId = canvasId + 1;
