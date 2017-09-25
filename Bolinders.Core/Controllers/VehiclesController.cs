@@ -108,23 +108,49 @@ namespace Bolinders.Core.Controllers
 
         // GET: Vehicles/Details/5
         [AllowAnonymous]
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(Guid? id, string vehicleLinkId = null)
         {
-            if (id == null)
+
+            if (id == null && vehicleLinkId == null)
+            {
+                return NotFound();
+            }
+            else if (id != null)
+            { 
+                var vehicle = await _context.Vehicles
+                    .Include(v => v.Facility)
+                    .Include(v => v.Make)
+                    .SingleOrDefaultAsync(m => m.Id == id);
+                if (vehicle == null)
+                {
+                    return NotFound();
+                }
+
+                return View(vehicle);
+            }
+            else if (vehicleLinkId != null)
+            {
+                var lastSign = vehicleLinkId.LastIndexOf("-");
+                int vehicleId = Int32.Parse(vehicleLinkId.Substring(lastSign + 1));
+
+
+                var vehicle = await _context.Vehicles
+                    .Include(v => v.Facility)
+                    .Include(v => v.Make)
+                    .SingleOrDefaultAsync(m => m.UrlId == vehicleId);
+                if (vehicle == null)
+                {
+                    return NotFound();
+                }
+
+                return View(vehicle);
+            }
+            else
             {
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicles
-                .Include(v => v.Facility)
-                .Include(v => v.Make)
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (vehicle == null)
-            {
-                return NotFound();
-            }
 
-            return View(vehicle);
         }
 
         // GET: Vehicles/Create
