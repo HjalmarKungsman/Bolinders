@@ -38,12 +38,16 @@ function init_map() {
                                     zoom: 16, center: new google.maps.LatLng(@c.Latitude, @c.Longitude),
                                     mapTypeId: google.maps.MapTypeId.ROADMAP
     }; map = new google.maps.Map(document.getElementById(@canvasId), myOptions); marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(@c.Latitude, @c.Longitude) });
-                            infowindow = new google.maps.InfoWindow({ content: '<strong>Bolinders​ ​Bil​ @c.Name</strong><br>@c.Address <br> @c.City<br>' }); google.maps.event.addListener(marker, 'click', function ()
-                            {
-                                window.open("https://maps.google.com/?q=" + @c.Latitude + "," + @c.Longitude);                               
-                                infowindow.open(map, marker);
-                            }); infowindow.open(map, marker);
-                            } google.maps.event.addDomListener(window, 'load', init_map);</script>
+                         marker['infowindow'] = new google.maps.InfoWindow({
+                             content: '<a target="_blank" href="https://maps.google.com/?q=@c.Latitude,@c.Longitude">gå vidare till google maps</a>'
+
+                           });
+
+                           google.maps.event.addListener(marker, 'click', function ()
+                           {
+                               this['infowindow'].open(map, this);
+                           });
+                           } google.maps.event.addDomListener(window, 'load', init_map);</script>
                     </li>
         canvasId = canvasId + 1;
     }
