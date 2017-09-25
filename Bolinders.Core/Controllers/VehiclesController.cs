@@ -31,14 +31,14 @@ namespace Bolinders.Core.Controllers
 
         //GET: Vehicles/List
         [AllowAnonymous]
-        public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 2)
+        public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
         {
             var toSkip = (page - 1) * pageLimit;
 
             var test = formData.PriceFrom;
 
             var result = _context.Vehicles
-                .OrderBy(x => x.Id)
+                .OrderByDescending(x => x.Created > x.Updated ? x.Created : x.Updated)
                 .Where(y => formData.SearchText == null || 
                     y.Make.Name.Contains(formData.SearchText) || 
                     y.Model.Contains(formData.SearchText) ||

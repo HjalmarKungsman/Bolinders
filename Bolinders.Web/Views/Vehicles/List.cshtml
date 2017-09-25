@@ -58,9 +58,24 @@
 </div>
 <br />
 
+<p>Din sökning gav @Model.Pager.TotalItems träffar</p>
+
 @foreach (var p in Model.Vehicles)
 {
 @Html.Partial("VehicleBlock", p)
+}
+
+@if (Model.Pager.TotalItems == 0)
+{
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><strong>Tyvärr matchade din sökning/filtrering inga bilar</strong></h4>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 <div page-model="@Model"
