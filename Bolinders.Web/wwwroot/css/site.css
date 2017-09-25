@@ -1,55 +1,73 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+body {
+  background-color: #363636;
+  color: #ffffff;
+  padding-top: 50px;
 }
-
+footer {
+  border-top: 1px solid #ff0000;
+  background-color: black;
+  height: auto;
+}
+hr {
+  border-top: 1px solid #ff0000;
+}
+.navbar-inverse {
+  border-color: #ff0000;
+  background-color: black;
+}
+/*.btn-default {
+    background-color: @theme-color;
+}*/
+.main-front {
+  background-image: url("../images/front-image.jpeg");
+  background-position-x: center;
+  background-position-y: top;
+  background-repeat: no-repeat;
+  /*background-size: cover;*/
+  height: 50%;
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 20px;
 }
-
 /* Carousel */
 .carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+  font-size: 20px;
+  line-height: 1.4;
 }
-
 /* Make .svg files in the carousel display properly in older browsers */
 .carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+  width: 100%;
 }
-
 /* QR code generator */
 #qrCode {
-    margin: 15px;
+  margin: 15px;
 }
-
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+  /* Hide captions */
+  .carousel-caption {
+    display: none;
+  }
 }
-
 .flex-container {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-flow: row wrap;
-    justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
 }
-
-.flex-item {    
-    padding: 5px;
-    width: 200px;
-    height: 180px;
-    margin-top: 10px;
-    line-height: 100px;
+.flex-item {
+  padding: 5px;
+  width: 200px;
+  height: 180px;
+  margin-top: 10px;
+  line-height: 100px;
 }

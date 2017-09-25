@@ -1,41 +1,83 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Bolinders Bil AB";
 }
 
-<div class="row">
-    <center>
-        <h2>
-            <a href="/bilar/nya">Nya bilar</a> -
-            <a href="/bilar/begagnade/">Begagnade bilar</a>
-        </h2>
-    </center>
-</div>
-<br />
-<form method="post" asp-action="list" asp-controller="vehicles">
-    <div class="row">
-        <div class="col-md-8">
-            <label for="searchText">Söktext</label>
-            <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Söktext" value="@ViewBag.SearchText" />
-        </div>
+<style>
+    h1,h2,h3,h4 {
+        text-align: center;
+    }
+</style>
+<link href="~/css/imageCarousel.css" rel="stylesheet" />
 
-        <div class="col-md-4">
-            <label>&nbsp;</label><br />
-            <button type="submit" class="btn btn-default">Filtrera/Sök</button>
-            <input type="hidden" id="page" name="page" value="1" />
+    <div class="row">
+        <div class="col-lg-12" style="margin-bottom: 10%;">
+      
+            <div class="col-md-6 col-md-offset-3" style="margin-top:20%">
+                <form method="post" asp-action="list" asp-controller="vehicles">
+                    <div class="form-group">
+                        <input type="hidden" id="page" name="page" value="1" />
+                        <h2>Vad för bil söker du?</h2>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-lg" id="searchText" name="searchText" placeholder="Söktext" value="@ViewBag.SearchText" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default input-lg">Sök</button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</form>
+<div class="row" style="margin-top:30%;">
+    <div class="col-lg-4">
+        <h2>Nya bilar</h2>
+        <hr />
+        <a href="/bilar/nya"><img class="img-responsive" src="~/images/newcar.jpg" alt="Nya bilar" /></a>        
+    </div>
+    <div class="col-lg-4">
+        <h2>Begagnade bilar</h2>
+        <hr />
+        <a href="/bilar/begagnade/"><img class="img-responsive" src="~/images/usedcar.jpg" alt="Begagnade bilar" /></a>      
+    </div>
+    <div class="col-lg-4">
+        <h2>Kontakta Oss</h2>
+        <hr />
+        <a href="/kontakt/"><img class="img-responsive" src="~/images/contact.jpg" alt="Begagnade bilar" /></a>
+    </div>
 
-    
-
-<div class="col-md-12">
-    <ul class="flex-container">
-        @foreach (var m in ViewBag.Makes)
-            {
-            <li class="flex-item">
-                <a href="bilar/sida/1?make=@m.Id" /><img src="~/images/vehiclelogotypes/@m.LogotypeFileName" alt="@m.Name" /><a />
-
-            </li>
-        }
-    </ul>
 </div>
+<div class="row" style="margin-top:0%; margin-bottom:5%;">
+    <div class="col-md-12">
+        <h2>Bilmärken i lager</h2>
+        <hr />
+        <div class="carousel slide multi-item-carousel" id="theCarousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < ViewBag.Makes.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <div class="item active">
+                            <div class="col-xs-4">
+                                <a href="bilar/sida/1?make=@ViewBag.Makes[i].Id"><img src="~/images/vehiclelogotypes/@ViewBag.Makes[i].LogotypeFileName" style="margin: 0 auto" alt="@ViewBag.Makes[i].Name" class="img-responsive" /></a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <div class="col-xs-4">
+                                <a href="bilar/sida/1?make=@ViewBag.Makes[i].Id"><img src="~/images/vehiclelogotypes/@ViewBag.Makes[i].LogotypeFileName" style="margin: 0 auto" alt="@ViewBag.Makes[i].Name" class="img-responsive" /></a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+            <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        </div>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $("body").addClass("main-front");
+</script>
