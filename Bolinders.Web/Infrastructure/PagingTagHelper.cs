@@ -33,6 +33,7 @@ namespace Bolinders.Web.Infrastructure
         public string PageClassSelected { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            // If there is only 1 page, show no pagination
             if (PageModel.Pager.TotalPages == 1)
             {
                 output.Content.AppendHtml("");
@@ -55,15 +56,15 @@ namespace Bolinders.Web.Infrastructure
                 }
             }
 
+            // If querystring have values, add a ? mark in begining
             if (queryString != "")
             {
                 queryString = "?" + queryString;
             }
 
-            // Builds the <a href=""> tag
+            // Builds the pagination link
             IUrlHelper urlHelper = _helper.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
-
 
             var stopPage = PageModel.Pager.TotalPages;
             var currentPage = PageModel.Pager.CurrentPage;
@@ -87,6 +88,22 @@ namespace Bolinders.Web.Infrastructure
                 }
             }
 
+            // Adds a "<<" link before pagination if currentPage > 1
+            if (currentPage > 1)
+            {
+                TagBuilder tag = new TagBuilder("a");
+                tag.Attributes["href"] = urlHelper.Action(PageAction,
+                    new { page = currentPage - 1 }) + queryString;
+                if (EnablePageClasses)
+                {
+                    tag.AddCssClass(PageClass);
+                    tag.AddCssClass(PageClassNormal);
+                }
+                tag.InnerHtml.Append("<<");
+                result.InnerHtml.AppendHtml(tag);
+            }
+
+            // Generates the pagination links
             for (; i <= stopPage; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
@@ -98,6 +115,21 @@ namespace Bolinders.Web.Infrastructure
                     tag.AddCssClass(i == currentPage ? PageClassSelected : PageClassNormal);
                 }
                 tag.InnerHtml.Append(i.ToString());
+                result.InnerHtml.AppendHtml(tag);
+            }
+
+            // Adds a ">>" link after pagination if currentPage < stopPage
+            if (currentPage < stopPage)
+            {
+                TagBuilder tag = new TagBuilder("a");
+                tag.Attributes["href"] = urlHelper.Action(PageAction,
+                    new { page = currentPage + 1 }) + queryString;
+                if (EnablePageClasses)
+                {
+                    tag.AddCssClass(PageClass);
+                    tag.AddCssClass(PageClassNormal);
+                }
+                tag.InnerHtml.Append(">>");
                 result.InnerHtml.AppendHtml(tag);
             }
 
