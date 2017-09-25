@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Bolinders.Core.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Bolinders.Core.Services;
 
 namespace Bolinders.Core.Controllers
 {
@@ -48,6 +51,31 @@ namespace Bolinders.Core.Controllers
         {
             var contacts = _context.Facilities.ToList();
             ViewBag.Contacts = contacts;
+
+            ViewData["Facility"] = new SelectList(_context.Facilities, "Email", "Email");
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(ContactformViewModel form)
+        {
+            var contacts = _context.Facilities.ToList();
+            ViewBag.Contacts = contacts;
+            ViewData["Facility"] = new SelectList(_context.Facilities, "Email", "Email");
+
+
+            var emailSender = EmailSenderService.SendEmailToFacility(form.SenderName, form.SenderEmail, form.Reciever, form.Subject, form.Message, form.PhoneNumber);
+
+            if (emailSender == System.Net.Mail.SmtpStatusCode.Ok)
+            {
+                ViewBag.Success = "Ditt meddelande har skickats.";
+            }
+            else
+            {
+                ViewBag.Fail = "Ett fel har uppstått se över dina uppgifter och testa igen.";
+            }
+            
 
             return View();
         }

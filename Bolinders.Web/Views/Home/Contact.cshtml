@@ -1,16 +1,18 @@
-﻿@{
+﻿@model Bolinders.Core.Models.ViewModels.ContactformViewModel
+
+@{
     ViewData["Title"] = "Kontakt";
 }
 <h2>@ViewData["Title"]</h2>
+<div class="col-lg-12">
+    @{
 
-@{
-
-    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBnxkppccHzwCOUHci_aLl7M_fYMMJnBOM'></script>
-    int canvasId = 1;
-        <div>
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBnxkppccHzwCOUHci_aLl7M_fYMMJnBOM'></script>
+        int canvasId = 1;
+        <div class="col-lg-6">
             <ul>
                 @foreach (var c in ViewBag.Contacts)
-                {
+            {
                     <li>
                         <b>Bolinders bil @c.Name </b>
                         <p>
@@ -30,7 +32,8 @@
                             </style>
                         </div>
                         <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=7c1fa14bdc2fe0ddafaa3e7f80fbbd1a808087dc'></script>
-                        <script type='text/javascript'>function init_map() {
+                        <script type='text/javascript'>
+function init_map() {
                                 var myOptions = {
                                     zoom: 16, center: new google.maps.LatLng(@c.Longitude, @c.Latitude),
                                     mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -43,5 +46,58 @@
     }
             </ul>
         </div>
+    }
 
-}
+    
+    <h2>Kontakta oss direkt!</h2>
+    <hr />
+    <div class="col-lg-6">
+        <p>@ViewBag.Success</p>
+        @{
+            if (ViewBag.Success != null)
+            {
+                <div class='alert alert-success'><strong>Skickat! </strong>@ViewBag.Success</div>
+            }
+
+            if (ViewBag.Fail != null)
+            {
+                <div class='alert alert-danger'><strong>Fel! </strong>@ViewBag.Fail</div>
+            }
+        }
+        <form asp-action="Contact">
+            <div class="form-group">
+                <label asp-for="SenderName" class="control-label"></label>
+                <input asp-for="SenderName" class="form-control" placeholder="Ditt namn..." required />
+                <span asp-validation-for="SenderName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Ditt telefonnummer..." />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SenderEmail" class="control-label"></label>
+                <input asp-for="SenderEmail" class="form-control" placeholder="Din epostadress..." required />
+                <span asp-validation-for="SenderEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reciever" class="control-label"></label>
+                <select asp-for="Reciever" class="form-control" asp-items="ViewBag.Facility">
+                    <option>kontakt@bolindersbil.se</option>
+                </select>
+                <span asp-validation-for="Reciever" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <input asp-for="Subject" class="form-control" placeholder="Ämne..." required />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <textarea asp-for="Message" class="form-control" placeholder="Meddelande..." required></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success pull-right">Skicka</button>
+        </form>
+    </div>
+</div>
