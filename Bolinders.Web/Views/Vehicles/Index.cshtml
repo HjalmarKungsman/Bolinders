@@ -8,57 +8,60 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Nytt fordon</a>
 </p>
 <table class="table table-striped">
     <thead>
         <tr>
             <th></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Make)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Model)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ModelDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Year)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BodyType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Colour)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FuelType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Used)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Leasable)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Created)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Updated)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Make)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModelDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BodyType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Colour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuelType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Used)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leasable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Facility)
             </th>
-            <th class="table" style="width:83px">Editor</th>
+            <th>
+                Editor
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr onclick="">
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td class="table-bordered">
                     <input type="checkbox" name="selectedVehicles" value="@item.Id">
                 </td>
@@ -71,7 +74,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ModelDescription)
                 </td>
-                <td style="border-left:solid thin  #e6e6e6">
+                <td>
                     @Html.DisplayFor(modelItem => item.Year)
                 </td>
                 <td>
@@ -106,8 +109,8 @@
                     <a asp-action="Details" asp-route-id="@item.Id"><span title="Details" class="glyphicon glyphicon-list-alt"></span></a> |
                     <a asp-action="Delete" asp-route-id="@item.Id"><span title="Delete" class="glyphicon glyphicon-trash"></span></a>
                 </td>
-</tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
 <p>

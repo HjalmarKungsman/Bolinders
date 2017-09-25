@@ -57,6 +57,8 @@ namespace Bolinders.Core.Controllers
                 .Skip(toSkip)
                 .Take(pageLimit)
                 .Include(v => v.Make)
+                .Include(v => v.Images)
+                .Include(v => v.Equipment)
                 .AsQueryable();
 
             var countResult = _context.Vehicles

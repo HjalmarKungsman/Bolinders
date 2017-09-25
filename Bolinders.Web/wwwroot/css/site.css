@@ -71,3 +71,47 @@ hr {
   margin-top: 10px;
   line-height: 100px;
 }
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #777;
+  border: none;
+}
+.table > thead > tr > th {
+  border-color: #ff0000;
+  border: none;
+}
+.table > tbody > tr > td {
+  border-color: #ff0000;
+  border: none;
+}
+a,
+a:visited {
+  color: #ffffff;
+}
+a:hover {
+  color: #ff0000;
+}
+.equipment.form-control {
+  height: auto !important;
+  padding: 1px;
+}
+.form-control ul.select2-choices {
+  border: 0;
+  background-image: none;
+  margin: 1px;
+  padding: 1px;
+}
+.form-control.select2-container .select2-choice {
+  height: 38px;
+  line-height: 38px;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #ff0000 !important;
+  color: #ffffff;
+  border: 1px solid #aaa;
+}
+.select2-search__field {
+  color: black!important;
+}
+.select2-selection__choice__remove {
+  color: black!important;
+}

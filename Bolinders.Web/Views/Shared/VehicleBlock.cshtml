@@ -1,18 +1,34 @@
 ﻿@model Vehicle
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-6">
-                @{ 
-                    var vehicleLinkId = Model.Make.Name + "-" + Model.Model + "-" + Model.ModelDescription + "-" + Model.UrlId;
-                    vehicleLinkId = vehicleLinkId.Replace(" ", "_");
-                }
-                <h4><strong><a href="/bil/@vehicleLinkId">@Model.Make.Name @Model.Model</a></strong></h4>
-                <p>@Model.ModelDescription, @Model.FuelType, @Model.BodyType, @Model.Year, @Model.Mileage, @Model.Gearbox, <strong>@Model.Used</strong>, @($"Pris: {Model.Price}")</p>
+
+@{
+    var vehicleLinkId = Model.Make.Name + "-" + Model.Model + "-" + Model.ModelDescription + "-" + Model.UrlId;
+    vehicleLinkId = vehicleLinkId.Replace(" ", "_");
+
+    var used = "";
+
+    if (Model.Used)
+    {
+        used = "Begagnad";
+    }
+    if (!Model.Used)
+    {
+        used = "Ny";
+    }
+}
+
+<div class="col-md-3">
+    <a href="/bil/@vehicleLinkId">
+        <div class="panel panel-default" style="height: 300px">
+            <div class="panel-body" style="color:black">
+                <img class="img-responsive" src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Images.First().ImageUrl" />
+               
+                <h4><strong>@Model.Make.Name @Model.Model @Model.ModelDescription</strong></h4>
+                <strong>@used</strong>
+                <br />
+                @*<p>@Model.FuelType.GetDisplayName(), @Model.BodyType.GetDisplayName(), @Model.Year, @Model.Mileage, @Model.Gearbox.GetDisplayName()</p>*@
+                <span style="color: green">@($"Pris: {Model.Price}")</span>
+
+
             </div>
-            <div class="col-md-6">
-                <img src="http://via.placeholder.com/50x50" class="pull-right" />
-            </div>
-        </div>
-    </div>
+    </div></a>
 </div>

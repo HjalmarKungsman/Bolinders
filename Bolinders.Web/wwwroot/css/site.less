@@ -86,3 +86,60 @@ hr {
     margin-top: 10px;
     line-height: 100px;
 }
+
+
+//tablke
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #777;
+    border: none;
+}
+.table > thead > tr > th {
+    border-color: @theme-color;
+    border: none;
+}
+.table > tbody > tr > td {
+    border-color: @theme-color;
+    border: none;
+}
+
+//links
+a, a:visited {
+    color: @theme-font-color;
+}
+
+a:hover {
+    color: @theme-color;
+
+}
+
+
+//select2 custom bootstrap css
+.equipment.form-control {
+    height: auto !important;
+    padding: 1px;
+}
+
+.form-control ul.select2-choices {
+    border: 0;
+    background-image: none;
+    margin: 1px;
+    padding: 1px;
+}
+
+.form-control.select2-container .select2-choice {
+    height: 38px;
+    line-height: 38px;
+}
+
+//select2 custom css
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: @theme-color!important;
+    color: @theme-font-color;
+    border: 1px solid #aaa;
+}
+.select2-search__field {
+    color: black!important;
+}
+.select2-selection__choice__remove {
+    color:black!important;
+}

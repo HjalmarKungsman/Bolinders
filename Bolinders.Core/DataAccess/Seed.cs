@@ -94,50 +94,53 @@ namespace Bolinders.Core.DataAccess
                 ctx.SaveChanges();
             }
 
-            Guid carId = Guid.NewGuid();
+            //Guid carId = Guid.NewGuid();
             var created = DateTime.UtcNow;
-            var i = 1;
+
 
             if (!ctx.Vehicles.Any())
             {
 
                 var vehicles = new List<Vehicle>
                 {
-                    new Vehicle { RegistrationNumber = "RTW610", MakeId = 1, Model = "V70", ModelDescription = "D1", BodyType = BodyType.B1, Colour="Röd", Horsepowers = 220, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = true, Mileage = 129, Used = false, Year = 2013, Price = 199999, Created = created.AddDays(-1), Updated = created.AddDays(-1)},
-                    new Vehicle { Id = carId, RegistrationNumber = "UYM207", MakeId = 29, Model = "9-3", ModelDescription = "2.0 Turbo", BodyType = BodyType.B2, Colour="Svart", Horsepowers = 183, FacilityId = "BB2", FuelType = FuelType.F2, Gearbox = Gearbox.G1, Leasable = false, Mileage = 16240, Used = false, Year = 2007, Price = 62500, Created = created.AddDays(-2), Updated = created.AddDays(-2) },
-                    new Vehicle { RegistrationNumber = "GRT912", MakeId = 30, Model = "M3", ModelDescription = "C2", BodyType = BodyType.B3, Colour="Vit", Horsepowers = 305, FacilityId = "BB2", FuelType = FuelType.F3, Gearbox = Gearbox.G1, Leasable = true, Mileage = 3250, Used = true, Year = 2014, Price = 32000, Created = created.AddDays(-3), Updated = created.AddDays(-3) },
-                    new Vehicle { RegistrationNumber = "BVO184", MakeId = 30, Model = "330ci", ModelDescription = "SE", BodyType = BodyType.B4, Colour="Silver", Horsepowers = 285, FacilityId = "BB3", FuelType = FuelType.F4, Gearbox = Gearbox.G1, Leasable = false, Mileage = 30000, Used = true, Year = 1996, Price = 42000, Created = created.AddDays(-4), Updated = created.AddDays(-4) },
-                    new Vehicle { RegistrationNumber = "RTF824", MakeId = 37, Model = "A4", ModelDescription = "Mark II", BodyType = BodyType.B5, Colour="Silver", Horsepowers = 170, FacilityId = "BB2", FuelType = FuelType.F5, Gearbox = Gearbox.G1, Leasable = false, Mileage = 25000, Used = true, Year = 2003, Price = 31000, Created = created.AddDays(-5), Updated = created.AddDays(-5) },
-                    new Vehicle { RegistrationNumber = "PTT498", MakeId = 1, Model = "XC70", ModelDescription = "A3", BodyType = BodyType.B6, Colour="Vit", Horsepowers = 205, FacilityId = "BB1", FuelType = FuelType.F6, Gearbox = Gearbox.G2, Leasable = true, Mileage = 6223, Used = true, Year = 2016, Price = 280000, Created = created.AddDays(-6), Updated = created.AddDays(-6) },
-                    new Vehicle { RegistrationNumber = "GRS267", MakeId = 35, Model = "Cayenne", ModelDescription = "SE", BodyType = BodyType.B7, Colour="Svart", Horsepowers = 300, FacilityId = "BB3", FuelType = FuelType.F7, Gearbox = Gearbox.G1, Leasable = true, Mileage = 13223, Used = true, Year = 2012, Price = 225000, Created = created.AddDays(-7), Updated = created.AddDays(7) },
-                    new Vehicle { RegistrationNumber = "NKD972", MakeId = 37, Model = "RS6", ModelDescription = "Bison X", BodyType = BodyType.B8, Colour="Grå", Horsepowers = 375, FacilityId = "BB2", FuelType = FuelType.F8, Gearbox = Gearbox.G2, Leasable = false, Mileage = 11000, Used = true, Year = 2012, Price = 180000, Created = created.AddDays(-8), Updated = created.AddDays(-8) },
-                    new Vehicle { RegistrationNumber = "FLS922", MakeId = 37, Model = "A2", ModelDescription = "D1", BodyType = BodyType.B9, Colour="Silver", Horsepowers = 130, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = false, Mileage = 13000, Used = true, Year = 2005, Price = 35000, Created = created.AddDays(-9), Updated = created.AddDays(-9) },
-                    new Vehicle { RegistrationNumber = "LVC884", MakeId = 38, Model = "Hilux", ModelDescription = "1.2", BodyType = BodyType.B1, Colour="Vit", Horsepowers = 150, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = true, Mileage = 13000, Used = true, Year = 2015, Price = 220000, Created = created.AddDays(-10), Updated = created.AddDays(-10) },
-                    new Vehicle { RegistrationNumber = "HSK563", MakeId = 31, Model = "Astra K", ModelDescription = "3.2", BodyType = BodyType.B1, Colour="Röd", Horsepowers = 148, FacilityId = "BB2", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = true, Mileage = 34000, Used = true, Year = 2014, Price = 130000, Created = created.AddDays(-11), Updated = created.AddDays(-11) },
-                    new Vehicle { RegistrationNumber = "KSD342", MakeId = 29, Model = "9-5", ModelDescription = "2.2 Turbo", BodyType = BodyType.B1, Colour="Svart", Horsepowers = 183, FacilityId = "BB2", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = false, Mileage = 44000, Used = true, Year = 2002, Price = 18000, Created = created.AddDays(-12), Updated = created.AddDays(-12) },
-                    new Vehicle { RegistrationNumber = "TWD702", MakeId = 33, Model = "Lexus RX", ModelDescription = "1.4", BodyType = BodyType.B1, Colour="Svart", Horsepowers = 313, FacilityId = "BB2", FuelType = FuelType.F1, Gearbox = Gearbox.G2, Leasable = false, Mileage = 14000, Used = true, Year = 2008, Price = 99000, Created = created.AddDays(-13), Updated = created.AddDays(-13) },
-                    new Vehicle { RegistrationNumber = "APA007", MakeId = 5, Model = "Agera S", ModelDescription = "5.0L V8, dual Turbo", BodyType = BodyType.B8, Colour="Mörkgrön", Horsepowers = 1341, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G2, Leasable = false, Mileage = 3600, Used = false, Year = 2013, Price = 4999000, Created = created.AddDays(6), Updated = created.AddDays(1) },
-                    new Vehicle { RegistrationNumber = "APA007", MakeId = 41, Model = "Bobby Car", ModelDescription = "Dual-leg Kicker", BodyType = BodyType.B8, Colour="Röd", Horsepowers = 1, FacilityId = "BB3", FuelType = FuelType.F9, Gearbox = Gearbox.G1, Leasable = true, Mileage = 1, Used = true, Year = 1998, Price = 600, Created = created.AddDays(2), Updated = created.AddDays(5) },
+                    new Vehicle { Id = Guid.Parse("{5536BDCC-B840-4F3A-9D35-AFA3EE920FE4}"), Images = MockImageBuilder(Guid.Parse("{5536BDCC-B840-4F3A-9D35-AFA3EE920FE4}"), ctx), RegistrationNumber = "RTW610", MakeId = 1, Model = "V70", ModelDescription = "D1", BodyType = BodyType.B1, Colour="Röd", Horsepowers = 220, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = true, Mileage = 129, Used = false, Year = 2013, Price = 199999, Created = created.AddDays(-1), Updated = created.AddDays(-1)},
+                    new Vehicle { Id = Guid.Parse("{762AA093-3A8E-49FA-B48E-4921E5DF44B3}"), Images = MockImageBuilder(Guid.Parse("{762AA093-3A8E-49FA-B48E-4921E5DF44B3}"), ctx), RegistrationNumber = "UYM207", MakeId = 29, Model = "9-3", ModelDescription = "2.0 Turbo", BodyType = BodyType.B2, Colour="Svart", Horsepowers = 183, FacilityId = "BB2", FuelType = FuelType.F2, Gearbox = Gearbox.G1, Leasable = false, Mileage = 16240, Used = false, Year = 2007, Price = 62500, Created = created.AddDays(-2), Updated = created.AddDays(-2) },
+                    new Vehicle { Id = Guid.Parse("{436238B8-E43E-4004-A33D-B40BF705F5FF}"), Images = MockImageBuilder(Guid.Parse("{436238B8-E43E-4004-A33D-B40BF705F5FF}"), ctx), RegistrationNumber = "GRT912", MakeId = 30, Model = "M3", ModelDescription = "C2", BodyType = BodyType.B3, Colour="Vit", Horsepowers = 305, FacilityId = "BB2", FuelType = FuelType.F3, Gearbox = Gearbox.G1, Leasable = true, Mileage = 3250, Used = true, Year = 2014, Price = 32000, Created = created.AddDays(-3), Updated = created.AddDays(-3) },
+                    new Vehicle { Id = Guid.Parse("{4C36E33A-4639-40E9-B4F6-43D43F4006EA}"), Images = MockImageBuilder(Guid.Parse("{4C36E33A-4639-40E9-B4F6-43D43F4006EA}"), ctx), RegistrationNumber = "BVO184", MakeId = 30, Model = "330ci", ModelDescription = "SE", BodyType = BodyType.B4, Colour="Silver", Horsepowers = 285, FacilityId = "BB3", FuelType = FuelType.F4, Gearbox = Gearbox.G1, Leasable = false, Mileage = 30000, Used = true, Year = 1996, Price = 42000, Created = created.AddDays(-4), Updated = created.AddDays(-4) },
+                    new Vehicle { Id = Guid.Parse("{3F11821F-8502-441F-8C2A-EEB39A4406A0}"), Images = MockImageBuilder(Guid.Parse("{3F11821F-8502-441F-8C2A-EEB39A4406A0}"), ctx), RegistrationNumber = "RTF824", MakeId = 37, Model = "A4", ModelDescription = "Mark II", BodyType = BodyType.B5, Colour="Silver", Horsepowers = 170, FacilityId = "BB2", FuelType = FuelType.F5, Gearbox = Gearbox.G1, Leasable = false, Mileage = 25000, Used = true, Year = 2003, Price = 31000, Created = created.AddDays(-5), Updated = created.AddDays(-5) },
+
+                    new Vehicle { Id = Guid.Parse("{F4CAC431-0020-4EB1-B20B-F8860209B191}"), Images = MockImageBuilder(Guid.Parse("{F4CAC431-0020-4EB1-B20B-F8860209B191}"), ctx), RegistrationNumber = "PTT498", MakeId = 1, Model = "XC70", ModelDescription = "A3", BodyType = BodyType.B6, Colour="Vit", Horsepowers = 205, FacilityId = "BB1", FuelType = FuelType.F6, Gearbox = Gearbox.G2, Leasable = true, Mileage = 6223, Used = true, Year = 2016, Price = 280000, Created = created.AddDays(-6), Updated = created.AddDays(-6) },
+                    new Vehicle { Id = Guid.Parse("{B931B364-F8FD-4788-BACC-A5E32C87FA20}"), Images = MockImageBuilder(Guid.Parse("{B931B364-F8FD-4788-BACC-A5E32C87FA20}"), ctx), RegistrationNumber = "GRS267", MakeId = 35, Model = "Cayenne", ModelDescription = "SE", BodyType = BodyType.B7, Colour="Svart", Horsepowers = 300, FacilityId = "BB3", FuelType = FuelType.F7, Gearbox = Gearbox.G1, Leasable = true, Mileage = 13223, Used = true, Year = 2012, Price = 225000, Created = created.AddDays(-7), Updated = created.AddDays(7) },
+                    new Vehicle { Id = Guid.Parse("{AE447001-ED5F-4319-AA98-34D89E3EEB80}"), Images = MockImageBuilder(Guid.Parse("{AE447001-ED5F-4319-AA98-34D89E3EEB80}"), ctx), RegistrationNumber = "NKD972", MakeId = 37, Model = "RS6", ModelDescription = "Bison X", BodyType = BodyType.B8, Colour="Grå", Horsepowers = 375, FacilityId = "BB2", FuelType = FuelType.F8, Gearbox = Gearbox.G2, Leasable = false, Mileage = 11000, Used = true, Year = 2012, Price = 180000, Created = created.AddDays(-8), Updated = created.AddDays(-8) },
+                    new Vehicle { Id = Guid.Parse("{10336577-CAD9-4133-BD0A-CC3993E5B22B}"), Images = MockImageBuilder(Guid.Parse("{10336577-CAD9-4133-BD0A-CC3993E5B22B}"), ctx), RegistrationNumber = "FLS922", MakeId = 37, Model = "A2", ModelDescription = "D1", BodyType = BodyType.B9, Colour="Silver", Horsepowers = 130, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = false, Mileage = 13000, Used = true, Year = 2005, Price = 35000, Created = created.AddDays(-9), Updated = created.AddDays(-9) },
+                    new Vehicle { Id = Guid.Parse("{3E04B3C5-DC71-4630-BD07-09542570043D}"), Images = MockImageBuilder(Guid.Parse("{3E04B3C5-DC71-4630-BD07-09542570043D}"), ctx), RegistrationNumber = "LVC884", MakeId = 38, Model = "Hilux", ModelDescription = "1.2", BodyType = BodyType.B1, Colour="Vit", Horsepowers = 150, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = true, Mileage = 13000, Used = true, Year = 2015, Price = 220000, Created = created.AddDays(-10), Updated = created.AddDays(-10) },
+
+                    new Vehicle { Id = Guid.Parse("{23EDA950-2768-4E25-ACB2-1C5B5A0AEA94}"), Images = MockImageBuilder(Guid.Parse("{23EDA950-2768-4E25-ACB2-1C5B5A0AEA94}"), ctx), RegistrationNumber = "HSK563", MakeId = 31, Model = "Astra K", ModelDescription = "3.2", BodyType = BodyType.B1, Colour="Röd", Horsepowers = 148, FacilityId = "BB2", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = true, Mileage = 34000, Used = true, Year = 2014, Price = 130000, Created = created.AddDays(-11), Updated = created.AddDays(-11) },
+                    new Vehicle { Id = Guid.Parse("{621D57D6-8289-4F2F-A07A-85C3197AB5CC}"), Images = MockImageBuilder(Guid.Parse("{621D57D6-8289-4F2F-A07A-85C3197AB5CC}"), ctx), RegistrationNumber = "KSD342", MakeId = 29, Model = "9-5", ModelDescription = "2.2 Turbo", BodyType = BodyType.B1, Colour="Svart", Horsepowers = 183, FacilityId = "BB2", FuelType = FuelType.F1, Gearbox = Gearbox.G1, Leasable = false, Mileage = 44000, Used = true, Year = 2002, Price = 18000, Created = created.AddDays(-12), Updated = created.AddDays(-12) },
+                    new Vehicle { Id = Guid.Parse("{5A32A64B-C9FA-4C8A-9633-2C8F1EC038E3}"), Images = MockImageBuilder(Guid.Parse("{5A32A64B-C9FA-4C8A-9633-2C8F1EC038E3}"), ctx), RegistrationNumber = "TWD702", MakeId = 33, Model = "Lexus RX", ModelDescription = "1.4", BodyType = BodyType.B1, Colour="Svart", Horsepowers = 313, FacilityId = "BB2", FuelType = FuelType.F1, Gearbox = Gearbox.G2, Leasable = false, Mileage = 14000, Used = true, Year = 2008, Price = 99000, Created = created.AddDays(-13), Updated = created.AddDays(-13) },
+                    new Vehicle { Id = Guid.Parse("{17ECA40C-59A5-40AD-B099-F699E38E78DC}"), Images = MockImageBuilder(Guid.Parse("{17ECA40C-59A5-40AD-B099-F699E38E78DC}"), ctx), RegistrationNumber = "APA007", MakeId = 5, Model = "Agera S", ModelDescription = "5.0L V8, dual Turbo", BodyType = BodyType.B8, Colour="Mörkgrön", Horsepowers = 1341, FacilityId = "BB1", FuelType = FuelType.F1, Gearbox = Gearbox.G2, Leasable = false, Mileage = 3600, Used = false, Year = 2013, Price = 4999000, Created = created.AddDays(6), Updated = created.AddDays(1) },
+                    new Vehicle { Id = Guid.Parse("{DB241A58-36F7-469D-AF2C-C2AB32492469}"), Images = MockImageBuilder(Guid.Parse("{DB241A58-36F7-469D-AF2C-C2AB32492469}"), ctx), RegistrationNumber = "APA007", MakeId = 41, Model = "Bobby Car", ModelDescription = "Dual-leg Kicker", BodyType = BodyType.B8, Colour="Röd", Horsepowers = 1, FacilityId = "BB3", FuelType = FuelType.F9, Gearbox = Gearbox.G1, Leasable = true, Mileage = 1, Used = true, Year = 1998, Price = 600, Created = created.AddDays(2), Updated = created.AddDays(5) },
                 };
 
                 ctx.Vehicles.AddRange(vehicles);
                 ctx.SaveChanges();
             }
+        }
 
-            if (!ctx.Images.Any())
-            {
-
-                var images = new List<Image>
+        public static List<Image> MockImageBuilder(Guid vehicleId, ApplicationDbContext ctx)
+        {
+            var images = new List<Image>
                 {
-                   new Image("car-image-1.png", carId),
-                   new Image("car-image-2.png", carId),
-                   new Image("car-image-3.png", carId),
-                   new Image("car-image-4.png", carId)
+                   new Image("noimage.jpg", vehicleId),
+                   new Image("noimage.jpg", vehicleId),
+                   new Image("noimage.jpg", vehicleId),
+                   new Image("noimage.jpg", vehicleId)
                 };
 
-                ctx.Images.AddRange(images);
-                ctx.SaveChanges();
-            }
+            //ctx.Images.AddRange(images);
+            //ctx.SaveChanges();
+
+            return images;
         }
-    }
+    }  
 }

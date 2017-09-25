@@ -52,6 +52,7 @@
                     <select asp-for="BodyType" asp-items="Html.GetEnumSelectList<BodyType>()" class="form-control"> </select>
                     <span asp-validation-for="BodyType" class="text-danger"></span>
                 </div>
+                <a class="btn btn-default pull-left" style="color:black" asp-action="Index">Tillbaka</a>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -100,13 +101,14 @@
                 <div class="form-group">
                     <label for="Images">Bilduppladdning</label>
                     <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple accept="image/*" />
-                    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+                    <small id="fileHelp" class="form-text text-muted">Ladda endast upp bilder i formaten: jpg, jpeg, png</small>
                 </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-success pull-right" />
-                </div>
+
+                    <input type="submit" value="Skapa" class="btn btn-success pull-right" />
+
             </div>
+            
         </form>
 
 
@@ -114,26 +116,11 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+   
 </div>
 
 <style>
-    .equipment.form-control {
-        height: auto !important;
-        padding: 1px;
-    }
 
-    .form-control ul.select2-choices {
-        border: 0;
-        background-image: none;
-        margin: 1px;
-        padding: 1px;
-    }
-
-    .form-control.select2-container .select2-choice {
-        height: 38px;
-        line-height: 38px;
-    }
 </style>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
