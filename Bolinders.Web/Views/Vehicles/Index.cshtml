@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<Bolinders.Core.Models.Vehicle>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Alla fordon";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    <a asp-action="Create">Nytt fordon</a>
-</p>
+
+    <a class="btn btn-default" asp-action="Create">Nytt fordon</a>
+
+<hr />
 <table class="table table-striped">
     <thead>
         <tr>

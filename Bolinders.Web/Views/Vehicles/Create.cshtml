@@ -52,7 +52,7 @@
                     <select asp-for="BodyType" asp-items="Html.GetEnumSelectList<BodyType>()" class="form-control"> </select>
                     <span asp-validation-for="BodyType" class="text-danger"></span>
                 </div>
-                <a class="btn btn-default pull-left" style="color:black" asp-action="Index">Tillbaka</a>
+                <a class="btn btn-default pull-left" asp-action="Index">Tillbaka</a>
             </div>
             <div class="col-md-6">
                 <div class="form-group">

@@ -128,3 +128,6 @@ a:hover {
 .select2-selection__choice__remove {
   color: black!important;
 }
+.btn-default {
+  background: none;
+}
