@@ -81,9 +81,67 @@
             <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
             <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
         </div>
+
     </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
+    <script>
+        $("body").addClass("main-front");
+    </script>
 </div>
-<script src="~/lib/jquery/dist/jquery.js"></script>
+<div id="nyheter">
+
+</div>
+
+<script id="template" type="text/x-handlebars-template">
+    <div>
+        {{#each this}}
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{{title}}</h2> <br />
+                <strong>Datum: </strong>{{publishedAt}} <br />
+                <strong>Ingress: </strong>{{description}} <a target="_blank" href="{{url}}">Läs mer!</a> <br />
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
 <script>
-    $("body").addClass("main-front");
+    var result = [];
+    var articles = [];
+
+    $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423", function (data) {
+        result = data;
+
+        $.each(result.articles, function (i, ob) {
+
+                var shortText = jQuery.trim(ob.description).substring(0, 50)
+                .split(" ").slice(0, -1).join(" ") + "...";
+
+                ob.description = shortText;
+
+                articles.push(ob)      
+        });
+
+        articles.sort(function (a, b) {
+            var c = new Date(a.publishedAt);
+            var d = new Date(b.publishedAt);
+            return d - c;
+
+        });
+
+        if (articles.length > 3) {
+            articles.length = 3;
+        }
+  
+        var source = $("#template").html();
+        var template = Handlebars.compile(source);
+        var html = template(articles);
+        $('#nyheter').html(html);
+
+        console.log(articles)
+    });
+
 </script>
