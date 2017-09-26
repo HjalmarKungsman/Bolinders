@@ -131,3 +131,17 @@ a:hover {
 .btn-default {
   background: none;
 }
+.dropdown-menu {
+  background: #000;
+  border: 1px solid #ffffff;
+}
+.dropdown-menu > li > a {
+  color: #fff;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #ff0000;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #ffffff;
+}

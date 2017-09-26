@@ -18,10 +18,10 @@
     </environment>
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
-    
+
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top transparent-header">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,7 +45,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="Vehicles" asp-action="Index">Fordon</a></li>
+                                <li style="color: #fff; border-bottom: 1px solid #ffffff;"><a asp-area="" asp-controller="Vehicles" asp-action="Index">Fordon</a></li>
                                 <li><a asp-area="" asp-controller="Vehicles" asp-action="Create">Nytt fordon</a></li>
                             </ul>
                         </li>
@@ -71,11 +71,11 @@
                     <h3>Nyhetsflöde</h3>
                     <hr />
                     @*<ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
-                    </ul>*@
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
+                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
+                        </ul>*@
                     <div id="nyheter">
 
                     </div>
@@ -153,10 +153,10 @@
                 <p>{{description}}</p>
                 <span class="small">{{publishedAt}}</span><a class="pull-right" target="_blank" href="{{url}}">Läs mer!</a>
                 <hr />
-            </li>           
+            </li>
             {{/each}}
         </ul>
-        
+
     </script>
 
     <script>
@@ -195,6 +195,23 @@
             console.log(articles)
         });
 
+    </script>
+    <style>
+        .transparent-header {
+            background: none !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() <= 25) {
+                    $('.navbar').addClass('transparent-header');
+                }
+                else {
+                    $('.navbar').removeClass('transparent-header');
+                }
+            });
+        });
     </script>
 
     @RenderSection("Scripts", required: false)
