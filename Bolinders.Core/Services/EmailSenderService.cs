@@ -42,7 +42,7 @@ namespace Bolinders.Core.Services
             }          
         }
 
-        public static SmtpStatusCode SendEmailWithSharedVehicle(string senderName, string senderEmail, string reciever, Vehicle vehicle, string baseUrl)
+        public static SmtpStatusCode SendEmailWithSharedVehicle(string reciever, Vehicle vehicle, string baseUrl)
         {
             SmtpClient client = new SmtpClient("mailcluster.loopia.se")
             {
@@ -54,14 +54,14 @@ namespace Bolinders.Core.Services
 
                 var message = string.Format("<h1>{0} {1} {2}</h1>" +
                    "<p>{5} vill att du ska kolla på:</p>" +
-                "<a href='{3}{4}'>{0} {1} {2}</a>" +
-                "<p>Bilen finns hos Bolinders Bil AB</p>", vehicle.Make, vehicle.Model, vehicle.ModelDescription, baseUrl, vehicle.Id, senderName);
+                "<a href='{3}'>{0} {1} {2}</a>" +
+                "<p>Bilen finns hos Bolinders Bil AB</p>", vehicle.Make, vehicle.Model, vehicle.ModelDescription, baseUrl);
 
                 MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress(senderEmail);
+                mailMessage.From = new MailAddress("bolindersbil@byteshift.se");
                 mailMessage.To.Add(reciever);
                 mailMessage.Body = message;
-                mailMessage.Subject = String.Format("{0} vill tipsa dig om en {1} {2} {3}", senderName, vehicle.Make, vehicle.Model, vehicle.ModelDescription);
+                mailMessage.Subject = String.Format("Bolidners Bil AB har en {1} {2} {3} i lager!", vehicle.Make, vehicle.Model, vehicle.ModelDescription);
                 client.Send(mailMessage);
 
                 return SmtpStatusCode.Ok;

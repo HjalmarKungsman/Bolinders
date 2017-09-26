@@ -22,7 +22,11 @@ namespace Bolinders.Core.Controllers
     {
         private readonly ApplicationDbContext _context;
         private IHostingEnvironment _environment;
-
+        private static IHttpContextAccessor HttpContextAccessor;
+        public static void Configure(IHttpContextAccessor httpContextAccessor)
+        {
+            HttpContextAccessor = httpContextAccessor;
+        }
         public VehiclesController(ApplicationDbContext context, IHostingEnvironment environment)
         {
             _context = context;
@@ -108,6 +112,18 @@ namespace Bolinders.Core.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        //[AllowAnonymous]
+        //[HttpPost]
+        //public IActionResult SendEmailToFriend([Bind("Reciever, VehicleId")] EmailViewModel email)
+        //{
+
+        //    var vehicle =_context.Vehicles.Find(email.VehicleId);
+
+        //    string scheme = HttpContextAccessor.HttpContext.Request.Scheme;
+
+
+        //    return View();
+        //}
         // GET: Vehicles/Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id, string vehicleLinkId = null)
