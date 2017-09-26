@@ -104,7 +104,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Facility.Name)
                 </td>
-                <td class="table-bordered" ´>
+                <td class="table-bordered">
                     <a asp-action="Edit" asp-route-id="@item.Id"><span title="Edit" class="glyphicon glyphicon-edit"></span></a> |
                     <a asp-action="Details" asp-route-id="@item.Id"><span title="Details" class="glyphicon glyphicon-list-alt"></span></a> |
                     <a asp-action="Delete" asp-route-id="@item.Id"><span title="Delete" class="glyphicon glyphicon-trash"></span></a>
@@ -134,7 +134,6 @@
                     console.log("error");
                 }
             }).done(function () {
-                console.log(arrayId + " it is done");
                 location.reload();
             });
 

@@ -240,14 +240,14 @@ namespace Bolinders.Core.Controllers
                 return NotFound();
             }
 
-            var vehicle = await _context.Vehicles.Include(x => x.Images).SingleOrDefaultAsync(m => m.Id == id);
+            var vehicle = await _context.Vehicles.Include(x => x.Images).Include(x => x.Equipment).SingleOrDefaultAsync(m => m.Id == id);
 
             if (vehicle == null)
             {
                 return NotFound();
             }
 
-            VehicleEditModel VehicleEditing = new VehicleEditModel
+            VehicleEditModel vehicleEditing = new VehicleEditModel
             {
                 RegistrationNumber = vehicle.RegistrationNumber,
                 Make = vehicle.Make,
@@ -271,10 +271,18 @@ namespace Bolinders.Core.Controllers
                 Updated = vehicle.Updated,
                 Equipment = vehicle.Equipment
             };
+            if (vehicleEditing.Equipment != null)
+            {
+                vehicleEditing.EquipmentString = new List<string>();
+                foreach (var i in vehicleEditing.Equipment)
+                {
+                    vehicleEditing.EquipmentString.Add(i.Value);
+                }
+            }
             ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name");
             ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Name");
 
-            return View(VehicleEditing);
+            return View(vehicleEditing);
         }
 
         // POST: Vehicles/Edit/5
@@ -284,6 +292,7 @@ namespace Bolinders.Core.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,ImageList,Images,Used,Leasable,Created,Updated,EquipmentString")] VehicleEditModel vehicle)
         {
+
             if (id != vehicle.Id)
             {
                 return NotFound();
@@ -292,11 +301,55 @@ namespace Bolinders.Core.Controllers
 
             if (ModelState.IsValid)
             {
+                //var oldVehicle = await _context.Vehicles.Include(x => x.Images).Include(x => x.Equipment).SingleOrDefaultAsync(m => m.Id == id);
+                Vehicle updateVehicle = new Vehicle
+                {
+                    Id = id,
+                    RegistrationNumber = vehicle.RegistrationNumber,
+                    BodyType = vehicle.BodyType,
+                    Colour = vehicle.Colour,
+                    Created = vehicle.Created,
+                    Facility = vehicle.Facility,
+                    FacilityId = vehicle.FacilityId,
+                    FuelType = vehicle.FuelType,
+                    Gearbox = vehicle.Gearbox,
+                    Horsepowers = vehicle.Horsepowers,
+                    Leasable = vehicle.Leasable,
+                    Make = vehicle.Make,
+                    MakeId = vehicle.MakeId,
+                    Mileage = vehicle.Mileage,
+                    Model = vehicle.Model,
+                    ModelDescription = vehicle.ModelDescription,
+                    Price = vehicle.Price,
+                    Updated = DateTime.UtcNow,
+                    Used = vehicle.Used,
+                    Year = vehicle.Year,
+                    Images = new List<Image>(),
+                    Equipment = new List<Equipment>()
+                };
+                if (vehicle.EquipmentString != null)
+                {
+                    updateVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.EquipmentString, updateVehicle);
+                }
+                if (vehicle.ImageList != null)
+                {
+                    foreach (var item in vehicle.ImageList)
+                    {
+                        updateVehicle.Images.Add(item);
+                    }
+                }
+                if (vehicle.Images != null)
+                {
+                    var listOfImages = await ImageHelpers.UploadImages(vehicle.Images, _environment);
+                    updateVehicle = ImageHelpers.ImageBuilder(listOfImages, updateVehicle);
+                }
 
                 try
                 {
-                    vehicle.Updated = DateTime.UtcNow;
-                    _context.Entry(vehicle).State = EntityState.Modified;               
+                    updateVehicle.Updated = DateTime.UtcNow;
+                    //oldVehicle = updateVehicle;
+                    _context.Entry(updateVehicle).State = EntityState.Modified;
+                    _context.Entry(updateVehicle).Property(x => x.UrlId).IsModified = false;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -362,6 +415,18 @@ namespace Bolinders.Core.Controllers
             var vehicle = await _context.Vehicles.SingleOrDefaultAsync(m => m.Id == id);
             _context.Vehicles.Remove(vehicle);
             await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> RemoveImage(string imageId, string imagelink)
+        {
+            var imgGuid = new Guid(imageId);
+            var image = await _context.Images.SingleOrDefaultAsync(m => m.Id == imgGuid);
+            var directory = Path.Combine(_environment.WebRootPath, "images/uploads");
+            await ImageHelpers.RemoveImageFromDisk(directory, imagelink);
+            _context.Images.Remove(image);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
