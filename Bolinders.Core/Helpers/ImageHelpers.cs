@@ -47,6 +47,10 @@ namespace Bolinders.Core.Helpers
 
         public static Task RemoveImageFromDisk(string directory, string fileName)
         {
+            if (fileName == "noimage.jpg")
+            {
+                return Task.CompletedTask;
+            }
             File.Delete(Path.Combine(directory, fileName));
             return Task.CompletedTask;
         }

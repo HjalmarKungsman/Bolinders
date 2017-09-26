@@ -1,11 +1,12 @@
+/*@theme-background-color: #363636;*/
 body {
-  background-color: #363636;
+  background-color: #000;
   color: #ffffff;
   padding-top: 50px;
 }
 footer {
   border-top: 1px solid #ff0000;
-  background-color: black;
+  background-color: #141414;
   height: auto;
 }
 hr {
@@ -13,7 +14,19 @@ hr {
 }
 .navbar-inverse {
   border-color: #ff0000;
-  background-color: black;
+  background-color: #000;
+}
+.navbar-brand {
+  font-size: xx-large;
+  color: #fff !important;
+  font-family: 'Russo One', sans-serif;
+}
+h1,
+h2,
+h3,
+h4 {
+  text-align: center;
+  font-family: 'Russo One', sans-serif;
 }
 /*.btn-default {
     background-color: @theme-color;

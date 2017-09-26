@@ -1,5 +1,6 @@
 ﻿@theme-color: #ff0000;
-@theme-background-color: #363636;
+/*@theme-background-color: #363636;*/
+@theme-background-color: #000;
 @theme-font-color: #ffffff;
 
 
@@ -10,7 +11,7 @@ body {
 }
 footer {
     border-top: 1px solid @theme-color;
-    background-color: black;
+    background-color: #141414;
     height: auto;
 }
 
@@ -20,7 +21,17 @@ hr {
 
 .navbar-inverse {
     border-color: @theme-color;
-    background-color: black;
+    background-color: #000;
+}
+.navbar-brand {
+    font-size: xx-large;
+    color: #fff !important;
+    font-family: 'Russo One', sans-serif;
+}
+
+h1, h2, h3, h4 {
+    text-align: center;
+    font-family: 'Russo One', sans-serif;
 }
 /*.btn-default {
     background-color: @theme-color;
@@ -28,7 +39,7 @@ hr {
 .main-front {
     background-image: url("../images/front-image.jpeg");
     background-position-x: center;
-    background-position-y:top;
+    background-position-y: top;
     background-repeat: no-repeat;
     /*background-size: cover;*/
     height: 50%;
