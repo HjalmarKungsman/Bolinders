@@ -70,12 +70,16 @@
                 <div class="col-md-6">
                     <h3>Nyhetsflöde</h3>
                     <hr />
-                    <ul>
+                    @*<ul>
                         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
                         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
                         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
                         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat dignissim nulla, porta euismod ante vestibulum </li>
-                    </ul>
+                    </ul>*@
+                    <div id="nyheter">
+
+                    </div>
+
                 </div>
                 <div class="col-md-2">
                     <h3>Socialamedier</h3>
@@ -140,8 +144,61 @@
 
     </script>
 
+    <script id="template" type="text/x-handlebars-template">
+        <ul style="-webkit-padding-start: 0px; list-style: none;">
+            {{#each this}}
+            <li>
+                <h5><strong>{{title}}</strong></h5>
+                <p>{{description}}</p>
+                <span class="small">{{publishedAt}}</span><a class="pull-right" target="_blank" href="{{url}}">Läs mer!</a>
+                <hr />
+            </li>           
+            {{/each}}
+        </ul>
+        
+    </script>
+
+    <script>
+        var result = [];
+        var articles = [];
+
+        $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423", function (data) {
+            result = data;
+
+            $.each(result.articles, function (i, ob) {
+
+                var shortText = jQuery.trim(ob.description).substring(0, 50)
+                    .split(" ").slice(0, -1).join(" ") + "...";
+
+                ob.description = shortText;
+
+                articles.push(ob)
+            });
+
+            articles.sort(function (a, b) {
+                var c = new Date(a.publishedAt);
+                var d = new Date(b.publishedAt);
+                return d - c;
+
+            });
+
+            if (articles.length > 3) {
+                articles.length = 3;
+            }
+
+            var source = $("#template").html();
+            var template = Handlebars.compile(source);
+            var html = template(articles);
+            $('#nyheter').html(html);
+
+            console.log(articles)
+        });
+
+    </script>
+
     @RenderSection("Scripts", required: false)
 
 
 </body>
 </html>
+
