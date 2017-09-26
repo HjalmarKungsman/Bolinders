@@ -2,61 +2,72 @@
 
 <div class="row" style="margin:5% 0 5% 0;">
     <form method="post" asp-action="list" asp-controller="vehicles">
-        <div class="form-group">
-            <div class="col-md-12">
+
+        <div class="col-md-12">
+            <div class="form-group">
                 <label for="searchText">Söktext</label>
                 <input type="text" class="form-control input-sm" id="searchText" name="searchText" placeholder="Söktext" value="@ViewBag.SearchText" />
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-4">
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="priceFrom">Pris från</label>
                 <input type="number" class="form-control input-sm" id="priceFrom" name="priceFrom" placeholder="Pris från" value="@ViewBag.PriceFrom" />
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="mileFrom">Mil från</label>
                 <input type="number" class="form-control input-sm" id="mileageTo" name="mileageFrom" placeholder="Mil från" value="@ViewBag.MileageFrom" />
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="yearFrom">År från</label>
                 <input type="number" class="form-control input-sm" id="yearFrom" name="yearFrom" placeholder="År från" value="@ViewBag.YearFrom" />
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-4">
+
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="priceTo">Pris till</label>
                 <input type="number" class="form-control input-sm" id="priceTo" name="priceTo" placeholder="Pris till" value="@ViewBag.PriceTo" />
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="mileTo">Mil till</label>
                 <input type="number" class="form-control input-sm" id="mileageTo" name="mileageTo" placeholder="Mil till" value="@ViewBag.MileageTo" />
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="yearTo">År till</label>
                 <input type="number" class="form-control input-sm" id="yearTo" name="yearTo" placeholder="År till" value="@ViewBag.YearTo" />
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-4">
+        <div class="col-md-4">
+            <div class="form-group">
                 <label for="bodyType">Kaross</label>
                 @*<input type="text" class="form-control input-sm" id="bodyType" name="bodyType" placeholder="Kaross" value="@ViewBag.BodyType" />*@
-                <select id="bodyType" name="bodyType" class="form-control input-sm" asp-items="Html.GetEnumSelectList<BodyType>()">
-                </select>
+                <select id="bodyType" name="bodyType" class="form-control input-sm" asp-items="Html.GetEnumSelectList<BodyType>()"></select>
+            </div>
             </div>
             <div class="col-md-4">
-                <label for="gearbox">Växellåda</label>
-                @*<input type="text" class="form-control input-sm" id="gearbox" name="gearbox" placeholder="Växellåda" value="@ViewBag.Gearbox" />*@
-                <select id="gearbox" name="gearbox" class="form-control input-sm" asp-items="Html.GetEnumSelectList<Gearbox>()">
-                </select>
+                <div class="form-group">
+                    <label for="gearbox">Växellåda</label>
+                    @*<input type="text" class="form-control input-sm" id="gearbox" name="gearbox" placeholder="Växellåda" value="@ViewBag.Gearbox" />*@
+                    <select id="gearbox" name="gearbox" class="form-control input-sm" asp-items="Html.GetEnumSelectList<Gearbox>()"></select>
+                </div>
             </div>
             <div class="col-md-4">
-                <label>&nbsp;</label><br />
-                <button type="submit" class="btn btn-success input-sm">Filtrera/Sök</button>
-                <input type="hidden" id="page" name="page" value="1" />
+                <div class="form-group">
+                    <label>&nbsp;</label><br />
+                    <button type="submit" class="btn btn-success input-sm">Filtrera/Sök</button>
+                    <input type="hidden" id="page" name="page" value="1" />
+                </div>
             </div>
-        </div>
-        
-</form>
+    </form>
 </div>
 
 
@@ -65,7 +76,7 @@
 
 @foreach (var p in Model.Vehicles)
 {
-@Html.Partial("VehicleBlock", p)
+    @Html.Partial("VehicleBlock", p)
 }
 
 @if (Model.Pager.TotalItems == 0)
