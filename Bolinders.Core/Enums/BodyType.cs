@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Bolinders.Core.Models
+namespace Bolinders.Core.Enums
 {
     public enum BodyType
     {

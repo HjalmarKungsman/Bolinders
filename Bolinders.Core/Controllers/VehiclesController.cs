@@ -14,6 +14,7 @@ using Bolinders.Core.Helpers;
 using Bolinders.Core.Models.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using Bolinders.Core.Enums;
 
 namespace Bolinders.Core.Controllers
 {
@@ -114,16 +115,17 @@ namespace Bolinders.Core.Controllers
 
         //[AllowAnonymous]
         //[HttpPost]
-        //public IActionResult SendEmailToFriend([Bind("Reciever, VehicleId")] EmailViewModel email)
+        //public IActionResult SendEmailToFriend([Bind("Reciever, VehicleId")] EmailViewComponent email)
         //{
 
-        //    var vehicle =_context.Vehicles.Find(email.VehicleId);
+        //    var vehicle = _context.Vehicles.Find(email.VehicleId);
 
         //    string scheme = HttpContextAccessor.HttpContext.Request.Scheme;
 
 
         //    return View();
         //}
+
         // GET: Vehicles/Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id, string vehicleLinkId = null)

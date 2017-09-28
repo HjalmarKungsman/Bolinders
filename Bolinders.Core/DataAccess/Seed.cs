@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
+using Bolinders.Core.Enums;
 
 namespace Bolinders.Core.DataAccess
 {

@@ -1,0 +1,8 @@
+﻿@model Bolinders.Core.Models.ViewModels.ShareVehicleViewModel
+
+<form asp-controller="Vehicle" asp-action="SendEmailToFriend">
+    <input type="email" asp-for="Reciever" />
+    <input type="hidden" asp-for="VehicleId" />
+    <input type="submit" />
+</form>
+
