@@ -152,6 +152,7 @@ namespace Bolinders.Core.Controllers
                     .Include(v => v.Facility)
                     .Include(v => v.Make)
                     .Include(v => v.Images)
+                    .Include(v => v.Equipment)
                     .SingleOrDefaultAsync(m => m.Id == id);
                 if (vehicle == null)
                 {
@@ -172,6 +173,7 @@ namespace Bolinders.Core.Controllers
                     .Include(v => v.Facility)
                     .Include(v => v.Make)
                     .Include(v => v.Images)
+                    .Include(v => v.Equipment)
                     .SingleOrDefaultAsync(m => m.UrlId == vehicleId);
                 if (vehicle == null)
                 {

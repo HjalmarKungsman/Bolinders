@@ -102,6 +102,38 @@
                     </dd>
                 }
             </dl>
+            <div>
+                @foreach (var item in Model.Equipment)
+                {
+                    @item.Value
+                }
+            </div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>Kontakta säljaren</dt>
+                <dd><a href="tel:@Model.Facility.PhoneNumber">@Model.Facility.PhoneNumber</a></dd>
+                <dt>Dela vi e-post</dt>
+                <dd>
+                    <a id="shareButton" href="#"><span class="glyphicon glyphicon-share"></span></a>
+                </dd>
+            </dl>
+            <div id="shareVehicle" class="hidden">
+                <form asp-action="ShareVehicle">
+                    <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
+                    <div class="form-group">
+                        <label for="email">Vem vill du tipsa?</label>
+                        <div class="input-group">
+
+                            <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
+                            <span class="input-group-btn">
+                                <input class="share btn btn-success" type="button" value="Tipsa" />
+                            </span>
+
+                        </div>
+                        <div id="statusMessage"></div>
+                    </div>
+                </form>
+            </div>   
         </div>
         <div class="col-lg-6">
             <img src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Images.First().ImageUrl" style="width:100%">
@@ -130,27 +162,9 @@
         <a asp-action="Index">Back to List</a>
     </div>
 }
-<div>
-    <a id="shareButton" href="#"><span class="glyphicon glyphicon-share" style="font-size: xx-large"></span></a>
-</div>
 
-<div id="shareVehicle" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 hidden">
-    <form asp-action="ShareVehicle">
-        <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
-        <div class="form-group">
-            <label for="email">Vem vill du tipsa?</label>
-            <div class="input-group">
 
-                <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
-                <span class="input-group-btn">
-                    <input class="share btn btn-success" type="button" value="Tipsa" />
-                </span>
-                
-            </div>
-            <div id="statusMessage"></div>
-        </div>
-    </form>
-</div>
+
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
@@ -179,7 +193,8 @@
                 }).fail(function (response) {
                     $('#statusMessage').html("<div class='alert alert-danger'><strong>Fel! </strong>" + response + "</div>");
                 })
-            });
+        });
+
         $('#shareButton').on("click", function () {
             $('#shareVehicle').toggleClass('hidden');
 

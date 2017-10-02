@@ -13,6 +13,7 @@ namespace Bolinders.Core.Helpers
             {
                 Equipment newEquipment = new Equipment
                 {
+                    Id = Guid.NewGuid(),
                     VehicledId = vehicle.Id,
                     Value = listOfEquipment[i]
                 };
