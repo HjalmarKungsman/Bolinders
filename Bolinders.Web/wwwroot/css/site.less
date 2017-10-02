@@ -1,4 +1,4 @@
-﻿@theme-color: #ff0000;
+﻿@theme-color: #bb0000;
 /*@theme-background-color: #363636;*/
 @theme-background-color: #000;
 @theme-font-color: #ffffff;
@@ -7,12 +7,13 @@
 body {
     background-color: @theme-background-color;
     color: @theme-font-color;
-    padding-top: 50px;  
+    padding-top: 50px;
 }
+
 footer {
     border-top: 1px solid @theme-color;
-    background-color: #141414;
     height: auto;
+    background-image: url(../images/bg-footer.jpg);
 }
 
 
@@ -24,6 +25,7 @@ hr {
     border-color: @theme-color;
     background-color: #000;
 }
+
 .navbar-brand {
     font-size: xx-large;
     color: #fff !important;
@@ -105,10 +107,12 @@ h1, h2, h3, h4 {
     background-color: #777;
     border: none;
 }
+
 .table > thead > tr > th {
     border-color: @theme-color;
     border: none;
 }
+
 .table > tbody > tr > td {
     border-color: @theme-color;
     border: none;
@@ -144,27 +148,42 @@ a:hover {
 
 //select2 custom css
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: @theme-color!important;
+    background-color: @theme-color !important;
     color: @theme-font-color;
     border: 1px solid #aaa;
 }
+
 .select2-search__field {
-    color: black!important;
+    color: black !important;
 }
+
 .select2-selection__choice__remove {
-    color:black!important;
+    color: black !important;
 }
 
 
 //Bootstrap overrides
 .btn-default {
     background: none;
+    border-color: @theme-color;
+}
+
+.btn-primary {
+    background-color: @theme-color;
+    border-color: @theme-color;
+}
+
+.btn-primary:hover {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    color: #000;
 }
 
 .dropdown-menu {
     background: #000;
-    border: 1px solid #ffffff;    
+    border: 1px solid #ffffff;
 }
+
 .dropdown-menu > li > a {
     color: #fff;
 }
@@ -172,6 +191,21 @@ a:hover {
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
     color: @theme-color;
 }
+
 .navbar-inverse .navbar-nav > li > a {
     color: @theme-font-color;
+}
+
+
+
+.equipment-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.equipment-list-item {
+    border: 1px solid @theme-color;
+    padding: 0px 5px;
+    border-radius: 5px;
+    margin: 3px;
 }

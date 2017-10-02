@@ -79,7 +79,15 @@
                 <dd>
                     @Html.DisplayFor(model => model.Facility.Name)
                 </dd>
-
+                <dt>Utrustning</dt>
+                <dd>
+                    <div class="equipment-list">
+                        @foreach (var item in Model.Equipment)
+                        {
+                            <div class="equipment-list-item">@item.Value</div>
+                        }
+                    </div>
+                </dd>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <dt>
@@ -102,21 +110,22 @@
                     </dd>
                 }
             </dl>
-            <div>
-                @foreach (var item in Model.Equipment)
-                {
-                    @item.Value
-                }
-            </div>
             <hr />
             <dl class="dl-horizontal">
                 <dt>Kontakta säljaren</dt>
                 <dd><a href="tel:@Model.Facility.PhoneNumber">@Model.Facility.PhoneNumber</a></dd>
-                <dt>Dela vi e-post</dt>
+                <dt>Dela via e-post</dt>
                 <dd>
                     <a id="shareButton" href="#"><span class="glyphicon glyphicon-share"></span></a>
                 </dd>
             </dl>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.Id">Ändra</a> |
+                    <a asp-action="Index">Se alla</a>
+                </div>
+            }
             <div id="shareVehicle" class="hidden">
                 <form asp-action="ShareVehicle">
                     <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
@@ -133,7 +142,7 @@
                         <div id="statusMessage"></div>
                     </div>
                 </form>
-            </div>   
+            </div>
         </div>
         <div class="col-lg-6">
             <img src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Images.First().ImageUrl" style="width:100%">
@@ -141,27 +150,38 @@
     </div>
     <hr />
     <div class="row">
-        @foreach (var image in Model.Images)
-            {
-            <div class="col-md-3">
-                <div class="thumbnail">
-                    <a href="~/images/uploads/@image.ImageUrl">
-                        <img src="~/images/uploads/@image.ImageUrl" alt="@image.ImageUrl" style="width:100%">
-                    </a>
-                </div>
+        <div class="carousel slide multi-item-carousel" id="theCarousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < Model.Images.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <div class="item active">
+                            <div class="col-xs-4">
+                                <a href="~/images/uploads/@Model.Images[i].ImageUrl">
+                                    <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <div class="col-xs-4">
+                                <a href="~/images/uploads/@Model.Images[i].ImageUrl">
+                                    <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
             </div>
-        }
+            <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+            <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        </div>
     </div>
-
-
 </div>
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>
-}
+
 
 
 

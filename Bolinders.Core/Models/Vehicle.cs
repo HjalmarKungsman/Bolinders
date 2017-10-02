@@ -46,7 +46,7 @@ namespace Bolinders.Core.Models
         [Display(Name = "Ort/Anläggning")]
         public virtual Facility Facility { get; set; }
         [Display(Name = "Bilder")]
-        public ICollection<Image> Images { get; set; }
+        public List<Image> Images { get; set; }
         [Display(Name = "Leasningsbar")]
         public bool Leasable { get; set; }
         [Display(Name = "Skapad")]
