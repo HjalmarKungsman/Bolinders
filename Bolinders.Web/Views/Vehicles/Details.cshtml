@@ -116,9 +116,16 @@
                     </dd>
                 }
             </dl>
+            @{
+                var price = Model.Price;
 
-            <span style="font-size:x-large">@Html.DisplayFor(model => model.Price) SEK</span>
-
+                if (Model.Leasable)
+                {
+                    price = (price * 0.8);
+                    <span style="font-size:large">@price SEK exkl. moms</span><br />
+                }
+                <span style="font-size:large">@Html.DisplayFor(model => model.Price) SEK inkl. moms</span>
+            }
             <hr />
             <dl id="contactInformation" class="dl-horizontal">
                 <dt>Kontakta säljaren</dt>

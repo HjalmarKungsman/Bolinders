@@ -16,7 +16,7 @@ namespace Bolinders.Core.Models.ViewModels
         public string ModelDescription { get; set; }
         public int Year { get; set; }
         public int Mileage { get; set; }
-        public Decimal Price { get; set; }
+        public double Price { get; set; }
         public BodyType BodyType { get; set; }
         public string Colour { get; set; }
         public Gearbox Gearbox { get; set; }

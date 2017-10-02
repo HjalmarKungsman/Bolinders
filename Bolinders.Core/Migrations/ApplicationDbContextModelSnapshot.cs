@@ -177,7 +177,7 @@ namespace Bolinders.Core.Migrations
 
                     b.Property<string>("ModelDescription");
 
-                    b.Property<decimal>("Price");
+                    b.Property<double>("Price");
 
                     b.Property<string>("RegistrationNumber");
 

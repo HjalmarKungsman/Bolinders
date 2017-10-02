@@ -28,7 +28,7 @@ namespace Bolinders.Core.Models
         [Display(Name = "Mätarställning")]
         public int Mileage { get; set; }
         [Display(Name = "Pris")]
-        public Decimal Price { get; set; }
+        public double Price { get; set; }
         [Display(Name = "Kaross")]
         public BodyType BodyType { get; set; }
         [Display(Name = "Färg")]
