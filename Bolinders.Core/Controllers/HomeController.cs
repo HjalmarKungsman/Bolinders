@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Bolinders.Core.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Bolinders.Core.Services;
+using System.Net.Mail;
 
 namespace Bolinders.Core.Controllers
 {
@@ -58,16 +59,16 @@ namespace Bolinders.Core.Controllers
         }
 
         [HttpPost]
-        public IActionResult Contact(ContactformViewModel form)
+        public async Task<IActionResult> Contact(ContactformViewModel form)
         {
             var contacts = _context.Facilities.ToList();
             ViewBag.Contacts = contacts;
             ViewData["Facility"] = new SelectList(_context.Facilities, "Email", "Email");
 
 
-            var emailSender = EmailSenderService.SendEmailToFacility(form.SenderName, form.SenderEmail, form.Reciever, form.Subject, form.Message, form.PhoneNumber);
+            var emailSender = await EmailSenderService.SendEmailToFacility(form.SenderName, form.SenderEmail, form.Reciever, form.Subject, form.Message, form.PhoneNumber);
 
-            if (emailSender == System.Net.Mail.SmtpStatusCode.Ok)
+            if (emailSender == SmtpStatusCode.Ok)
             {
                 ViewBag.Success = "Ditt meddelande har skickats.";
             }

@@ -12,8 +12,8 @@ namespace Bolinders.Core.Services
 {
     public class EmailSenderService
     {
-        
-        public static SmtpStatusCode SendEmailToFacility(string senderName, string senderEmail, string reciever, string subject, string message, string phoneNumber)
+
+        public static async Task<SmtpStatusCode> SendEmailToFacility(string senderName, string senderEmail, string reciever, string subject, string message, string phoneNumber)
         {
             SmtpClient client = new SmtpClient("mailcluster.loopia.se")
             {
@@ -32,44 +32,45 @@ namespace Bolinders.Core.Services
                 mailMessage.To.Add(reciever);
                 mailMessage.Body = message;
                 mailMessage.Subject = "Skickat från kontaktformulär: " + subject;
-                client.Send(mailMessage);
+                mailMessage.IsBodyHtml = true;
+                await client.SendMailAsync(mailMessage);
 
                 return SmtpStatusCode.Ok;
             }
             catch (Exception)
             {
                 return SmtpStatusCode.GeneralFailure;
-            }          
+            }
         }
 
-        public static SmtpStatusCode SendEmailWithSharedVehicle(string reciever, Vehicle vehicle, string baseUrl)
+        public static async Task<SmtpStatusCode> SendEmailWithSharedVehicle(string reciever, Vehicle vehicle, string baseUrl)
         {
             SmtpClient client = new SmtpClient("mailcluster.loopia.se")
             {
+                Port = 587,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential("bolindersbil@byteshift.se", "MSD8921%ewf13Xf")
             };
             try
             {
-
-                var message = string.Format("<h1>{0} {1} {2}</h1>" +
-                   "<p>{5} vill att du ska kolla på:</p>" +
-                "<a href='{3}'>{0} {1} {2}</a>" +
-                "<p>Bilen finns hos Bolinders Bil AB</p>", vehicle.Make, vehicle.Model, vehicle.ModelDescription, baseUrl);
+                var message = string.Format("<h1>{1} {2} {3}</h1>" +
+                "<a href='{0}/bil/{1}-{2}-{3}-{4}'>{1} {2} {3}</a>" +
+                "<p>Bilen finns hos Bolinders Bil AB</p>", baseUrl, vehicle.Make.Name, vehicle.Model, vehicle.ModelDescription, vehicle.UrlId);
 
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("bolindersbil@byteshift.se");
                 mailMessage.To.Add(reciever);
                 mailMessage.Body = message;
-                mailMessage.Subject = String.Format("Bolidners Bil AB har en {1} {2} {3} i lager!", vehicle.Make, vehicle.Model, vehicle.ModelDescription);
+                mailMessage.Subject = String.Format("Bolidners Bil AB har en {0} {1} {2} i lager!", vehicle.Make.Name, vehicle.Model, vehicle.ModelDescription);
+                mailMessage.IsBodyHtml = true;
                 client.Send(mailMessage);
 
                 return SmtpStatusCode.Ok;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return SmtpStatusCode.GeneralFailure;
-            }      
+            }
         }
     }
 }

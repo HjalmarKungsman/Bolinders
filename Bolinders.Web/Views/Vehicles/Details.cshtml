@@ -5,125 +5,185 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>@Model.Make.Name @Model.Model @Model.ModelDescription</h2>
 
 <div>
-    <h4>Vehicle</h4>
+    <h4>@Model.BodyType.GetDisplayName()</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RegistrationNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RegistrationNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Make)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Make.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Model)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModelDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModelDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Mileage)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Mileage)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BodyType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BodyType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Colour)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Colour)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Gearbox)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Gearbox)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FuelType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FuelType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Horsepowers)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Horsepowers)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Used)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Used)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Leasable)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Leasable)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Facility)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Facility.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Make)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Make.Id)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-lg-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.RegistrationNumber)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RegistrationNumber)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Year)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Year)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Mileage)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Mileage)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.BodyType)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.BodyType)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Colour)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Colour)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Gearbox)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Gearbox)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FuelType)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FuelType)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Horsepowers)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Horsepowers)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Used)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Used)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Facility)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Facility.Name)
+                </dd>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Created)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Created)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Updated)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Updated)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Leasable)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Leasable)
+                    </dd>
+                }
+            </dl>
+        </div>
+        <div class="col-lg-6">
+            <img src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Images.First().ImageUrl" style="width:100%">
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        @foreach (var image in Model.Images)
+            {
+            <div class="col-md-3">
+                <div class="thumbnail">
+                    <a href="~/images/uploads/@image.ImageUrl">
+                        <img src="~/images/uploads/@image.ImageUrl" alt="@image.ImageUrl" style="width:100%">
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+
 </div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a id="shareButton" href="#"><span class="glyphicon glyphicon-share" style="font-size: xx-large"></span></a>
 </div>
 
- @Html.Partial("_EmailLink")
+<div id="shareVehicle" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 hidden">
+    <form asp-action="ShareVehicle">
+        <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
+        <div class="form-group">
+            <label for="email">Vem vill du tipsa?</label>
+            <div class="input-group">
+
+                <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
+                <span class="input-group-btn">
+                    <input class="share btn btn-success" type="button" value="Tipsa" />
+                </span>
+                
+            </div>
+            <div id="statusMessage"></div>
+        </div>
+    </form>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.share').on('click', function (e) {
+            e.preventDefault;
+
+            var email = $('#email').val();
+            var id = $('#vehicleId').val();
+            var data = new FormData();
+            console.log(id);
+
+            data.append("id", id);
+            data.append("reciever", email);
+
+            $.ajax({
+                method: 'POST',
+                url: '@Url.Action("ShareVehicle", "Vehicles")',
+                data: data,
+                contentType: false,
+                processData: false
+            })
+                .done(function (response) {
+                    $('#statusMessage').html("<div class='alert alert-success'><strong>Skickat! </strong>" + response + "</div>");
+                }).fail(function (response) {
+                    $('#statusMessage').html("<div class='alert alert-danger'><strong>Fel! </strong>" + response + "</div>");
+                })
+            });
+        $('#shareButton').on("click", function () {
+            $('#shareVehicle').toggleClass('hidden');
+
+        });
+
+    });
+</script>

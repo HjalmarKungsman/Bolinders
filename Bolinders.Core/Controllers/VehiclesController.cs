@@ -15,6 +15,9 @@ using Bolinders.Core.Models.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using Bolinders.Core.Enums;
+using Bolinders.Core.Services;
+using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
+using System.Net.Mail;
 
 namespace Bolinders.Core.Controllers
 {
@@ -44,8 +47,8 @@ namespace Bolinders.Core.Controllers
 
             var result = _context.Vehicles
                 .OrderByDescending(x => x.Created > x.Updated ? x.Created : x.Updated)
-                .Where(y => formData.SearchText == null || 
-                    y.Make.Name.Contains(formData.SearchText) || 
+                .Where(y => formData.SearchText == null ||
+                    y.Make.Name.Contains(formData.SearchText) ||
                     y.Model.Contains(formData.SearchText) ||
                     y.ModelDescription.Contains(formData.SearchText))
                 .Where(y => formData.Used == null || y.Used.Equals(formData.Used))
@@ -113,18 +116,26 @@ namespace Bolinders.Core.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        //[AllowAnonymous]
-        //[HttpPost]
-        //public IActionResult SendEmailToFriend([Bind("Reciever, VehicleId")] EmailViewComponent email)
-        //{
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> ShareVehicle(Guid id, string reciever)
+        {
 
-        //    var vehicle = _context.Vehicles.Find(email.VehicleId);
+            var vehicle = _context.Vehicles.Include(x => x.Make).Where(x => x.Id == id).First();
+            var absUrl = string.Format("{0}://{1}", Request.Scheme,
+            Request.Host);
 
-        //    string scheme = HttpContextAccessor.HttpContext.Request.Scheme;
+            var emailSender = await EmailSenderService.SendEmailWithSharedVehicle(reciever, vehicle, absUrl);
 
-
-        //    return View();
-        //}
+            if (emailSender == SmtpStatusCode.Ok)
+            {
+                return Ok("Ditt meddelande har skickats.");
+            }
+            else
+            {
+                return BadRequest("Ett fel har uppstått se över dina uppgifter och testa igen.");
+            }
+        }
 
         // GET: Vehicles/Details/5
         [AllowAnonymous]
@@ -136,15 +147,18 @@ namespace Bolinders.Core.Controllers
                 return NotFound();
             }
             else if (id != null)
-            { 
+            {
                 var vehicle = await _context.Vehicles
                     .Include(v => v.Facility)
                     .Include(v => v.Make)
+                    .Include(v => v.Images)
                     .SingleOrDefaultAsync(m => m.Id == id);
                 if (vehicle == null)
                 {
                     return NotFound();
                 }
+
+
 
                 return View(vehicle);
             }
@@ -157,6 +171,7 @@ namespace Bolinders.Core.Controllers
                 var vehicle = await _context.Vehicles
                     .Include(v => v.Facility)
                     .Include(v => v.Make)
+                    .Include(v => v.Images)
                     .SingleOrDefaultAsync(m => m.UrlId == vehicleId);
                 if (vehicle == null)
                 {
@@ -192,8 +207,9 @@ namespace Bolinders.Core.Controllers
             {
 
                 var listOfImages = await ImageHelpers.UploadImages(vehicle.Images, _environment);
-                   
-                Vehicle newVehicle = new Vehicle {
+
+                Vehicle newVehicle = new Vehicle
+                {
                     Id = Guid.NewGuid(),
                     RegistrationNumber = vehicle.RegistrationNumber,
                     BodyType = vehicle.BodyType,
@@ -222,7 +238,7 @@ namespace Bolinders.Core.Controllers
 
                 if (vehicle.Equipment != null)
                 {
-                    newVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.Equipment, newVehicle);                  
+                    newVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.Equipment, newVehicle);
                 }
 
                 _context.Add(newVehicle);
@@ -399,10 +415,10 @@ namespace Bolinders.Core.Controllers
             {
                 return NotFound();
             }
-            foreach(var i in selectedVehicles)
+            foreach (var i in selectedVehicles)
             {
                 var vehicle = await _context.Vehicles.SingleOrDefaultAsync(m => m.Id == i);
-                _context.Vehicles.Remove(vehicle);             
+                _context.Vehicles.Remove(vehicle);
             }
             await _context.SaveChangesAsync();
 
