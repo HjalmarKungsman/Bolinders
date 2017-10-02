@@ -18,7 +18,8 @@
     </environment>
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
-    <link href="~/css/imageCarousel.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top transparent-header">
@@ -216,7 +217,12 @@
             });
 
             $('.navbar-toggle').on("click", function () {
-                $('.navbar').toggleClass('transparent-header');
+                if ($('.navbar-collaspse').hasClass('in')) {
+                    $('.navbar').addClass('transparent-header');
+                }
+                else {
+                    $('.navbar').removeClass('transparent-header');
+                }
             })
 
         });

@@ -30,7 +30,7 @@
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.Mileage) km
-                </dd>       
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.BodyType)
                 </dt>
@@ -117,15 +117,16 @@
                 }
             </dl>
 
-                <span style="font-size:x-large">@Html.DisplayFor(model => model.Price) SEK</span>
+            <span style="font-size:x-large">@Html.DisplayFor(model => model.Price) SEK</span>
 
             <hr />
-            <dl class="dl-horizontal">
+            <dl id="contactInformation" class="dl-horizontal">
                 <dt>Kontakta säljaren</dt>
                 <dd><a href="tel:@Model.Facility.PhoneNumber">@Model.Facility.PhoneNumber</a></dd>
                 <dt>Dela via e-post</dt>
                 <dd>
-                    <a id="shareButton" href="#"><span class="glyphicon glyphicon-share"></span></a>
+                    <a class="hidden-xs shareButton" href="#"><span class="glyphicon glyphicon-share"></span></a>
+                    <a class="hidden-lg hidden-md hidden-sm shareButton" href="#contactInformation"><span style="font-size:x-large" class="glyphicon glyphicon-share"></span></a>
                 </dd>
             </dl>
             @if (User.Identity.IsAuthenticated)
@@ -135,6 +136,8 @@
                     <a asp-action="Index">Se alla</a>
                 </div>
             }
+
+
             <div id="shareVehicle" class="hidden">
                 <form asp-action="ShareVehicle">
                     <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
@@ -153,48 +156,69 @@
                 </form>
             </div>
         </div>
+
         <div class="col-lg-6">
-            <img src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Images.First().ImageUrl" style="width:100%">
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-lg-12 col-xs-12">
-            <div class="carousel slide multi-item-carousel" id="theCarousel">
+            <div id="myCarousel" class="carousel slide details-slide" data-ride="carousel">
+                <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    @for (int i = 0; i < Model.Images.Count; i++)
+                    @for (int i = 0; i < @Model.Images.Count; i++)
                     {
                         if (i == 0)
                         {
                             <div class="item active">
-                                <div class="col-xs-4">
-                                    <a href="~/images/uploads/@Model.Images[i].ImageUrl">
-                                        <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
-                                    </a>
-                                </div>
+                                @*<a href="~/images/uploads/@Model.Images[i].ImageUrl">*@
+                                    <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
+                                @*</a>*@
                             </div>
                         }
                         else
                         {
                             <div class="item">
-                                <div class="col-xs-4">
-                                    <a href="~/images/uploads/@Model.Images[i].ImageUrl">
-                                        <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
-                                    </a>
-                                </div>
+                                @*<a href="~/images/uploads/@Model.Images[i].ImageUrl">*@
+                                    <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
+                                @*</a>*@
                             </div>
                         }
                     }
                 </div>
-                <a class="left carousel-control" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
-                <a class="right carousel-control" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    @for (int i = 0; i < @Model.Images.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@i" class="active">
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
+                            </li>
+                        }
+                        else
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@i">
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
+                            </li>
+                        }
+                    }
+                </ol>
             </div>
+
         </div>
     </div>
 </div>
-
-
-
+<!-- The Image Modal -->
+<div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
 
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -226,10 +250,33 @@
                 })
         });
 
-        $('#shareButton').on("click", function () {
+        $('.shareButton').on("click", function () {
             $('#shareVehicle').toggleClass('hidden');
 
         });
 
+
+        $('img').on('click', function () {
+
+        });
+
+    });
+</script>
+
+<script>
+    var modal = document.getElementById('imageModal');
+    var modalImg = document.getElementById("modalImage");
+
+    $('.myImg').on('click', function () { 
+        modal.style.display = "block";
+        modalImg.src = this.src;
+    })
+
+    $(modal).on('click', function () { 
+        modal.style.display = "none";
+    });
+   
+    $('close').on('click', function () {
+        modal.style.display = "none";
     });
 </script>
