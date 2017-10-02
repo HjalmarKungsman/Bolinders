@@ -180,6 +180,15 @@ namespace Bolinders.Core.Controllers
                     return NotFound();
                 }
 
+                //kollar relaterade makeids på aktuellt fordon, jämför pris och tar ut max 4st. 
+                var relatedVehicles = _context.Vehicles
+                    .Include(v => v.Make)
+                    .Where(b => b.MakeId == vehicle.MakeId)
+                    .Where(b => b.Price >= vehicle.Price).Take(4)
+                    .ToList();
+
+                ViewBag.relatedVehicles = relatedVehicles;
+
                 return View(vehicle);
             }
             else

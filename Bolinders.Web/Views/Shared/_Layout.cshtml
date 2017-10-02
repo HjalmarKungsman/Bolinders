@@ -171,9 +171,11 @@
                 var month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
                 var date = ('0' + dateObj.getDate()).slice(-2);
                 var year = dateObj.getFullYear();
-                var shortDate = date + '/' + month + '/' + year;
+                var hour = ('0' + dateObj.getHours()).slice(-2);
+                var minute = ('0' + dateObj.getMinutes()).slice(-2);
+                var shortDate = date + '/' + month + '/' + year + " " + hour + ":" + minute;
                 ob.publishedAt = shortDate;
-
+               
                 articles.push(ob)
             });
 
