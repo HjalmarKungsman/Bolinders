@@ -13,7 +13,8 @@
 <div class="row">
     <div class="col-lg-12" style="margin-bottom: 10%;">
         <div class="col-md-6 col-md-offset-3" style="margin-top:20%">
-            <form method="post" asp-action="list" asp-controller="vehicles">
+            <form method="post" asp-action="list" asp-controller="vehicles" asp-route-page="">
+                <input type="hidden" id="page" name="page" value="1" />
                 <div class="form-group">
                     <input type="hidden" id="page" name="page" value="1" />
                     <h2>Vad för bil söker du?</h2>

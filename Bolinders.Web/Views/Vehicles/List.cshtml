@@ -2,7 +2,8 @@
 @using Bolinders.Core.Enums
 
 <div class="row" style="margin: 20px 0 0 0;">
-    <form method="post" asp-action="list" asp-controller="vehicles">
+    <form method="post" asp-action="list" asp-controller="vehicles" asp-route-page="1">
+        <input type="hidden" id="page" name="page" value="1" />
         <div class="col-md-12">
             <div class="form-group">
                 <label for="searchText">Söktext</label>
