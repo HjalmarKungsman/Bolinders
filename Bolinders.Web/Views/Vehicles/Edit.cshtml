@@ -13,52 +13,52 @@
     <div class="col-md-12">
         <form asp-action="Edit" enctype="multipart/form-data">
             <div class="col-lg-6">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="RegistrationNumber" class="control-label"></label>
-                <input asp-for="RegistrationNumber" class="form-control" />
-                <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MakeId" class="control-label"></label>
-                <select asp-for="MakeId" class="form-control" asp-items="ViewBag.MakeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" />
-                <span asp-validation-for="Model" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModelDescription" class="control-label"></label>
-                <input asp-for="ModelDescription" class="form-control" />
-                <span asp-validation-for="ModelDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Year" class="control-label"></label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Mileage" class="control-label"></label>
-                <input asp-for="Mileage" class="form-control" />
-                <span asp-validation-for="Mileage" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BodyType" class="control-label"></label>
-                <select asp-for="BodyType" asp-items="Html.GetEnumSelectList<Bolinders.Core.Enums.BodyType>()" class="form-control"> </select>
-                <span asp-validation-for="BodyType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Colour" class="control-label"></label>
-                <input asp-for="Colour" class="form-control" />
-                <span asp-validation-for="Colour" class="text-danger"></span>
-            </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="RegistrationNumber" class="control-label"></label>
+                    <input asp-for="RegistrationNumber" class="form-control" />
+                    <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MakeId" class="control-label"></label>
+                    <select asp-for="MakeId" class="form-control" asp-items="ViewBag.MakeId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model" class="control-label"></label>
+                    <input asp-for="Model" class="form-control" />
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ModelDescription" class="control-label"></label>
+                    <input asp-for="ModelDescription" class="form-control" />
+                    <span asp-validation-for="ModelDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Year" class="control-label"></label>
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Mileage" class="control-label"></label>
+                    <input asp-for="Mileage" class="form-control" />
+                    <span asp-validation-for="Mileage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BodyType" class="control-label"></label>
+                    <select asp-for="BodyType" asp-items="Html.GetEnumSelectList<Bolinders.Core.Enums.BodyType>()" class="form-control"> </select>
+                    <span asp-validation-for="BodyType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Colour" class="control-label"></label>
+                    <input asp-for="Colour" class="form-control" />
+                    <span asp-validation-for="Colour" class="text-danger"></span>
+                </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -96,26 +96,38 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Equipment" class="control-label"></label>
-                    <select asp-for="EquipmentString" class="form-control equipment" multiple="multiple">
-                        @foreach (var item in Model.EquipmentString)
+                    @*<select asp-for="Equipment" class="form-control equipment" multiple="multiple">
+                            @for (int i = 0; i < Model.Equipment.Count; i++)
+                            {
+                                <option value="@Model.Equipment[i].Id">@Model.Equipment[i].Value</option>
+                            }
+                        </select>*@
+                    <div class="equipment-list">
+                        @if (Model.Equipment != null && Model.Equipment.Any())
                         {
-                            <option value="@item">@item</option>
+                            foreach (var equipment in Model.Equipment)
+                            {
+                                <div class="equipment-list-item" data-id="@equipment.Id">@equipment.Value</div>
+                            }
                         }
-                    </select>
+                    </div>
+                    <input type="hidden" class="existingEquipment" />
+                    <input type="hidden" class="newEquipment" />
+                    <input class="newEquipmentItem form-control" type="text"/>
                 </div>
                 <div class="form-group hidden">
                     <label asp-for="Created" class="control-label"></label>
                     <input asp-for="Created" class="form-control" />
                     <span asp-validation-for="Created" class="text-danger"></span>
                 </div>
-               <div class="form-group">
+                <div class="form-group">
                     <label for="Images">File input</label>
                     <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple />
                     <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                 </div>
                 @foreach (var img in Model.ImageList)
                 {
-                   <img onclick="deletepic('@img.Id','@img.ImageUrl')" src="~/images/uploads/@img.ImageUrl" alt="Image" class="img-thumbnail" width="254" height="176"/>
+                    <img onclick="deletepic('@img.Id','@img.ImageUrl')" src="~/images/uploads/@img.ImageUrl" alt="Image" class="img-thumbnail" width="254" height="176" />
                 }
             </div>
             <div class="form-group">
@@ -145,33 +157,49 @@
         height: 38px;
         line-height: 38px;
     }
+
+    .select2-container {
+        color: #000 !important;
+    }
 </style>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script type="text/javascript">
-    $('.equipment').select2({
+    $(document).ready(function () {
+        $('.equipment-list-item').on('click', function () {
+            this.remove(this);
+        });
 
+        $('.newEquipmentItem').on('blur', function () {
+            //TODO Fix or remove
+            $('.newEquipment').val($('.newEquipmentItem').val());
+            $('.newEquipment').val();
+
+        });
+
+    });
+    $('.equipment').select2({
         tags: true
     });
 
     function deletepic(imgId, imgUrl) {
-        if (confirm("Delete Selected picture?")) {
+            if (confirm("Delete Selected picture?")) {
 
             $.ajax({
-                url: '@Url.Action("RemoveImage", "Vehicles")',
+                    url: '@Url.Action("RemoveImage", "Vehicles")',
                 type: 'POST',
                 data: { imageId: imgId,
                         imagelink: imgUrl},
                 error: function () {
-                    console.log("error");
-                }
-            }).done(function () {
-                location.reload();
-            });
-        }
-    };
+                        console.log("error");
+                    }
+                }).done(function () {
+                    location.reload();
+                });
+            }
+        };
 </script>
 
 

@@ -18,6 +18,7 @@ using Bolinders.Core.Enums;
 using Bolinders.Core.Services;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using System.Net.Mail;
+using Newtonsoft.Json;
 
 namespace Bolinders.Core.Controllers
 {
@@ -294,20 +295,22 @@ namespace Bolinders.Core.Controllers
                 Used = vehicle.Used,
                 FacilityId = vehicle.FacilityId,
                 Facility = vehicle.Facility,
-                ImageList = vehicle.Images.ToList(),
+                ImageList = vehicle.Images,
                 Leasable = vehicle.Leasable,
                 Created = vehicle.Created,
                 Updated = vehicle.Updated,
                 Equipment = vehicle.Equipment
             };
-            if (vehicleEditing.Equipment != null)
-            {
-                vehicleEditing.EquipmentString = new List<string>();
-                foreach (var i in vehicleEditing.Equipment)
-                {
-                    vehicleEditing.EquipmentString.Add(i.Value);
-                }
-            }
+            //if (vehicleEditing.Equipment != null)
+            //{
+            //    vehicleEditing.EquipmentString = new List<string>();
+            //    foreach (var i in vehicleEditing.Equipment)
+            //    {
+            //        vehicleEditing.EquipmentString.Add(i.Value);
+            //    }
+            //}
+
+
             ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name");
             ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Name");
 
@@ -327,58 +330,89 @@ namespace Bolinders.Core.Controllers
                 return NotFound();
             }
 
-
             if (ModelState.IsValid)
             {
-                //var oldVehicle = await _context.Vehicles.Include(x => x.Images).Include(x => x.Equipment).SingleOrDefaultAsync(m => m.Id == id);
-                Vehicle updateVehicle = new Vehicle
-                {
-                    Id = id,
-                    RegistrationNumber = vehicle.RegistrationNumber,
-                    BodyType = vehicle.BodyType,
-                    Colour = vehicle.Colour,
-                    Created = vehicle.Created,
-                    Facility = vehicle.Facility,
-                    FacilityId = vehicle.FacilityId,
-                    FuelType = vehicle.FuelType,
-                    Gearbox = vehicle.Gearbox,
-                    Horsepowers = vehicle.Horsepowers,
-                    Leasable = vehicle.Leasable,
-                    Make = vehicle.Make,
-                    MakeId = vehicle.MakeId,
-                    Mileage = vehicle.Mileage,
-                    Model = vehicle.Model,
-                    ModelDescription = vehicle.ModelDescription,
-                    Price = vehicle.Price,
-                    Updated = DateTime.UtcNow,
-                    Used = vehicle.Used,
-                    Year = vehicle.Year,
-                    Images = new List<Image>(),
-                    Equipment = new List<Equipment>()
-                };
-                if (vehicle.EquipmentString != null)
-                {
-                    updateVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.EquipmentString, updateVehicle);
-                }
+                var existingVehicle = await _context.Vehicles.Include(x => x.Images).Include(x => x.Equipment).SingleOrDefaultAsync(m => m.Id == id);
+                existingVehicle.Id = vehicle.Id;
+                existingVehicle.RegistrationNumber = vehicle.RegistrationNumber;
+                existingVehicle.BodyType = vehicle.BodyType;
+                existingVehicle.Colour = vehicle.Colour;
+                existingVehicle.Created = vehicle.Created;
+                existingVehicle.Facility = vehicle.Facility;
+                existingVehicle.FacilityId = vehicle.FacilityId;
+                existingVehicle.FuelType = vehicle.FuelType;
+                existingVehicle.Gearbox = vehicle.Gearbox;
+                existingVehicle.Horsepowers = vehicle.Horsepowers;
+                existingVehicle.Leasable = vehicle.Leasable;
+                existingVehicle.Make = vehicle.Make;
+                existingVehicle.MakeId = vehicle.MakeId;
+                existingVehicle.Mileage = vehicle.Mileage;
+                existingVehicle.Model = vehicle.Model;
+                existingVehicle.ModelDescription = existingVehicle.ModelDescription;
+                existingVehicle.Price = vehicle.Price;
+                existingVehicle.Used = vehicle.Used;
+                existingVehicle.Year = vehicle.Year;
+
+                //Vehicle updateVehicle = new Vehicle
+                //{
+                //    Id = id,
+                //    RegistrationNumber = vehicle.RegistrationNumber,
+                //    BodyType = vehicle.BodyType,
+                //    Colour = vehicle.Colour,
+                //    Created = vehicle.Created,
+                //    Facility = vehicle.Facility,
+                //    FacilityId = vehicle.FacilityId,
+                //    FuelType = vehicle.FuelType,
+                //    Gearbox = vehicle.Gearbox,
+                //    Horsepowers = vehicle.Horsepowers,
+                //    Leasable = vehicle.Leasable,
+                //    Make = vehicle.Make,
+                //    MakeId = vehicle.MakeId,
+                //    Mileage = vehicle.Mileage,
+                //    Model = vehicle.Model,
+                //    ModelDescription = vehicle.ModelDescription,
+                //    Price = vehicle.Price,
+                //    Updated = DateTime.UtcNow,
+                //    Used = vehicle.Used,
+                //    Year = vehicle.Year,
+                //    Images = new List<Image>(),
+                //    Equipment = new List<Equipment>()
+                //};
+                //if (vehicle.EquipmentString != null)
+                //{
+                //    existingVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.EquipmentString, existingVehicle);
+                //}
+
+                //existingVehicle.Equipment = new List<Equipment>();
+
+                //foreach (Equipment equipment in vehicle.Equipment)
+                //{
+                //    var exists = _context.Equipments.Find(equipment.Value);
+                //    if (exists != null)
+                //    {
+                //        existingVehicle.Equipment.Add(exists);
+                //    }
+                //}
+
                 if (vehicle.ImageList != null)
                 {
                     foreach (var item in vehicle.ImageList)
                     {
-                        updateVehicle.Images.Add(item);
+                        existingVehicle.Images.Add(item);
                     }
                 }
                 if (vehicle.Images != null)
                 {
                     var listOfImages = await ImageHelpers.UploadImages(vehicle.Images, _environment);
-                    updateVehicle = ImageHelpers.ImageBuilder(listOfImages, updateVehicle);
+                    existingVehicle = ImageHelpers.ImageBuilder(listOfImages, existingVehicle);
                 }
 
                 try
                 {
-                    updateVehicle.Updated = DateTime.UtcNow;
+                    existingVehicle.Updated = DateTime.UtcNow;
                     //oldVehicle = updateVehicle;
-                    _context.Entry(updateVehicle).State = EntityState.Modified;
-                    _context.Entry(updateVehicle).Property(x => x.UrlId).IsModified = false;
+                    _context.Entry(existingVehicle).State = EntityState.Modified;
+                    _context.Entry(existingVehicle).Property(x => x.UrlId).IsModified = false;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
