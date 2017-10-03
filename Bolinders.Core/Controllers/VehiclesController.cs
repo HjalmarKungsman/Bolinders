@@ -367,7 +367,7 @@ namespace Bolinders.Core.Controllers
                     existingVehicle = ImageHelpers.ImageBuilder(listOfImages, existingVehicle);
                 }
 
-                if (vehicle.Images == null)
+                if (existingVehicle.Images.Count == 0 && vehicle.ImageList == null)
                 {
                     List<string> fillerImage = new List<string>
                     {
