@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bolinders.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace Bolinders.Core.Models.ViewModels
         public string SearchText { get; set; }
         public int? YearFrom { get; set; }
         public int? YearTo { get; set; }
-        public string BodyType { get; set; }
+        public BodyType? BodyType { get; set; }
         public int? PriceFrom { get; set; }
         public int? PriceTo { get; set; }
         public int? MileageFrom { get; set; }

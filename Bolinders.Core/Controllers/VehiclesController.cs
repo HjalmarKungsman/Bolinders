@@ -44,8 +44,6 @@ namespace Bolinders.Core.Controllers
         {
             var toSkip = (page - 1) * pageLimit;
 
-            var test = formData.PriceFrom;
-
             var result = _context.Vehicles
                 .OrderByDescending(x => x.Created > x.Updated ? x.Created : x.Updated)
                 .Where(y => formData.SearchText == null ||
@@ -60,9 +58,9 @@ namespace Bolinders.Core.Controllers
                 .Where(z => formData.MileageFrom == null || z.Mileage >= formData.MileageFrom)
                 .Where(z => formData.MileageTo == null || z.Mileage <= formData.MileageTo)
                 .Where(z => formData.Make == null || z.MakeId.Equals(formData.Make))
-                .Where(z => formData.BodyType == null || z.BodyType.Equals((BodyType)Enum.Parse(typeof(BodyType), formData.BodyType)))
-                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((Gearbox)Enum.Parse(typeof(Gearbox), formData.Gearbox)))
-                .Where(z => formData.FuelType == null || z.FuelType.Equals((FuelType)Enum.Parse(typeof(FuelType), formData.FuelType)))
+                .Where(z => formData.BodyType == null || z.BodyType.Equals(formData.BodyType))
+                .Where(z => formData.Gearbox == null || z.Gearbox.Equals(formData.Gearbox))
+                .Where(z => formData.FuelType == null || z.FuelType.Equals(formData.FuelType))
                 .Skip(toSkip)
                 .Take(pageLimit)
                 .Include(v => v.Make)
@@ -83,9 +81,9 @@ namespace Bolinders.Core.Controllers
                 .Where(z => formData.MileageFrom == null || z.Mileage >= formData.MileageFrom)
                 .Where(z => formData.MileageTo == null || z.Mileage >= formData.MileageTo)
                 .Where(z => formData.Make == null || z.MakeId.Equals(formData.Make))
-                .Where(z => formData.BodyType == null || z.BodyType.Equals((BodyType)Enum.Parse(typeof(BodyType), formData.BodyType)))
-                .Where(z => formData.Gearbox == null || z.Gearbox.Equals((Gearbox)Enum.Parse(typeof(Gearbox), formData.Gearbox)))
-                .Where(z => formData.FuelType == null || z.FuelType.Equals((FuelType)Enum.Parse(typeof(FuelType), formData.FuelType)))
+                .Where(z => formData.BodyType == null || z.BodyType.Equals(formData.BodyType))
+                .Where(z => formData.Gearbox == null || z.Gearbox.Equals(formData.Gearbox))
+                .Where(z => formData.FuelType == null || z.FuelType.Equals(formData.FuelType))
                 .Count();
 
             var itemsFinal = await result.ToListAsync();

@@ -42,11 +42,15 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="bodyType">Kaross</label>
-                    <select id="bodyType" name="bodyType" class="form-control input-sm" asp-items="Html.GetEnumSelectList<BodyType>()"></select>
+                    <select asp-for="@Model.SeachModel.BodyType" id="bodyType" name="bodyType" class="form-control input-sm" asp-items="Html.GetEnumSelectList<BodyType>()">
+                        <option value="">Alla karosser</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="gearbox">Växellåda</label>
-                    <select id="gearbox" name="gearbox" class="form-control input-sm" asp-items="Html.GetEnumSelectList<Gearbox>()"></select>
+                    <select asp-for="@Model.SeachModel.Gearbox" id="gearbox" name="gearbox" class="form-control input-sm" asp-items="Html.GetEnumSelectList<Gearbox>()">
+                        <option value="">Alla växellådor</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -79,8 +83,12 @@
     <p class="text-center" style="font-size:x-large"><strong>Tyvärr matchade din sökning/filtrering inga bilar</strong></p>
 
 }
-@if (Model.Pager.TotalItems > 8)
-{
+
+@*Behövs ingen ingen if-sats här. Pagehelpern har en inbyggd funktion som returnerar noll ifall antalet bilar som hittade får plats på en sida. 
+    Alltså är den anpassningsbar ifall man kan välja hur många bilar som ska visas på varje sida. Funktionen finns just nu med querystringen ?pageLimit=8,
+    men den är inte implementerad i VehicleSearchViewModel*@ 
+@*@if (Model.Pager.TotalItems > 8)
+    {*@
     <div page-model="@Model"
          page-action="List"
          enable-page-classes="true"
@@ -88,7 +96,7 @@
          page-class-normal="btn-default"
          page-class-selected="btn-primary"
          class="btn-group"></div>
-}
+@*}*@
    
 
 
