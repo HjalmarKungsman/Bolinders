@@ -24,8 +24,7 @@
                 <h4><strong>@Model.Make.Name @Model.Model @Model.ModelDescription</strong></h4>
                 <strong>@used</strong>
                 <br />
-                @*<p>@Model.FuelType.GetDisplayName(), @Model.BodyType.GetDisplayName(), @Model.Year, @Model.Mileage, @Model.Gearbox.GetDisplayName()</p>*@
-                <span style="color: green">@($"Pris: {Model.Price}")</span>
+                <span style="color: green">@($"Pris: {Model.Price:C0}")</span>
 
 
             </div>
