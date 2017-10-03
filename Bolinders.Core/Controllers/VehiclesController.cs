@@ -299,14 +299,14 @@ namespace Bolinders.Core.Controllers
                 Updated = vehicle.Updated,
                 Equipment = vehicle.Equipment
             };
-            //if (vehicleEditing.Equipment != null)
-            //{
-            //    vehicleEditing.EquipmentString = new List<string>();
-            //    foreach (var i in vehicleEditing.Equipment)
-            //    {
-            //        vehicleEditing.EquipmentString.Add(i.Value);
-            //    }
-            //}
+            if (vehicleEditing.Equipment != null)
+            {
+                vehicleEditing.EquipmentString = new List<string>();
+                foreach (var i in vehicleEditing.Equipment)
+                {
+                    vehicleEditing.EquipmentString.Add(i.Value);
+                }
+            }
 
 
             ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Name");
@@ -330,7 +330,8 @@ namespace Bolinders.Core.Controllers
 
             if (ModelState.IsValid)
             {
-                var existingVehicle = await _context.Vehicles.Include(x => x.Images).Include(x => x.Equipment).SingleOrDefaultAsync(m => m.Id == id);
+                var existingVehicle = 
+                    await _context.Vehicles.Include(x => x.Images).Include(x => x.Equipment).SingleOrDefaultAsync(m => m.Id == id);
                 existingVehicle.Id = vehicle.Id;
                 existingVehicle.RegistrationNumber = vehicle.RegistrationNumber;
                 existingVehicle.BodyType = vehicle.BodyType;
@@ -350,47 +351,8 @@ namespace Bolinders.Core.Controllers
                 existingVehicle.Price = vehicle.Price;
                 existingVehicle.Used = vehicle.Used;
                 existingVehicle.Year = vehicle.Year;
-
-                //Vehicle updateVehicle = new Vehicle
-                //{
-                //    Id = id,
-                //    RegistrationNumber = vehicle.RegistrationNumber,
-                //    BodyType = vehicle.BodyType,
-                //    Colour = vehicle.Colour,
-                //    Created = vehicle.Created,
-                //    Facility = vehicle.Facility,
-                //    FacilityId = vehicle.FacilityId,
-                //    FuelType = vehicle.FuelType,
-                //    Gearbox = vehicle.Gearbox,
-                //    Horsepowers = vehicle.Horsepowers,
-                //    Leasable = vehicle.Leasable,
-                //    Make = vehicle.Make,
-                //    MakeId = vehicle.MakeId,
-                //    Mileage = vehicle.Mileage,
-                //    Model = vehicle.Model,
-                //    ModelDescription = vehicle.ModelDescription,
-                //    Price = vehicle.Price,
-                //    Updated = DateTime.UtcNow,
-                //    Used = vehicle.Used,
-                //    Year = vehicle.Year,
-                //    Images = new List<Image>(),
-                //    Equipment = new List<Equipment>()
-                //};
-                //if (vehicle.EquipmentString != null)
-                //{
-                //    existingVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.EquipmentString, existingVehicle);
-                //}
-
-                //existingVehicle.Equipment = new List<Equipment>();
-
-                //foreach (Equipment equipment in vehicle.Equipment)
-                //{
-                //    var exists = _context.Equipments.Find(equipment.Value);
-                //    if (exists != null)
-                //    {
-                //        existingVehicle.Equipment.Add(exists);
-                //    }
-                //}
+                existingVehicle.Equipment = vehicle.EquipmentString.Select(x => new Equipment(x, existingVehicle)).ToList();
+                
 
                 if (vehicle.ImageList != null)
                 {
@@ -405,12 +367,25 @@ namespace Bolinders.Core.Controllers
                     existingVehicle = ImageHelpers.ImageBuilder(listOfImages, existingVehicle);
                 }
 
+                if (vehicle.Images == null)
+                {
+                    List<string> fillerImage = new List<string>
+                    {
+                        "noimage.jpg"
+                    };
+
+                    existingVehicle = ImageHelpers.ImageBuilder(fillerImage, existingVehicle);
+                }
+
+
+
                 try
                 {
                     existingVehicle.Updated = DateTime.UtcNow;
-                    //oldVehicle = updateVehicle;
+
                     _context.Entry(existingVehicle).State = EntityState.Modified;
                     _context.Entry(existingVehicle).Property(x => x.UrlId).IsModified = false;
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -428,6 +403,7 @@ namespace Bolinders.Core.Controllers
             }
             ViewData["FacilityId"] = new SelectList(_context.Facilities, "Id", "Id", vehicle.FacilityId);
             ViewData["MakeId"] = new SelectList(_context.Make, "Id", "Id", vehicle.MakeId);
+
             return View(vehicle);
         }
 

@@ -14,5 +14,22 @@ namespace Bolinders.Core.Models
         [ForeignKey("VehicledId")]
         public Vehicle Vehicle { get; set; }
         public string Value { get; set; }
+
+        public Equipment()
+        {
+
+        }
+
+        public Equipment(string value, Vehicle vehicle)
+        {
+            if (vehicle.Id != Guid.Empty)
+            {
+                Id = Guid.NewGuid();
+            }
+
+            VehicledId = vehicle.Id;
+            Vehicle = vehicle;
+            Value = value;
+        }
     }
 }

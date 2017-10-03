@@ -95,14 +95,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Equipment" class="control-label"></label>
-                    @*<select asp-for="Equipment" class="form-control equipment" multiple="multiple">
-                            @for (int i = 0; i < Model.Equipment.Count; i++)
+                    <label asp-for="EquipmentString" class="control-label"></label>
+                    <select asp-for="EquipmentString" class="form-control equipment" multiple="multiple">
+                            @*@for (int i = 0; i < Model.Equipment.Count; i++)
                             {
                                 <option value="@Model.Equipment[i].Id">@Model.Equipment[i].Value</option>
+                            }*@
+                            @foreach (var item in Model.EquipmentString)
+                            {
+                                <option value="@item">@item</option>
                             }
-                        </select>*@
-                    <div class="equipment-list">
+
+                        </select>
+                    @*<div class="equipment-list">
                         @if (Model.Equipment != null && Model.Equipment.Any())
                         {
                             foreach (var equipment in Model.Equipment)
@@ -110,10 +115,10 @@
                                 <div class="equipment-list-item" data-id="@equipment.Id">@equipment.Value</div>
                             }
                         }
-                    </div>
-                    <input type="hidden" class="existingEquipment" />
+                    </div>*@
+                    @*<input type="hidden" class="existingEquipment" />
                     <input type="hidden" class="newEquipment" />
-                    <input class="newEquipmentItem form-control" type="text"/>
+                    <input class="newEquipmentItem form-control" type="text"/>*@
                 </div>
                 <div class="form-group hidden">
                     <label asp-for="Created" class="control-label"></label>
@@ -168,16 +173,16 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.equipment-list-item').on('click', function () {
-            this.remove(this);
-        });
+        //$('.equipment-list-item').on('click', function () {
+        //    this.remove(this);
+        //});
 
-        $('.newEquipmentItem').on('blur', function () {
-            //TODO Fix or remove
-            $('.newEquipment').val($('.newEquipmentItem').val());
-            $('.newEquipment').val();
+        //$('.newEquipmentItem').on('blur', function () {
+        //    //TODO Fix or remove
+        //    $('.newEquipment').val($('.newEquipmentItem').val());
+        //    $('.newEquipment').val();
 
-        });
+        //});
 
     });
     $('.equipment').select2({

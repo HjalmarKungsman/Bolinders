@@ -156,6 +156,9 @@ a:hover {
 .navbar-inverse .navbar-nav > li > a {
   color: #ffffff;
 }
+/*.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: @theme-color;
+}*/
 .equipment-list {
   display: flex;
   flex-wrap: wrap;
