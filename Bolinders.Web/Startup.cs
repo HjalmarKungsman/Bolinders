@@ -98,6 +98,11 @@ namespace Bolinders.Web
 
                 routes.MapRoute(
                     name: null,
+                    template: "bilar",
+                    defaults: new { Controller = "Vehicles", action = "List" });
+
+                routes.MapRoute(
+                    name: null,
                     template: "bilar/nya",
                     defaults: new { Controller = "Vehicles", action = "List", used = false });
 
@@ -105,11 +110,6 @@ namespace Bolinders.Web
                     name: null,
                     template: "bilar/begagnade",
                     defaults: new { Controller = "Vehicles", action = "List", used = true });
-
-                routes.MapRoute(
-                    name: null,
-                    template: "bilar",
-                    defaults: new { Controller = "Vehicles", action = "List" });
 
                 routes.MapRoute(
                     name: "Vehicles-routing",
