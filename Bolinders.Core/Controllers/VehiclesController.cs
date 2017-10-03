@@ -42,8 +42,10 @@ namespace Bolinders.Core.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
         {
+            //Calculated how many pages to skip
             var toSkip = (page - 1) * pageLimit;
 
+            //Get current page's list of vehicles
             var result = _context.Vehicles
                 .OrderByDescending(x => x.Created > x.Updated ? x.Created : x.Updated)
                 .Where(y => formData.SearchText == null ||
@@ -68,6 +70,7 @@ namespace Bolinders.Core.Controllers
                 .Include(v => v.Equipment)
                 .AsQueryable();
 
+            //Calculates total hits in db
             var countResult = _context.Vehicles
                 .Where(y => formData.SearchText == null ||
                     y.Make.Name.Contains(formData.SearchText) ||
@@ -88,24 +91,21 @@ namespace Bolinders.Core.Controllers
 
             var itemsFinal = await result.ToListAsync();
 
-            var paging = new PagingInfo { CurrentPage = page, ItemsPerPage = pageLimit, TotalItems = countResult };
-            var vm = new VehicleListViewModel { Vehicles = itemsFinal, Pager = paging, SeachModel = formData };
+            //Sets the paginering object
+            var paging = new PagingInfo {
+                CurrentPage = page,
+                ItemsPerPage = pageLimit,
+                TotalItems = countResult
+            };
 
-            ViewBag.SearchText = formData.SearchText;
-            ViewBag.PriceFrom = formData.PriceFrom;
-            ViewBag.PriceTo = formData.PriceTo;
-            ViewBag.MileageFrom = formData.MileageFrom;
-            ViewBag.MileageTo = formData.MileageTo;
-            ViewBag.YearFrom = formData.YearFrom;
-            ViewBag.YearTo = formData.YearTo;
-            ViewBag.BodyType = formData.BodyType;
-            ViewBag.Gearbox = formData.Gearbox;
+            //Sets the viewmodel with current page's vehicle list, paging info & searchmodels filter
+            var vm = new VehicleListViewModel {
+                Vehicles = itemsFinal,
+                Pager = paging,
+                SeachModel = formData
+            };
+
             return View("~/Views/Vehicles/List.cshtml", vm);
-        }
-
-        private object VehicleSearchHelper()
-        {
-            throw new NotImplementedException();
         }
 
         //GET: Vehicles

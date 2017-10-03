@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label for="searchText">Söktext</label>
-                <input type="text" class="form-control input-sm" id="searchText" name="searchText" placeholder="Söktext" value="@ViewBag.SearchText" />
+                <input type="text" class="form-control input-sm" id="searchText" name="searchText" placeholder="Söktext" value="@Model.SeachModel.SearchText" />
             </div>
         </div>
         
@@ -15,29 +15,29 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="priceFrom">Pris från</label>
-                    <input type="number" class="form-control input-sm" id="priceFrom" name="priceFrom" placeholder="Pris från" value="@ViewBag.PriceFrom" />
+                    <input type="number" class="form-control input-sm" id="priceFrom" name="priceFrom" placeholder="Pris från" value="@Model.SeachModel.PriceFrom" />
                 </div>
                 <div class="form-group">
                     <label for="mileFrom">Mil från</label>
-                    <input type="number" class="form-control input-sm" id="mileageTo" name="mileageFrom" placeholder="Mil från" value="@ViewBag.MileageFrom" />
+                    <input type="number" class="form-control input-sm" id="mileageTo" name="mileageFrom" placeholder="Mil från" value="@Model.SeachModel.MileageFrom" />
                 </div>
                 <div class="form-group">
                     <label for="yearFrom">År från</label>
-                    <input type="number" class="form-control input-sm" id="yearFrom" name="yearFrom" placeholder="År från" value="@ViewBag.YearFrom" />
+                    <input type="number" class="form-control input-sm" id="yearFrom" name="yearFrom" placeholder="År från" value="@Model.SeachModel.YearFrom" />
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="priceTo">Pris till</label>
-                    <input type="number" class="form-control input-sm" id="priceTo" name="priceTo" placeholder="Pris till" value="@ViewBag.PriceTo" />
+                    <input type="number" class="form-control input-sm" id="priceTo" name="priceTo" placeholder="Pris till" value="@Model.SeachModel.PriceTo" />
                 </div>
                 <div class="form-group">
                     <label for="mileTo">Mil till</label>
-                    <input type="number" class="form-control input-sm" id="mileageTo" name="mileageTo" placeholder="Mil till" value="@ViewBag.MileageTo" />
+                    <input type="number" class="form-control input-sm" id="mileageTo" name="mileageTo" placeholder="Mil till" value="@Model.SeachModel.MileageTo" />
                 </div>
                 <div class="form-group">
                     <label for="yearTo">År till</label>
-                    <input type="number" class="form-control input-sm" id="yearTo" name="yearTo" placeholder="År till" value="@ViewBag.YearTo" />
+                    <input type="number" class="form-control input-sm" id="yearTo" name="yearTo" placeholder="År till" value="@Model.SeachModel.YearTo" />
                 </div>
             </div>
             <div class="col-md-4">
