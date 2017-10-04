@@ -97,28 +97,12 @@
                 <div class="form-group">
                     <label asp-for="EquipmentString" class="control-label"></label>
                     <select asp-for="EquipmentString" class="form-control equipment" multiple="multiple">
-                            @*@for (int i = 0; i < Model.Equipment.Count; i++)
-                            {
-                                <option value="@Model.Equipment[i].Id">@Model.Equipment[i].Value</option>
-                            }*@
-                            @foreach (var item in Model.EquipmentString)
-                            {
-                                <option value="@item">@item</option>
-                            }
-
-                        </select>
-                    @*<div class="equipment-list">
-                        @if (Model.Equipment != null && Model.Equipment.Any())
+                        @foreach (var item in Model.EquipmentString)
                         {
-                            foreach (var equipment in Model.Equipment)
-                            {
-                                <div class="equipment-list-item" data-id="@equipment.Id">@equipment.Value</div>
-                            }
+                            <option value="@item">@item</option>
                         }
-                    </div>*@
-                    @*<input type="hidden" class="existingEquipment" />
-                    <input type="hidden" class="newEquipment" />
-                    <input class="newEquipmentItem form-control" type="text"/>*@
+
+                    </select>
                 </div>
                 <div class="form-group hidden">
                     <label asp-for="Created" class="control-label"></label>
@@ -130,10 +114,17 @@
                     <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple />
                     <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                 </div>
-                @foreach (var img in Model.ImageList)
-                {
-                    <img onclick="deletepic('@img.Id','@img.ImageUrl')" src="~/images/uploads/@img.ImageUrl" alt="Image" class="img-thumbnail" width="254" height="176" />
-                }
+                <div class="currentImages">
+                    @foreach (var img in Model.ImageList)
+                    {
+                        <div class="imgDeleteBox" onclick="deletepic('@img.Id','@img.ImageUrl')">
+                            <img src="~/images/uploads/@img.ImageUrl" alt="Image" class="images" width="254" height="176" />
+                            <div class="imgMiddle">
+                                <div class="imgText"><i class="fa fa-trash" style="font-size:100px"></i></div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

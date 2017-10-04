@@ -8,7 +8,7 @@
 <h2>@ViewBag.Title</h2>
 
 
-    <a class="btn btn-default" asp-action="Create">Nytt fordon</a>
+<a class="btn btn-default" asp-action="Create">Nytt fordon</a>
 
 <hr />
 <table class="table table-striped">
@@ -64,7 +64,7 @@
         {
             <tr>
                 <td class="table-bordered">
-                    <input type="checkbox" name="selectedVehicles" value="@item.Id">
+                    <input type="checkbox" class="selectedVehicles" value="@item.Id">
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Make.Name)
@@ -114,30 +114,41 @@
         }
     </tbody>
 </table>
-<p>
-    <a onclick="collect()" class="btn btn-danger">Delete Selected</a>
+<p> 
+    <a class="btn btn-danger disabled" id="deleteButton">Delete Selected</a>
 </p>
 <script>
-    function collect() {
-        if (confirm("Delete Selected items?")) {
-            var arrayId = new Array();
-            var checkboxes = document.querySelectorAll('input[name=selectedVehicles]:checked')
+    $(document).ready(function () {
 
-            for (var i = 0; i < checkboxes.length; i++) {
-                arrayId.push(checkboxes[i].value)
+        $('.selectedVehicles').on('change', function () {
+            if ($('.selectedVehicles:checked').length > 0)
+            {
+                $('#deleteButton').removeClass('disabled');
             }
-            $.ajax({
-                url: '@Url.Action("DeleteSelected", "Vehicles")',
-                type: 'POST',
-                traditional: true,
-                data: { selectedVehicles: arrayId },
-                error: function () {
-                    console.log("error");
-                }
-            }).done(function () {
-                location.reload();
-            });
+            else { $('#deleteButton').addClass('disabled'); }
+        }),
 
-        }
-    }
+        $('#deleteButton').on('click', function () {
+            if (confirm("Delete Selected items?")) {
+                var arrayId = new Array();
+                var checkboxes = document.querySelectorAll('.selectedVehicles:checked')
+
+                for (var i = 0; i < checkboxes.length; i++) {
+                    arrayId.push(checkboxes[i].value)
+                }
+                $.ajax({
+                    url: '@Url.Action("DeleteSelected", "Vehicles")',
+                    type: 'POST',
+                    traditional: true,
+                    data: { selectedVehicles: arrayId },
+                    error: function () {
+                        console.log("error");
+                    }
+                }).done(function () {
+                    location.reload();
+                });
+            }
+         });
+    });
+
 </script>
