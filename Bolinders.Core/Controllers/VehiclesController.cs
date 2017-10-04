@@ -209,6 +209,8 @@ namespace Bolinders.Core.Controllers
                     .Where(b => b.MakeId == vehicle.MakeId)
                     .Where(b => b.Price >= vehicle.Price)
                     .Where(b => b.Id != vehicle.Id).Take(4)
+                    .Include(v => v.Images)
+                    
                     .ToList();
 
                 ViewBag.relatedVehicles = relatedVehicles;

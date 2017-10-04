@@ -218,6 +218,26 @@
                 </ol>
             </div>
 
+
+        <div id="relatedVehicle">
+        <h1>Relaterade fordon!</h1>
+        <ul>
+            @foreach (var item in ViewBag.relatedVehicles)
+            {
+                var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
+                vehicleLinkId = vehicleLinkId.Replace(" ", "_");
+                <li>
+                    <div class="item active">
+                        <a href="/bil/@vehicleLinkId"> <img src="~/images/uploads/@item.Images[0].ImageUrl" style="margin: 0 auto" alt="@item.Model" class="img-responsive" /></a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+
+
+            
+
         </div>
     </div>
 </div>
