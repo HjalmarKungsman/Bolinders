@@ -129,10 +129,16 @@ namespace Bolinders.Core.Controllers
         //GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Vehicles.Include(v => v.Facility).Include(v => v.Make);
+            var applicationDbContext = _context.Vehicles
+                .Include(v => v.Facility)
+                .Include(v => v.Make)
+                .OrderBy(v => v.ModelDescription)
+                .OrderBy(v => v.Model)
+                .OrderBy(v => v.Make.Name);
             return View(await applicationDbContext.ToListAsync());
         }
 
+        //POST: ShareVehicles
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ShareVehicle(Guid id, string reciever)
