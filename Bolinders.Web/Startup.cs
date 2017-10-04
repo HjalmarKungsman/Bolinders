@@ -127,8 +127,14 @@ namespace Bolinders.Web
                     defaults: new { Controller = "Home", Action = "Contact" });
 
                 routes.MapRoute(
+                    name: "Admin",
+                    template: "admin",
+                    defaults: new { Controller = "Account", Action = "Login" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
             });
 
             Seed.FillIfEmpty(ctx, userManager);

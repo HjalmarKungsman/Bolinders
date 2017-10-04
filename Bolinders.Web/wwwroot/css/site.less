@@ -1,8 +1,7 @@
 ﻿@theme-color: #bb0000;
-/*@theme-background-color: #363636;*/
 @theme-background-color: #000;
-@theme-font-color: #ffffff;
-
+@theme-font-color: #fff;
+@theme-color-75: fade(@theme-color, 75%); 
 
 body {
     background-color: @theme-background-color;
@@ -197,11 +196,13 @@ a:hover {
     color: @theme-font-color;
 }
 
-
+.form-control:focus {
+    border-color: @theme-color;
+    box-shadow: inset 0 1px 1px fade(@theme-color, 75%), 0 0 8px fade(@theme-color, 60%);
+}
 /*.select2-container--default .select2-results__option[aria-selected=true] {
     background-color: @theme-color;
 }*/
-
 .equipment-list {
     display: flex;
     flex-wrap: wrap;
@@ -237,7 +238,6 @@ a:hover {
 }
 /* Indicators images style */
 .details-slide .carousel-indicators img {
-
     height: 54px;
     width: 100px;
 }
@@ -265,7 +265,6 @@ a:hover {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
 }
-
 /* Modal Content (Image) */
 .modal-content {
     margin: auto;
@@ -273,7 +272,6 @@ a:hover {
     width: 80%;
     max-width: 700px;
 }
-
 /* Add Animation - Zoom in the Modal */
 .modal-content, #caption {
     -webkit-animation-name: zoom;
@@ -301,7 +299,6 @@ a:hover {
         transform: scale(1)
     }
 }
-
 /* The Close Button */
 .close {
     position: absolute;
@@ -347,7 +344,6 @@ a:hover {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%)
 }
-
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px) {
     .modal-content {
