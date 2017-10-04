@@ -16,18 +16,12 @@
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.Make)
+                @Html.DisplayNameFor(model => model.Make), @Html.DisplayNameFor(model => model.Model), Beskrivning
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Model)
+                År
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModelDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Year)
-            </th>
-            <th>
+            <th class="nowrap text-right">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
@@ -40,21 +34,21 @@
                 @Html.DisplayNameFor(model => model.FuelType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Used)
+                Beg
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Leasable)
+                Leas
             </th>
-            <th>
+            <th class="nowrap">
                 @Html.DisplayNameFor(model => model.Created)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Updated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Facility)
+                Ort
             </th>
-            <th>
+            <th class="nowrap">
                 Editor
             </th>
         </tr>
@@ -67,19 +61,13 @@
                     <input type="checkbox" name="selectedVehicles" value="@item.Id">
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Make.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModelDescription)
+                    @Html.DisplayFor(modelItem => item.Make.Name) @Html.DisplayFor(modelItem => item.Model) @Html.DisplayFor(modelItem => item.ModelDescription)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Year)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                <td class="nowrap text-right">
+                    @($"{item.Price:N0}")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BodyType)
@@ -96,18 +84,18 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Leasable)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
+                <td class="nowrap">
+                    @item.Created.ToShortDateString()
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Updated)
+                <td class="nowrap">
+                    @item.Updated.ToShortDateString()
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Facility.Name)
                 </td>
                 <td class="table-bordered">
-                    <a asp-action="Edit" asp-route-id="@item.Id"><span title="Edit" class="glyphicon glyphicon-edit"></span></a> |
-                    <a asp-action="Details" asp-route-id="@item.Id"><span title="Details" class="glyphicon glyphicon-list-alt"></span></a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id"><span title="Edit" class="glyphicon glyphicon-edit"></span></a>&nbsp
+                    <a asp-action="Details" asp-route-id="@item.Id"><span title="Details" class="glyphicon glyphicon-list-alt"></span></a>&nbsp
                     <a asp-action="Delete" asp-route-id="@item.Id"><span title="Delete" class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
