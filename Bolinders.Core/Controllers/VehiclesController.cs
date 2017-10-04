@@ -207,7 +207,8 @@ namespace Bolinders.Core.Controllers
                 var relatedVehicles = _context.Vehicles
                     .Include(v => v.Make)
                     .Where(b => b.MakeId == vehicle.MakeId)
-                    .Where(b => b.Price >= vehicle.Price).Take(4)
+                    .Where(b => b.Price >= vehicle.Price)
+                    .Where(b => b.Id != vehicle.Id).Take(4)
                     .ToList();
 
                 ViewBag.relatedVehicles = relatedVehicles;
