@@ -378,8 +378,16 @@ namespace Bolinders.Core.Controllers
                 existingVehicle.Price = vehicle.Price;
                 existingVehicle.Used = vehicle.Used;
                 existingVehicle.Year = vehicle.Year;
-                existingVehicle.Equipment = vehicle.EquipmentString.Select(x => new Equipment(x, existingVehicle)).ToList();
-                
+
+                if (vehicle.EquipmentString != null)
+                {
+                    existingVehicle.Equipment = vehicle.EquipmentString.Select(x => new Equipment(x, existingVehicle)).ToList();
+                }
+                else
+                {
+                    existingVehicle.Equipment = null;
+                }
+                      
 
                 if (vehicle.ImageList != null)
                 {
