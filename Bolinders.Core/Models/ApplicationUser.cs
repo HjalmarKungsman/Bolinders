@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
+using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Core.Models
 {

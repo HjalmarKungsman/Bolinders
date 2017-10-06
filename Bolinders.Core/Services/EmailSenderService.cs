@@ -1,5 +1,6 @@
 ﻿using Bolinders.Core.Helpers;
 using Bolinders.Core.Models;
+using Bolinders.Core.Models.Entities;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;

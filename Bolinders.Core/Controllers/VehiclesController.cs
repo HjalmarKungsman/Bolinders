@@ -19,6 +19,7 @@ using Bolinders.Core.Services;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using System.Net.Mail;
 using Newtonsoft.Json;
+using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Core.Controllers
 {
