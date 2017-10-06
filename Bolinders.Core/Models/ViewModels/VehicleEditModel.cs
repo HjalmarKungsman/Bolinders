@@ -1,5 +1,4 @@
 ﻿using Bolinders.Core.Enums;
-using Bolinders.Core.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace Bolinders.Core.Models.ViewModels
 {
-    public class VehicleEditViewModel
+    public class VehicleEditModel
     {
         public Guid Id { get; set; }
         public string RegistrationNumber { get; set; }

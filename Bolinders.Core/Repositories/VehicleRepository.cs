@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bolinders.Core.DataAccess;
 using Bolinders.Core.Models;
-using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Core.Repositories
 {

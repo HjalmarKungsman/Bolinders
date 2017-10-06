@@ -13,7 +13,6 @@ using Microsoft.Extensions.Options;
 using Bolinders.Core.Models.AccountViewModels;
 using Bolinders.Core.Models;
 using Bolinders.Core.Services;
-using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Core.Controllers
 {

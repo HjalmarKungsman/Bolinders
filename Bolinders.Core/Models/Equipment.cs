@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bolinders.Core.Models.Entities
+namespace Bolinders.Core.Models
 {
     public class Equipment
     {

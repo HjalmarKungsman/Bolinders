@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bolinders.Core.Models.Entities
+namespace Bolinders.Core.Models
 {
     public class Make
     {

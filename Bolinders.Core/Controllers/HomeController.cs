@@ -11,7 +11,6 @@ using Bolinders.Core.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Bolinders.Core.Services;
 using System.Net.Mail;
-using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Core.Controllers
 {

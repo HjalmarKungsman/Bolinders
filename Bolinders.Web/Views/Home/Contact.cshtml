@@ -3,33 +3,41 @@
 @{
     ViewData["Title"] = "Kontakt";
 }
-<h1>@ViewBag.Title</h1>
-<hr />
+
 <div class="col-lg-12">
     @{
         <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBk-v4Q-5hiaJeLvNpOAdBwSQsyrCaE-ow'></script>
-
-        @*<div style='overflow:hidden;height:400px;width:520px;'>*@
-        <div id='googleMap'></div>
+     
+        <div style='overflow:hidden;height:400px;width:520px;'>
+            <div id='id' style='height:400px;width:520px;'></div>
             <style>
-               
+                #gmap_canvas img {
+                    max-width: none !important;
+                    background: none !important
+                }
+                a, a:active, a:focus, a:hover, a:after, a:visited, :link {
+                    color:black;
+                }
+                span.gm {
+                    color: black;
+                }
             </style>
-            @*</div>*@
-            <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=7c1fa14bdc2fe0ddafaa3e7f80fbbd1a808087dc'></script>
-            <script type='text/javascript'>
+        </div>
+        <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=7c1fa14bdc2fe0ddafaa3e7f80fbbd1a808087dc'></script>
+        <script type='text/javascript'>
             function init_map() {
 
                                 var myOptions = {
                                     zoom: 7, center: new google.maps.LatLng(57.78261370000001, 14.161787600000025),
                                     mapTypeId: google.maps.MapTypeId.ROADMAP
-                }; map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+                }; map = new google.maps.Map(document.getElementById("id"), myOptions);
 
                 @foreach (var item in ViewBag.Contacts)
                 {
                     <text>
                     marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(@(item.Latitude), @(item.Longitude)) });
                     marker['infowindow-@(item.Id)'] = new google.maps.InfoWindow({
-                        content: '<h5 class="gm-text">Bolinders Bil i @(item.City)</h5><a class="gm-link" target="_blank" href="https://maps.google.com/?q=@(item.Latitude),@(item.Longitude)">Visa på Google Maps</a>'
+                        content: '<span class="gm"><strong>Bolinders Bil i @(item.City)</strong><br><a target="_blank" href="https://maps.google.com/?q=@(item.Latitude),@(item.Longitude)">Visa på Google Maps</a></span>'
                     });
 
                     google.maps.event.addListener(marker, 'click', function ()
@@ -42,31 +50,30 @@
                 }
             }
             google.maps.event.addDomListener(window, 'load', init_map);
-            </script>
-
-            <div class="col-md-6">
-                <h2>Adress</h2>
-                <hr />
-                <ul>
-                    @foreach (var c in ViewBag.Contacts)
+        </script>
+      
+        <div class="col-md-6">
+            <h2>@ViewData["Title"]</h2>
+            <ul>
+                @foreach (var c in ViewBag.Contacts)
             {
-                        <li>
-                            <b>Bolinders bil @c.Name </b>
-                            <p>
-                                @c.Address @c.City
-                                <br>
-                                Telefon: @c.PhoneNumber
-                                <br>
-                                E-post: <a href="mailto:@{@c.Email}">@c.Email</a>
-                            </p>
-                        </li>
+                    <li>
+                        <b>Bolinders bil @c.Name </b>
+                        <p>
+                            @c.Address @c.City
+                            <br>
+                            Telefon: @c.PhoneNumber
+                            <br>
+                            E-post: <a href="mailto:@{@c.Email}">@c.Email</a>
+                        </p>
+                    </li>
     }
-                </ul>
-            </div>
+            </ul>
+        </div>
     }
 
-
-
+    
+    
     <div class="col-md-6">
         <h2>Kontakta oss direkt!</h2>
         <hr />

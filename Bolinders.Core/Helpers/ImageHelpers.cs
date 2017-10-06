@@ -1,5 +1,4 @@
 ﻿using Bolinders.Core.Models;
-using Bolinders.Core.Models.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -60,7 +59,7 @@ namespace Bolinders.Core.Helpers
         {
             for (int i = 0; i < listOfImages.Count; i++)
             {
-                Models.Entities.Image newImage = new Models.Entities.Image(listOfImages[i], vehicle.Id);
+                Models.Image newImage = new Models.Image(listOfImages[i], vehicle.Id);
                 vehicle.Images.Add(newImage);
             }
             return vehicle;

@@ -33,6 +33,12 @@ namespace Bolinders.Web.Infrastructure
         public string PageClassSelected { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            // If there is only 1 page, show no pagination
+            if (PageModel.Pager.TotalPages == 1)
+            {
+                output.Content.AppendHtml("");
+            }
+
             // Generate a querystring if search or filter is active.
             string queryString = "";
             bool first = true;
@@ -125,12 +131,6 @@ namespace Bolinders.Web.Infrastructure
                 }
                 tag.InnerHtml.Append(">>");
                 result.InnerHtml.AppendHtml(tag);
-            }
-
-            // If there is only 1 page, show no pagination
-            if (PageModel.Pager.TotalPages == 1)
-            {
-                result.InnerHtml.Clear();
             }
 
             output.Content.AppendHtml(result.InnerHtml);
