@@ -20,25 +20,17 @@ namespace Bolinders.Core.Services
 {
     public class XmlToDbService
     {
-        //public static void Run()
-        public static IEnumerable<VehicleXml> Run()
+        //public static void Run()                                                                  /*TODO återställ*/
+        public static IEnumerable<VehicleXml> Run()                                                 /*TODO: Kommentera bort*/
         {
-            //TODO Koppla på dessa igen
-            //string _xmlFile = FtpDownload();
+            //string _xmlFile = FtpDownload();                                                      /*TODO återställ*/
             //IEnumerable<VehicleXml> vehiclesAll = ParseXmlToObject(_xmlFile);
 
-            //TODO: Koppla bort fake XML:en
-            IEnumerable<VehicleXml> vehiclesAll = ParseXmlToObjectFake();
-
+            IEnumerable<VehicleXml> vehiclesAll = ParseXmlToObjectFake();                           /*TODO: Kommentera bort*/
             IEnumerable<VehicleXml> vehiclesUpdatedLastDay = SelectUpdatedVehicles(vehiclesAll);
-
             UpdateDbWithUpdatedVehicles(vehiclesUpdatedLastDay);
 
-
-
-
-            //TODO: Remove return
-            return vehiclesUpdatedLastDay;
+            return vehiclesUpdatedLastDay;                                                          /*TODO: Ta bort*/
         }
 
         //Connects to FTP and downloads the XML-file
