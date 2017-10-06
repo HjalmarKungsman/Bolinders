@@ -116,16 +116,8 @@
                     </dd>
                 }
             </dl>
-            @{
-                var price = Model.Price;
 
-                if (Model.Leasable)
-                {
-                    price = (price * 0.8);
-                    <span style="font-size:large">@($"{price:C0}") exkl. moms</span><br />
-                }
-                <span style="font-size:large">@($"{Model.Price:C0}") inkl. moms</span>
-            }
+           
             <hr />
             <dl id="contactInformation" class="dl-horizontal">
                 <dt>Kontakta säljaren</dt>
@@ -143,8 +135,6 @@
                     <a asp-action="Index">Se alla</a>
                 </div>
             }
-
-
             <div id="shareVehicle" class="hidden">
                 <form asp-action="ShareVehicle">
                     <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
@@ -161,8 +151,55 @@
                         <div id="statusMessage"></div>
                     </div>
                 </form>
+
             </div>
+            @{
+                if (Model.Leasable)
+                {
+                    var untaxedprice = (Model.Price * 0.8);
+                    var leaseprice = Math.Round(untaxedprice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
+
+                    <div class="LeaseCalculator">
+                        <label style="font-size:large">Lease Kalkylator</label>
+                        <hr />
+                        <form>
+                            <div class="form-group">
+                                <label>Kontant insats</label>
+                                <input type="number" value="@leaseprice" class="form-control" />
+                                <input type="hidden" value="@untaxedprice" class="form-control" />
+                                <small class="form-text text-muted">Standard är 20% av bilens kostnad</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Längd på avbetalning</label>
+                                <select class="form-control">
+                                    <option value="12">12 månader</option>
+                                    <option value="24">24 månader</option>
+                                    <option selected="selected" value="36">36 månader</option>
+                                    <option value="48">48 månader</option>
+                                    <option value="60">60 månader</option>
+                                    <option value="72">72 månader</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Räkna</button>
+
+
+                        </form>
+                    </div>
+                    <hr />
+                    <div >
+                        <label style="font-size:large">Pris per månad:</label>
+                        <span class="monthlyPrice" style="font-size:large"></span><br />
+                        <label style="font-size:large">Total Kostnad:</label>
+                        <span class="totalPrice" style="font-size:large"></span><br />
+                        <span style="font-size:large">@($"{untaxedprice:C0}") exl. moms</span>
+                    </div>
+                }
+
+                <span style="font-size:large">@($"{Model.Price:C0}") inkl. moms</span>
+
+            }
         </div>
+
 
         <div class="col-lg-6">
             <div id="myCarousel" class="carousel slide details-slide" data-ride="carousel">
@@ -174,7 +211,7 @@
                         {
                             <div class="item active">
                                 @*<a href="~/images/uploads/@Model.Images[i].ImageUrl">*@
-                                    <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
                                 @*</a>*@
                             </div>
                         }
@@ -182,7 +219,7 @@
                         {
                             <div class="item">
                                 @*<a href="~/images/uploads/@Model.Images[i].ImageUrl">*@
-                                    <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
                                 @*</a>*@
                             </div>
                         }
@@ -219,24 +256,21 @@
             </div>
 
 
-        <div id="relatedVehicle">
-        <h1>Relaterade fordon!</h1>
-        <ul>
-            @foreach (var item in ViewBag.relatedVehicles)
-            {
-                var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
-                vehicleLinkId = vehicleLinkId.Replace(" ", "_");
-                <li>
-                    <div class="item active">
-                        <a href="/bil/@vehicleLinkId"> <img src="~/images/uploads/@item.Images[0].ImageUrl" style="margin: 0 auto" alt="@item.Model" class="img-responsive" /></a>
-                    </div>
-                </li>
-            }
-        </ul>
-    </div>
-
-
-            
+            <div id="relatedVehicle">
+                <h1>Relaterade fordon!</h1>
+                <ul class="flex-container">
+                    @foreach (var item in ViewBag.relatedVehicles)
+                        {
+                            var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
+                            vehicleLinkId = vehicleLinkId.Replace(" ", "_");
+                            <li class="flex-item">
+                            <div class="item active">
+                                <a href="/bil/@vehicleLinkId"> <img src="~/images/uploads/@item.Images[0].ImageUrl" style="margin: 0 auto" alt="@item.Model" class="img-responsive" /></a>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
 
         </div>
     </div>
@@ -247,7 +281,7 @@
     <img class="modal-content" id="modalImage">
 </div>
 
-
+<script src="~/js/details.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     $(document).ready(function () {
@@ -294,15 +328,15 @@
     var modal = document.getElementById('imageModal');
     var modalImg = document.getElementById("modalImage");
 
-    $('.myImg').on('click', function () { 
+    $('.myImg').on('click', function () {
         modal.style.display = "block";
         modalImg.src = this.src;
     })
 
-    $(modal).on('click', function () { 
+    $(modal).on('click', function () {
         modal.style.display = "none";
     });
-   
+
     $('close').on('click', function () {
         modal.style.display = "none";
     });

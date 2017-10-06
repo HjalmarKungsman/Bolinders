@@ -265,7 +265,7 @@ namespace Bolinders.Core.Controllers
                 Vehicle newVehicle = new Vehicle
                 {
                     Id = Guid.NewGuid(),
-                    RegistrationNumber = vehicle.RegistrationNumber,
+                    RegistrationNumber = vehicle.RegistrationNumber.ToUpper(),
                     BodyType = vehicle.BodyType,
                     Colour = vehicle.Colour,
                     Created = DateTime.UtcNow,
@@ -395,8 +395,16 @@ namespace Bolinders.Core.Controllers
                 existingVehicle.Price = vehicle.Price;
                 existingVehicle.Used = vehicle.Used;
                 existingVehicle.Year = vehicle.Year;
-                existingVehicle.Equipment = vehicle.EquipmentString.Select(x => new Equipment(x, existingVehicle)).ToList();
-                
+
+                if (vehicle.EquipmentString != null)
+                {
+                    existingVehicle.Equipment = vehicle.EquipmentString.Select(x => new Equipment(x, existingVehicle)).ToList();
+                }
+                else
+                {
+                    existingVehicle.Equipment = null;
+                }
+                      
 
                 if (vehicle.ImageList != null)
                 {
