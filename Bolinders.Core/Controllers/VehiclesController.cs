@@ -248,7 +248,7 @@ namespace Bolinders.Core.Controllers
                 Vehicle newVehicle = new Vehicle
                 {
                     Id = Guid.NewGuid(),
-                    RegistrationNumber = vehicle.RegistrationNumber,
+                    RegistrationNumber = vehicle.RegistrationNumber.ToUpper(),
                     BodyType = vehicle.BodyType,
                     Colour = vehicle.Colour,
                     Created = DateTime.UtcNow,
