@@ -1,5 +1,6 @@
 ﻿using Bolinders.Core.Helpers;
 using Bolinders.Core.Models;
+using Bolinders.Core.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using System;
@@ -21,7 +22,11 @@ namespace Bolinders.Core.Services
         public static void Run()
         {
             string _xmlFile = FtpDownload();
-            VehiclesXml _vehicles = ParseXmlToObject(_xmlFile);
+            VehiclesXml _vehiclesXml = ParseXmlToObject(_xmlFile);
+            Vehicle _vehicle = ParseVehiclesXmlToVehicle(_vehiclesXml);
+
+
+            
 
         }
         public static string FtpDownload()
@@ -52,41 +57,28 @@ namespace Bolinders.Core.Services
 
         public static VehiclesXml ParseXmlToObject(string xmlFile)
         {
-            //var cleanXmlFile1 = xmlFile.Replace("<? xml version = \"1.0\" encoding = \"iso - 8859 - 1\" ?>", "");
-            //var cleanXmlFile2 = cleanXmlFile1.Replace(" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\"", "");
-
-            //XmlNodeList xnList = xmlFile.SelectNodes("/Names/Name");
-
-            //var vehiclesXml = new VehicleXml();
-
-            //XmlSerializer serializer = new XmlSerializer(typeof(VehicleXml), new XmlRootAttribute("cars"));
-            //using (TextReader reader = new StringReader(xmlFile))
-            //{
-            //    vehiclesXml = (VehicleXml)serializer.Deserialize(reader);
-            //};
-
-
             Serializer ser = new Serializer();
-            string path = string.Empty;
-            string xmlInputData = string.Empty;
-            string xmlOutputData = string.Empty;
-
-            // EXAMPLE 1
-            //path = Directory.GetCurrentDirectory() + @"\Customer.xml";
-            //xmlInputData = File.ReadAllText(path);
-            xmlInputData = xmlFile;
-
-            VehiclesXml vehiclesXml = ser.Deserialize<VehiclesXml>(xmlInputData);
-            xmlOutputData = ser.Serialize<VehiclesXml>(vehiclesXml);
-
-
-
+            VehiclesXml vehiclesXml = ser.Deserialize<VehiclesXml>(xmlFile);
 
             return vehiclesXml;
         }
 
+        public static Vehicle ParseVehiclesXmlToVehicle(VehiclesXml vehiclesXml)
+        {
+            var _vehiclesList = vehiclesXml.VehicleXml;
+
+
+
+
+            Vehicle _vehicle = new Vehicle();
+            return _vehicle;
+        }
+
+
         public class Serializer
         {
+
+            #region XML to object
             public T Deserialize<T>(string input) where T : class
             {
                 System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(T), new XmlRootAttribute("cars"));
@@ -96,7 +88,9 @@ namespace Bolinders.Core.Services
                     return (T)ser.Deserialize(sr);
                 }
             }
+            #endregion
 
+            #region Oject to XML
             public string Serialize<T>(T ObjectToSerialize)
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(ObjectToSerialize.GetType(), new XmlRootAttribute("cars"));
@@ -107,6 +101,7 @@ namespace Bolinders.Core.Services
                     return textWriter.ToString();
                 }
             }
+#endregion
         }
     }
 }
