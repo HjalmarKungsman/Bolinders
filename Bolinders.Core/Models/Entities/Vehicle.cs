@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Bolinders.Core.Models
+namespace Bolinders.Core.Models.Entities
 {
     public class Vehicle
     {

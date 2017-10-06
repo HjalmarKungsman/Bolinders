@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Bolinders.Core.Models;
+using Bolinders.Core.Models.Entities;
 using Bolinders.Core.DataAccess;
 using Bolinders.Core.Enums;
+using Bolinders.Core.Models;
 
 namespace Bolinders.Core.DataAccess
 {

@@ -19,6 +19,7 @@ using Bolinders.Core.Services;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using System.Net.Mail;
 using Newtonsoft.Json;
+using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Core.Controllers
 {
@@ -38,8 +39,25 @@ namespace Bolinders.Core.Controllers
             _environment = environment;
         }
 
+        public ViewResult GetXml()
+        {
+            XmlToDbService.Run();
+
+            return View("Tada");
+        }
+
+        ////POST: Vehicles/List
+        //[AllowAnonymous]
+        //[HttpPost]
+        //public IActionResult ListSearch(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
+        //{
+        //    return RedirectToAction("List", formData, page, pageLimit);
+        //}
+
+
         //GET: Vehicles/List
         [AllowAnonymous]
+        //[HttpGet]
         public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
         {
             //Sets the paginering object
@@ -248,7 +266,7 @@ namespace Bolinders.Core.Controllers
                 Vehicle newVehicle = new Vehicle
                 {
                     Id = Guid.NewGuid(),
-                    RegistrationNumber = vehicle.RegistrationNumber,
+                    RegistrationNumber = vehicle.RegistrationNumber.ToUpper(),
                     BodyType = vehicle.BodyType,
                     Colour = vehicle.Colour,
                     Created = DateTime.UtcNow,
@@ -302,7 +320,7 @@ namespace Bolinders.Core.Controllers
                 return NotFound();
             }
 
-            VehicleEditModel vehicleEditing = new VehicleEditModel
+            VehicleEditViewModel vehicleEditing = new VehicleEditViewModel
             {
                 RegistrationNumber = vehicle.RegistrationNumber,
                 Make = vehicle.Make,
@@ -347,7 +365,7 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,ImageList,Images,Used,Leasable,Created,Updated,EquipmentString")] VehicleEditModel vehicle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,ImageList,Images,Used,Leasable,Created,Updated,EquipmentString")] VehicleEditViewModel vehicle)
         {
 
             if (id != vehicle.Id)

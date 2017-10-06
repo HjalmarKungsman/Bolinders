@@ -1,4 +1,5 @@
 ﻿using Bolinders.Core.Models;
+using Bolinders.Core.Models.Entities;
 using Bolinders.Core.Models.ViewModels;
 using System;
 using System.Collections.Generic;
