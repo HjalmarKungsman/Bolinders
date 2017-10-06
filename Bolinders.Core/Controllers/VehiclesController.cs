@@ -38,8 +38,25 @@ namespace Bolinders.Core.Controllers
             _environment = environment;
         }
 
+        public ViewResult GetXml()
+        {
+            XmlToDbService.Run();
+
+            return View("Tada");
+        }
+
+        ////POST: Vehicles/List
+        //[AllowAnonymous]
+        //[HttpPost]
+        //public IActionResult ListSearch(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
+        //{
+        //    return RedirectToAction("List", formData, page, pageLimit);
+        //}
+
+
         //GET: Vehicles/List
         [AllowAnonymous]
+        //[HttpGet]
         public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
         {
             //Sets the paginering object
