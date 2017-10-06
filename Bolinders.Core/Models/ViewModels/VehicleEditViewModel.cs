@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Bolinders.Core.Models.ViewModels
 {
-    public class VehicleEditModel
+    public class VehicleEditViewModel
     {
         public Guid Id { get; set; }
         public string RegistrationNumber { get; set; }

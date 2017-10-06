@@ -320,7 +320,7 @@ namespace Bolinders.Core.Controllers
                 return NotFound();
             }
 
-            VehicleEditModel vehicleEditing = new VehicleEditModel
+            VehicleEditViewModel vehicleEditing = new VehicleEditViewModel
             {
                 RegistrationNumber = vehicle.RegistrationNumber,
                 Make = vehicle.Make,
@@ -365,7 +365,7 @@ namespace Bolinders.Core.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,ImageList,Images,Used,Leasable,Created,Updated,EquipmentString")] VehicleEditModel vehicle)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,RegistrationNumber,MakeId,Model,ModelDescription,Year,Mileage,Price,BodyType,Colour,Gearbox,FuelType,Horsepowers,FacilityId,ImageList,Images,Used,Leasable,Created,Updated,EquipmentString")] VehicleEditViewModel vehicle)
         {
 
             if (id != vehicle.Id)

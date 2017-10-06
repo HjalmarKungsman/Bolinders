@@ -22,10 +22,8 @@ namespace Bolinders.Core.Services
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential("bolindersbil@byteshift.se", "MSD8921%ewf13Xf")
             };
-
             try
             {
-
                 message = message + "<br />Telefon: " + phoneNumber + "<br />Namn: " + senderName;
 
                 MailMessage mailMessage = new MailMessage();
@@ -68,7 +66,7 @@ namespace Bolinders.Core.Services
 
                 return SmtpStatusCode.Ok;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return SmtpStatusCode.GeneralFailure;
             }
