@@ -117,10 +117,17 @@
                 <div class="currentImages">
                     @foreach (var img in Model.ImageList)
                     {
-                        <div class="imgDeleteBox" onclick="deletepic('@img.Id','@img.ImageUrl')">
+                        <div class="imgDeleteBox">
                             <img src="~/images/uploads/@img.ImageUrl" alt="Image" class="images" width="254" height="176" />
                             <div class="imgMiddle">
-                                <div class="imgText"><i class="fa fa-trash" style="font-size:100px"></i></div>
+                                <div class="imgText">
+                                    <div>
+                                        <p class="noRemove hidden"><strong>Are you Sure?</strong></p>
+                                        <a class="noRemove hidden"><i class="fa fa-close" style="font-size:50px"></i></a>
+                                        <a class="yesRemove hidden" onclick="deletepic('@img.Id','@img.ImageUrl', this, event)"><i class="fa fa-check" style="font-size:50px "></i></a>
+                                    </div>
+                                    <i class="fa fa-trash" style="font-size:100px"></i>
+                                </div>
                             </div>
                         </div>
                     }
@@ -140,6 +147,12 @@
     .equipment.form-control {
         height: auto !important;
         padding: 1px;
+    }
+    .yesRemove:hover{
+        color:green;
+    }
+    .red{
+        background-color:#650000;
     }
 
     .form-control ul.select2-choices {
@@ -164,6 +177,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+       
         //$('.equipment-list-item').on('click', function () {
         //    this.remove(this);
         //});
@@ -179,10 +193,34 @@
     $('.equipment').select2({
         tags: true
     });
+    var test = true;
+    $('.imgDeleteBox').on('click', function () {
+        if (test) {
+            $('.noRemove', this).removeClass('hidden');
+            $('.yesRemove', this).removeClass('hidden');
+            $('.fa-trash', this).addClass('hidden');
+            $('.imgDeleteBox').addClass('red');
+            test = false;
+        }
+    });
+    $('.imgDeleteBox').hover(function () {
+        $('.noRemove', this).addClass('hidden');
+        $('.yesRemove', this).addClass('hidden');
+        $('.fa-trash', this).removeClass('hidden');
+        $('.imgDeleteBox').removeClass('red');
+        test = true;
+    });
+    $('.noRemove').on('click', function () {
+        var thiss = this.parentElement;
+        $('.noRemove', thiss).addClass('hidden');
+        $('.yesRemove', thiss).addClass('hidden');
+        $('.fa-trash').removeClass('hidden');
+        $('.imgDeleteBox').removeClass('red');
+    });
 
-    function deletepic(imgId, imgUrl) {
-            if (confirm("Delete Selected picture?")) {
 
+    function deletepic(imgId, imgUrl, thiss, events) {
+        $(events.path[5]).addClass('hidden');
             $.ajax({
                     url: '@Url.Action("RemoveImage", "Vehicles")',
                 type: 'POST',
@@ -191,10 +229,7 @@
                 error: function () {
                         console.log("error");
                     }
-                }).done(function () {
-                    location.reload();
-                });
-            }
+            })
         };
 </script>
 
