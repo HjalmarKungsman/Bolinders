@@ -40,9 +40,9 @@ namespace Bolinders.Core.Controllers
 
         public ViewResult GetXml()
         {
-            XmlToDbService.Run();
+            IEnumerable<VehicleXml> vehicleXmlList = XmlToDbService.Run();
 
-            return View("Tada");
+            return View("TestTheXmlThing", vehicleXmlList);
         }
 
         ////POST: Vehicles/List
