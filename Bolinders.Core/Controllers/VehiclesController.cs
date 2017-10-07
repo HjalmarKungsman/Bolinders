@@ -38,6 +38,8 @@ namespace Bolinders.Core.Controllers
             _environment = environment;
         }
 
+        //GetXml, triggs the XmlToDbService()
+        //TODO: Create an once-a-day Task and remove this ViewResult
         public ViewResult GetXml()
         {
             IEnumerable<VehicleXml> vehicleXmlList = XmlToDbService.Run();
@@ -45,18 +47,8 @@ namespace Bolinders.Core.Controllers
             return View("TestTheXmlThing", vehicleXmlList);
         }
 
-        ////POST: Vehicles/List
-        //[AllowAnonymous]
-        //[HttpPost]
-        //public IActionResult ListSearch(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
-        //{
-        //    return RedirectToAction("List", formData, page, pageLimit);
-        //}
-
-
         //GET: Vehicles/List
         [AllowAnonymous]
-        //[HttpGet]
         public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)
         {
             //Sets the paginering object
