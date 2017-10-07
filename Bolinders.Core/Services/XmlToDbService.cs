@@ -15,11 +15,28 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Bolinders.Core.DataAccess;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bolinders.Core.Services
 {
     public class XmlToDbService
     {
+        private readonly ApplicationDbContext _context;
+        private IHostingEnvironment _environment;
+        private static IHttpContextAccessor HttpContextAccessor;
+        public static void Configure(IHttpContextAccessor httpContextAccessor)
+        {
+            HttpContextAccessor = httpContextAccessor;
+        }
+        public XmlToDbService(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+
         //public static void Run()                                                                  /*TODO återställ*/
         public static IEnumerable<VehicleXml> Run()                                                 /*TODO: Kommentera bort*/
         {
@@ -86,5 +103,6 @@ namespace Bolinders.Core.Services
         {
 
         }
+
     }
 }
