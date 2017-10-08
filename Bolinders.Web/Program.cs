@@ -19,7 +19,11 @@ namespace Bolinders.Web
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+            .ConfigureAppConfiguration((builderContext, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            })
+            .UseStartup<Startup>()
+            .Build();
     }
 }
