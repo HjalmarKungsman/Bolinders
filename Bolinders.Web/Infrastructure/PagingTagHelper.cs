@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Bolinders.Core.ViewModels;
 using Bolinders.Core.Models.ViewModels;
 
 namespace Bolinders.Web.Infrastructure

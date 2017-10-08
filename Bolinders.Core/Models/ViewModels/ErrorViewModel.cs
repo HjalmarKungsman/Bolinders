@@ -1,6 +1,5 @@
-using System;
 
-namespace Bolinders.Core.Models
+namespace Bolinders.Core.Models.ViewModels
 {
     public class ErrorViewModel
     {

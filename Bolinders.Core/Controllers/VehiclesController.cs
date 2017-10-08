@@ -5,20 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
 using Microsoft.AspNetCore.Http;
-using Bolinders.Core.ViewModels;
+using Bolinders.Core.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Bolinders.Core.Helpers;
-using Bolinders.Core.Models.ViewModels;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
-using Bolinders.Core.Enums;
 using Bolinders.Core.Services;
-using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
 using System.Net.Mail;
-using Newtonsoft.Json;
 using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Core.Controllers

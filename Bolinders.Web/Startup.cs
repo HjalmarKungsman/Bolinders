@@ -12,6 +12,7 @@ using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
 using Bolinders.Core.Services;
 using Microsoft.AspNetCore.Http;
+using Bolinders.Core.Models.Entities;
 
 namespace Bolinders.Web
 {

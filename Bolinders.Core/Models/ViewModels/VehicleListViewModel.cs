@@ -6,7 +6,7 @@ using Bolinders.Core.Models;
 using Bolinders.Core.Models.ViewModels;
 using Bolinders.Core.Models.Entities;
 
-namespace Bolinders.Core.ViewModels
+namespace Bolinders.Core.Models.ViewModels
 {
     public class VehicleListViewModel
     {
