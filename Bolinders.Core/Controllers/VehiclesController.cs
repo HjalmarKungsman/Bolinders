@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Bolinders.Core.Services;
 using System.Net.Mail;
 using Bolinders.Core.Models.Entities;
+using Bolinders.Core.Models;
 
 namespace Bolinders.Core.Controllers
 {
