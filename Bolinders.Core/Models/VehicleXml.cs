@@ -8,9 +8,10 @@ namespace Bolinders.Core.Models
     public class VehiclesXml
     {
         [XmlElement("car")]
-        public VehicleXml VehicleXml { get; set; }
+        public List<VehicleXml> VehicleXml { get; set; }
     }
 
+    [Serializable()]
     public class VehicleXml
     {
         [XmlElement("regno")]
@@ -22,11 +23,11 @@ namespace Bolinders.Core.Models
         [XmlElement("modeldescription")]
         public string ModelDescription { get; set; }
         [XmlElement("yearmodel")]
-        public int Year { get; set; }
+        public string Year { get; set; }
         [XmlElement("miles")]
-        public int Milage { get; set; }
+        public string Milage { get; set; }
         [XmlElement("price")]
-        public double Price { get; set; }
+        public string Price { get; set; }                       // double
         [XmlElement("bodytype")]
         public string BodyType { get; set; }
         [XmlElement("color")]
@@ -41,19 +42,22 @@ namespace Bolinders.Core.Models
         //public bool Used { get; set; }
         [XmlElement("station")]
         public string FacilityId { get; set; }
-        [XmlElement("images")]
+        [XmlArray("images")]
+        [XmlArrayItem("image", typeof(ImageXml))]
         public List<ImageXml> Images { get; set; }
+        //public List<ImageXml> Images { get; set; }
         [XmlElement("exkl_moms")]
-        public bool Leasable { get; set; }
+        public string Leasable { get; set; }                    // Bool?
         [XmlElement("updated")]
-        public int Updated { get; set; }
+        public string Updated { get; set; }
         [XmlElement("info")]
         public string Equipment { get; set; }
     }
 
+    [Serializable()]
     public class ImageXml
     {
-        [XmlElement("image")]
+        [XmlText()]
         public string Url { get; set; }
     }
 }

@@ -21,7 +21,7 @@
             <th>
                 År
             </th>
-            <th class="nowrap text-right">
+            <th  class="nowrap text-right">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
@@ -103,13 +103,22 @@
     </tbody>
 </table>
 
-    <a class="btn btn-danger disabled" id="deleteButton">Delete Selected</a>
+<a class="btn btn-danger disabled" id="deleteButton">Delete Selected</a>
 
 <style>
-    .popover.right > .arrow:after {border-right-color: black;}
-    .tab{margin-left:1.2em;}
-    .popover{background-color: black;}
+    .popover.right > .arrow:after {
+        border-right-color: black;
+    }
+
+    .tab {
+        margin-left: 1.2em;
+    }
+
+    .popover {
+        background-color: black;
+    }
 </style>
+
 <script>
     $(document).ready(function () {
 
@@ -128,7 +137,7 @@
             }
             else { $('#deleteButton').addClass('disabled'); }
         });
-
+        
         $(document).on('click', '#confirmRemove', function () {
 
                 var arrayId = new Array();
@@ -148,12 +157,9 @@
                 }).done(function () {
                     location.reload();
                 });
-            
-        });
 
-
-
-        $(document).on('click', '#noRemove',  function () {
+             });
+        $(document).on('click', '#noRemove', function () {
             $('#deleteButton').popover('hide');
         });
     });

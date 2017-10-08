@@ -124,9 +124,10 @@
                                     <div>
                                         <p class="noRemove hidden"><strong>Are you Sure?</strong></p>
                                         <a class="noRemove hidden"><i class="fa fa-close" style="font-size:50px"></i></a>
-                                        <a class="yesRemove hidden" onclick="deletepic('@img.Id','@img.ImageUrl', this, event)"><i class="fa fa-check" style="font-size:50px "></i></a>
+                                        <a class="yesRemove hidden" onclick="deletepic('@img.Id','@img.ImageUrl', this, event)"><i class="fa fa-check" style="font-size:50px "></i></a>                                        
                                     </div>
-                                    <i class="fa fa-trash" style="font-size:100px"></i>
+                                <i class="fa fa-trash" style="font-size:100px"></i>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -152,6 +153,14 @@
         color:green;
     }
     .red{
+        background-color:#650000;
+    }
+
+    .yesRemove:hover {
+        color:green;
+    }
+
+    .red {
         background-color:#650000;
     }
 
@@ -218,17 +227,44 @@
         $('.imgDeleteBox').removeClass('red');
     });
 
+    var test = true;
+    $('.imgDeleteBox').on('click', function () {
+        if (test) {
+            $('.noRemove', this).removeClass('hidden');
+            $('.yesRemove', this).removeClass('hidden');
+            $('.fa-trash', this).addClass('hidden');
+            $('.imgDeleteBox').addClass('red');
+            test = false;
+        }
+    });
+    $('.imgDeleteBox').hover(function () {
+        $('.noRemove', this).addClass('hidden');
+        $('.yesRemove', this).addClass('hidden');
+        $('.fa-trash', this).removeClass('hidden');
+        $('.imgDeleteBox').removeClass('red');
+        test = true;
+    });
+    $('.noRemove').on('click', function () {
+        var thiss = this.parentElement;
+        $('.noRemove', thiss).addClass('hidden');
+        $('.yesRemove', thiss).addClass('hidden');
+        $('.fa-trash').removeClass('hidden');
+        $('.imgDeleteBox').removeClass('red');
+    });
+
+    function deletepic(imgId, imgUrl, thiss, events) {
+        $(events.path[5]).addClass('hidden');
 
     function deletepic(imgId, imgUrl, thiss, events) {
         $(events.path[5]).addClass('hidden');
             $.ajax({
-                    url: '@Url.Action("RemoveImage", "Vehicles")',
-                type: 'POST',
-                data: { imageId: imgId,
-                        imagelink: imgUrl},
-                error: function () {
-                        console.log("error");
-                    }
+                url: '@Url.Action("RemoveImage", "Vehicles")',
+            type: 'POST',
+            data: { imageId: imgId,
+                    imagelink: imgUrl},
+            error: function () {
+                    console.log("error");
+                }
             })
         };
 </script>
