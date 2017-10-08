@@ -223,7 +223,7 @@ namespace Bolinders.Core.Controllers
                     .Where(b => b.Price >= vehicle.Price)
                     .Where(b => b.Id != vehicle.Id).Take(4)
                     .Include(v => v.Images)
-                    
+
                     .ToList();
 
                 ViewBag.relatedVehicles = relatedVehicles;
@@ -280,16 +280,21 @@ namespace Bolinders.Core.Controllers
                     Updated = DateTime.UtcNow,
                     Used = vehicle.Used,
                     Year = vehicle.Year,
-                    Images = new List<Image>(),
-                    Equipment = new List<Equipment>()
+                    Images = new List<Image>()
                 };
 
                 newVehicle = ImageHelpers.ImageBuilder(listOfImages, newVehicle);
 
                 if (vehicle.Equipment != null)
                 {
-                    newVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.Equipment, newVehicle);
+                    newVehicle.Equipment = vehicle.Equipment.Select(x => new Equipment(x, newVehicle)).ToList();
                 }
+                
+
+                //if (vehicle.Equipment != null)
+                //{
+                //    newVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.Equipment, newVehicle);
+                //}
 
                 _context.Add(newVehicle);
                 await _context.SaveChangesAsync();
@@ -370,7 +375,7 @@ namespace Bolinders.Core.Controllers
 
             if (ModelState.IsValid)
             {
-                var existingVehicle = 
+                var existingVehicle =
                     await _context.Vehicles.Include(x => x.Images).Include(x => x.Equipment).SingleOrDefaultAsync(m => m.Id == id);
                 existingVehicle.Id = vehicle.Id;
                 existingVehicle.RegistrationNumber = vehicle.RegistrationNumber;
@@ -400,7 +405,7 @@ namespace Bolinders.Core.Controllers
                 {
                     existingVehicle.Equipment = null;
                 }
-                      
+
 
                 if (vehicle.ImageList != null)
                 {
@@ -433,7 +438,7 @@ namespace Bolinders.Core.Controllers
 
                     _context.Entry(existingVehicle).State = EntityState.Modified;
                     _context.Entry(existingVehicle).Property(x => x.UrlId).IsModified = false;
-                    
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
