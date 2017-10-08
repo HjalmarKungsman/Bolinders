@@ -2,6 +2,8 @@
 @using System.Linq
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Authentication
+@using Bolinders.Core.Models.Entities
+
 @model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 
@@ -10,8 +12,9 @@
 }
 
 <h2>@ViewData["Title"]</h2>
+<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-md-offset-4">
         <section>
             <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                 <h4>Använd ditt kontors konto för att logga in.</h4>
