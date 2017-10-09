@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Bolinders.Core\Bolinders.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\downloads\" />
+  </ItemGroup>
+
 </Project>

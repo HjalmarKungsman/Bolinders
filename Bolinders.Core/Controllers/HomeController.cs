@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Bolinders.Core.Models;
 using Bolinders.Core.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Bolinders.Core.Models.ViewModels;
@@ -12,16 +9,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Bolinders.Core.Services;
 using System.Net.Mail;
 using Bolinders.Core.Models.Entities;
+using Bolinders.Core.Models;
+using Microsoft.Extensions.Options;
 
 namespace Bolinders.Core.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IEmailSenderService _emailSender;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, IEmailSenderService emailSender)
         {
             _context = context;
+            _emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -60,7 +61,7 @@ namespace Bolinders.Core.Controllers
             ViewData["Facility"] = new SelectList(_context.Facilities, "Email", "Email");
 
 
-            var emailSender = await EmailSenderService.SendEmailToFacility(form.SenderName, form.SenderEmail, form.Reciever, form.Subject, form.Message, form.PhoneNumber);
+            var emailSender = await _emailSender.SendEmailToFacility(form.SenderName, form.SenderEmail, form.Reciever, form.Subject, form.Message, form.PhoneNumber);
 
             if (emailSender == SmtpStatusCode.Ok)
             {
@@ -73,6 +74,23 @@ namespace Bolinders.Core.Controllers
             
 
             return View();
+        }
+
+        public IActionResult Errors(string Id)
+        {
+            switch (Id)
+            {
+                case "404":
+                case "500":
+                    return View($"~/Views/Errors/Page{Id}.cshtml");
+                default: return DefaultError();
+            }
+
+        }
+
+        public IActionResult DefaultError()
+        {
+            return View("~/Views/Shared/Error.cshtml");
         }
 
         public IActionResult Error()

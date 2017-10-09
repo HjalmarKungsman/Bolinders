@@ -79,10 +79,16 @@
                     @Html.DisplayFor(modelItem => item.FuelType)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Used)
+                    @if (item.Used == true)
+                    {<i class="fa fa-check" style="font-size:25px; color:lightgreen"></i>}
+                    else
+                    {<i class="fa fa-close" style="font-size:25px; color:darkred"></i>}
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Leasable)
+                    @if (item.Leasable == true)
+                    {<i class="fa fa-check" style="font-size:25px; color:lightgreen"></i>}
+                    else
+                    {<i class="fa fa-close" style="font-size:25px; color:darkred"></i>}
                 </td>
                 <td class="nowrap">
                     @item.Created.ToShortDateString()
@@ -105,24 +111,10 @@
 
 <a class="btn btn-danger disabled" id="deleteButton">Delete Selected</a>
 
-<style>
-    .popover.right > .arrow:after {
-        border-right-color: black;
-    }
-
-    .tab {
-        margin-left: 1.2em;
-    }
-
-    .popover {
-        background-color: black;
-    }
-</style>
-
 <script>
     $(document).ready(function () {
 
-        var content = '<p>Are you sure?</p> <a id="confirmRemove" ><i class="fa fa-check" style="font-size:36px"></i></a><a id="noRemove" class="tab"><i class="fa fa-close" style="font-size:36px"></i></a>';
+        var content = '<p>Är du säker?</p> <a id="confirmRemove" ><i class="fa fa-check" style="font-size:36px;"></i></a><a id="noRemove" class="tab"><i class="fa fa-close" style="font-size:36px"></i></a>';
 
         $('#deleteButton').popover({
             animation: true,
@@ -135,7 +127,10 @@
             if ($('.selectedVehicles:checked').length > 0) {
                 $('#deleteButton').removeClass('disabled');
             }
-            else { $('#deleteButton').addClass('disabled'); }
+            else {
+                $('#deleteButton').addClass('disabled');
+                $('#deleteButton').popover('hide');
+            }
         });
         
         $(document).on('click', '#confirmRemove', function () {
