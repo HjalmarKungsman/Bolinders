@@ -69,6 +69,11 @@ namespace Bolinders.Web
 
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
 
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IXmlToDbService, XmlToDbService>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             // Add application services.
             services.AddMvc();
 
