@@ -75,6 +75,28 @@ namespace Bolinders.Core.Controllers
             return View();
         }
 
+        public IActionResult Errors(string Id)
+        {
+            switch (Id)
+            {
+                case "401":
+                case "403":
+                case "404":
+                case "500":
+                case "502":
+                case "503":
+                case "504":
+                    return View($"~/Views/Errors/Page{Id}.cshtml");
+                default: return DefaultError();
+            }
+
+        }
+
+        public IActionResult DefaultError()
+        {
+            return View("~/Views/Shared/Error.cshtml");
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
