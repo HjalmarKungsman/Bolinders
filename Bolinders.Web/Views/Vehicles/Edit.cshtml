@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Edit" enctype="multipart/form-data">
-            <div class="col-lg-6">
+            <div class="col-md-6">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
@@ -122,9 +122,9 @@
                             <div class="imgMiddle">
                                 <div class="imgText">
                                     <div>
-                                        <p class="noRemove hidden"><strong>Are you Sure?</strong></p>
-                                        <a class="noRemove hidden"><i class="fa fa-close" style="font-size:50px"></i></a>
-                                        <a class="yesRemove hidden" onclick="deletepic('@img.Id','@img.ImageUrl', this, event)"><i class="fa fa-check" style="font-size:50px "></i></a>
+                                        <p class="noRemove hidden"><strong>Är du säker?</strong></p>
+                                        <a class="yesRemove hidden" onclick="deletepic('@img.Id','@img.ImageUrl', this, event)"><i class="fa fa-check" style="font-size:45px "></i></a>
+                                        <a class="noRemove hidden"><i class="fa fa-close" style="font-size:45px"></i></a>
                                     </div>
                                     <i class="fa fa-trash" style="font-size:100px"></i>
 
@@ -144,36 +144,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-<style>
-    .equipment.form-control {
-        height: auto !important;
-        padding: 1px;
-    }
-
-    .yesRemove:hover {
-        color: green;
-    }
-
-    .red {
-        background-color: #650000;
-    }
-
-    .form-control ul.select2-choices {
-        border: 0;
-        background-image: none;
-        margin: 1px;
-        padding: 1px;
-    }
-
-    .form-control.select2-container .select2-choice {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .select2-container {
-        color: #000 !important;
-    }
-</style>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

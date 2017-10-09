@@ -112,7 +112,19 @@
                         @Html.DisplayNameFor(model => model.Leasable)
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.Leasable)
+                        @{
+                            var Leasable = "";
+
+                            if (Model.Leasable)
+                            {
+                                Leasable = "Ja";
+                            }
+                            else
+                            {
+                                Leasable = "Nej";
+                            }
+                        }
+                        @Leasable
                     </dd>
                 }
             </dl>
@@ -126,7 +138,7 @@
                 if (Model.Leasable)
                 {
                     price = (price * 0.8);
-                    < span style = "font-size:large" >@($"{price:C0}") exkl.moms </ span >< br />
+                    <span style = "font-size:large">@($"{price:C0}") exkl.moms </span><br/>
                 }
                 <span style="font-size:large">@($"{Model.Price:C0}") inkl. moms</span>
             }
