@@ -2,6 +2,7 @@
 using Bolinders.Core.Enums;
 using Bolinders.Core.Models;
 using Bolinders.Core.Models.Entities;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,14 @@ namespace Bolinders.Core.Services
         private readonly ApplicationDbContext _context;
         private readonly IImageService _image;
         private readonly IEmailSenderService _email;
+        private readonly IHostingEnvironment _environment;
 
-        public XmlToDbService(ApplicationDbContext context, IImageService image, IEmailSenderService email)
+        public XmlToDbService(ApplicationDbContext context, IImageService image, IEmailSenderService email, IHostingEnvironment environment)
         {
             _context = context;
             _image = image;
             _email = email;
+            _environment = environment;
         }
 
         //Nu är metoden kopplad till en Controller och en View bara utvecklings skull.
@@ -103,12 +106,13 @@ namespace Bolinders.Core.Services
         private void SortVehicles(List<VehicleXml> vehicles)
         {
             List<Guid> addedVehicles = new List<Guid>();
+            List<VehicleXml> vehiclesToRemove = new List<VehicleXml>();
 
             //Checks for edits and apply them.
             foreach (var vehicle in vehicles)
             {
 
-                var existingVehicle = _context.Vehicles.Where(x => x.RegistrationNumber == vehicle.RegistrationNumber).FirstOrDefault();
+                var existingVehicle = _context.Vehicles.Where(x => x.RegistrationNumber == vehicle.RegistrationNumber).Include(x => x.Images).FirstOrDefault();
                 if (existingVehicle == null)
                 {
                     break;
@@ -123,18 +127,25 @@ namespace Bolinders.Core.Services
                     listOfImages.Add(image.Url);
                 }
 
+                //remove old images from disk
+                var directory = Path.Combine(_environment.WebRootPath, "images/uploads");
+                foreach (var image in existingVehicle.Images)
+                {
+                    _image.RemoveImageFromDisk(directory, image.ImageUrl);
+                    _context.Images.Remove(image);
+                }
+                
                 existingVehicle.Colour = vehicle.Colour;
                 existingVehicle.FacilityId = vehicle.FacilityId;
                 existingVehicle.Horsepowers = vehicle.Horsepowers;
-               
                 existingVehicle.Make = _context.Make.Where(x => x.Name == vehicle.Make).FirstOrDefault();
                 existingVehicle.Mileage = Int32.Parse(vehicle.Milage);
                 existingVehicle.Model = vehicle.Model;
                 existingVehicle.ModelDescription = vehicle.ModelDescription;
-                existingVehicle.Price = Double.Parse(vehicle.Price);
                 existingVehicle.RegistrationNumber = vehicle.RegistrationNumber;
                 existingVehicle.Updated = FromUnixTime(Int32.Parse(vehicle.Updated));
                 existingVehicle.Year = Int32.Parse(vehicle.Year);
+                existingVehicle.Images = new List<Image>();
 
                 if (Enum.TryParse(vehicle.BodyType, out BodyType bodyType))
                 {
@@ -149,7 +160,7 @@ namespace Bolinders.Core.Services
                     existingVehicle.Gearbox = gearbox;
                 }
 
-                if (Int32.Parse(vehicle.Leasable) == 0)
+                if (vehicle.Leasable == "0" || vehicle.Leasable == "")
                 {
                     existingVehicle.Leasable = false;
                 }
@@ -157,6 +168,9 @@ namespace Bolinders.Core.Services
                 {
                     existingVehicle.Leasable = true;
                 }
+
+                string justNumbers = new String(vehicle.Price.Where(Char.IsDigit).ToArray());
+                existingVehicle.Price = Int32.Parse(justNumbers);
 
 
                 var downloadedImages = _image.DownloadImagesFromURL(listOfImages);
@@ -173,12 +187,17 @@ namespace Bolinders.Core.Services
                 {
                     existingVehicle.Equipment = null;
                 }
-                vehicles.Remove(vehicle);
+                vehiclesToRemove.Add(vehicle);
 
                 _context.Entry(existingVehicle).State = EntityState.Modified;
-                _context.Entry(existingVehicle).Property(x => x.UrlId).IsModified = false;
+                _context.Entry(existingVehicle).Property(x => x.UrlId).IsModified = false;   
+            }
+            _context.SaveChangesAsync();
 
-                _context.SaveChangesAsync();
+            //removes already updated vehicles
+            foreach (var item in vehiclesToRemove)
+            {
+                vehicles.Remove(item);
             }
 
             //Create new vehicles out of what's left in the list
