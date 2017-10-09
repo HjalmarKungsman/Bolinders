@@ -4,6 +4,7 @@ using Bolinders.Core.Models;
 using Bolinders.Core.Models.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,7 @@ namespace Bolinders.Core.Services
                 "<p>Bilen finns hos Bolinders Bil AB</p>", baseUrl, vehicle.Make.Name, vehicle.Model, vehicle.ModelDescription, vehicle.UrlId);
 
                 MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("bolindersbil@byteshift.se");
+                mailMessage.From = new MailAddress(_smtpSettings.Email);
                 mailMessage.To.Add(reciever);
                 mailMessage.Body = message;
                 mailMessage.Subject = String.Format("Bolidners Bil AB har en {0} {1} {2} i lager!", vehicle.Make.Name, vehicle.Model, vehicle.ModelDescription);
@@ -95,30 +96,88 @@ namespace Bolinders.Core.Services
             try
             {
                 List<Vehicle> listOfVehicles = new List<Vehicle>();
-                var client = SmtpClientBuilder();
+                
 
                 foreach (var vehicle in addedVehicles)
                 {
-                    listOfVehicles.Add(_context.Vehicles.Where(x => x.Id == vehicle).FirstOrDefault());
+                    listOfVehicles.Add(_context.Vehicles.Where(x => x.Id == vehicle).Include(x => x.Facility).Include(x => x.Make).FirstOrDefault());
                 }
+
+
+                Dictionary<string, string> mailQueue = new Dictionary<string, string>();
 
                 foreach (var vehicle in listOfVehicles)
                 {
                     var baseUrl = UrlHelpers.GetBaseUrl(_httpContext);
 
-                    var message = string.Format("<h1>{1} {2} {3}</h1>" +
-                    "<a href='{0}/bil/{1}-{2}-{3}-{4}'>Till annonsen</a>",
-                    baseUrl, vehicle.Make.Name, vehicle.Model, vehicle.ModelDescription, vehicle.UrlId);
+                    if (vehicle.FacilityId == "BB1")
+                    {
+                        mailQueue.Add(vehicle.FacilityId, MessageNotificationBuilder(vehicle, baseUrl));
+                    }
+
+                    if (vehicle.FacilityId == "BB2")
+                    {
+                        mailQueue.Add(vehicle.FacilityId, MessageNotificationBuilder(vehicle, baseUrl));
+                    }
+
+                    if (vehicle.FacilityId == "BB3")
+                    {
+                        mailQueue.Add(vehicle.FacilityId, MessageNotificationBuilder(vehicle, baseUrl));
+                    }
+                }
+
+                var BB1 = mailQueue.Where(x => x.Key == "BB1").ToDictionary(x => x.Key, y => y.Value );
+                if (BB1.Count > 0)
+                {
+                    SendNotification(BB1);
+                }
+                
+                var BB2 = mailQueue.Where(x => x.Key == "BB2").ToDictionary(x => x.Key, y => y.Value);
+                if (BB2.Count > 0)
+                {
+                    SendNotification(BB2);
+                }
+
+                var BB3 = mailQueue.Where(x => x.Key == "BB3").ToDictionary(x => x.Key, y => y.Value);
+                if (BB3.Count > 0)
+                {
+                    SendNotification(BB3);
                 }
 
                 return SmtpStatusCode.Ok;
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 return SmtpStatusCode.GeneralFailure;
             }
 
+        }
+        private string MessageNotificationBuilder(Vehicle vehicle, string baseUrl)
+        {
+            return string.Format("<h1>{1} {2} {3}</h1>" +
+                        "<a href='{0}/bil/{1}-{2}-{3}-{4}'>Till annonsen</a><br/>",
+                        baseUrl, vehicle.Make.Name, vehicle.Model, vehicle.ModelDescription, vehicle.UrlId);
+        }
+
+        private SmtpStatusCode SendNotification(Dictionary<string, string> facility)
+        {
+            var client = SmtpClientBuilder();
+            var reciever = _context.Facilities.Find(facility.Keys.FirstOrDefault()).Email;
+            //var reciever = "Din_testmail";
+
+            var message = facility.Values.FirstOrDefault().ToString();
+
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress(_smtpSettings.Email);
+            mailMessage.To.Add(reciever);
+            mailMessage.Body = message;
+            mailMessage.Subject = facility.Count() + " ändring(ar) har gjorts via importen.";
+            mailMessage.IsBodyHtml = true;
+            client.Send(mailMessage);
+
+            return SmtpStatusCode.Ok;
         }
     }
 }
