@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>Bolinders Bil AB - @ViewData["Title"]</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=1.1">
 
     <environment include="Development">
@@ -124,7 +124,6 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -166,24 +165,17 @@
         });
 
     </script>
-
-    <script id="template" type="text/x-handlebars-template">
-        <ul style="-webkit-padding-start: 0px; list-style: none;">
-            {{#each this}}
-            <li>
-                <h5><strong>{{title}}</strong></h5>
-                <p>{{description}}</p>
-                <span class="small">{{publishedAt}}</span><a class="pull-right" target="_blank" href="{{url}}">Läs mer!</a>
-                <hr />
-            </li>
-            {{/each}}
+    <div>
+        <ul id="nyheter">
         </ul>
 
-    </script>
+    </div>
 
     <script>
         var result = [];
         var articles = [];
+        var count = 0;
+        var hr;
 
         $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423", function (data) {
             result = data;
@@ -215,10 +207,16 @@
                 articles.length = 3;
             }
 
-            var source = $("#template").html();
-            var template = Handlebars.compile(source);
-            var html = template(articles);
-            $('#nyheter').html(html);
+            $.each(articles, function (i, obj) {
+                count += 1;
+                var new_html = "<h5> <strong>" + obj.title + "</h5> </strong>"
+                    + "<p>" + obj.description + "</p>"
+                    + '<span class="small">' + obj.publishedAt + '</span>'
+                    + '<a class="pull-right target="_blank href="' + obj.url + '">' + "Läs mer!" + '</a>'
+                    + (count < 3 ? '<hr />' : '')
+                                
+                $('#nyheter').append($('<ul class="list-unstyled" style="-webkit-padding-start: 0px; list-style: none;"><li></li></ul>').html(new_html));
+            });
 
             console.log(articles)
         });

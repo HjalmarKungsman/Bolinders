@@ -69,6 +69,11 @@ namespace Bolinders.Web
 
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
 
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IXmlToDbService, XmlToDbService>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             // Add application services.
             services.AddMvc();
 
@@ -77,6 +82,7 @@ namespace Bolinders.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext ctx, UserManager<ApplicationUser> userManager)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,7 +91,8 @@ namespace Bolinders.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithReExecute("/Home/Errors/{0}");
+                //app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
@@ -94,6 +101,10 @@ namespace Bolinders.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "Errors",
+                    template: "Home/Errors/{Id}",
+                    defaults: new { controller = "Home", action = "Errors" });
 
                 routes.MapRoute(
                     name: "pagination",
@@ -139,7 +150,13 @@ namespace Bolinders.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
 
+
+
+
             });
+            app.Run(context => { context.Response.StatusCode = 404; return Task.FromResult(0); });
+            app.Run(context => { context.Response.StatusCode = 500; return Task.FromResult(0); });
+
 
             Seed.FillIfEmpty(ctx, userManager);
         }

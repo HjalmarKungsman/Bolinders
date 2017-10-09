@@ -5,24 +5,22 @@
 }
 <h1>@ViewBag.Title</h1>
 <hr />
+
+
+
 <div class="col-lg-12">
     @{
-        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBk-v4Q-5hiaJeLvNpOAdBwSQsyrCaE-ow'></script>
 
-        @*<div style='overflow:hidden;height:400px;width:520px;'>*@
-        <div id='googleMap'></div>
-            <style>
-               
-            </style>
-            @*</div>*@
-            <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=7c1fa14bdc2fe0ddafaa3e7f80fbbd1a808087dc'></script>
+        <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyBk-v4Q-5hiaJeLvNpOAdBwSQsyrCaE-ow'></script>
+        <div id="map"></div>
+        <style id="map"></style>
             <script type='text/javascript'>
             function init_map() {
 
                                 var myOptions = {
                                     zoom: 8, center: new google.maps.LatLng(57.4959123, 13.0902289),
                                     mapTypeId: google.maps.MapTypeId.ROADMAP
-                }; map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+                }; map = new google.maps.Map(document.getElementById("map"), myOptions);
 
                 @foreach (var item in ViewBag.Contacts)
                 {
@@ -47,7 +45,7 @@
             <div class="col-md-6">
                 <h2>Adress</h2>
                 <hr />
-                <ul>
+                <ul class="list-unstyled">
                     @foreach (var c in ViewBag.Contacts)
             {
                         <li>

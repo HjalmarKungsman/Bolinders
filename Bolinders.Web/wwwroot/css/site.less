@@ -317,6 +317,7 @@ a:hover {
     cursor: pointer;
 }
 
+//Css for images in edit view//
 .imgDeleteBox {
     display: inline-flex;
     flex-wrap: wrap;
@@ -344,6 +345,50 @@ a:hover {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%)
 }
+
+//Css in edit view//
+.equipment.form-control {
+    height: auto !important;
+    padding: 1px;
+}
+
+.yesRemove:hover {
+    color: green;
+}
+
+.red {
+    background-color: #650000;
+}
+
+.form-control ul.select2-choices {
+    border: 0;
+    background-image: none;
+    margin: 1px;
+    padding: 1px;
+}
+
+.form-control.select2-container .select2-choice {
+    height: 38px;
+    line-height: 38px;
+}
+
+.select2-container {
+    color: #000 !important;
+}
+
+//Css for popover in index.cshtml//
+.popover.right > .arrow:after {
+    border-right-color: black;
+}
+
+.tab {
+    margin-left: 1.2em;
+}
+
+.popover {
+    background-color: black;
+}
+
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px) {
     .modal-content {
@@ -352,12 +397,13 @@ a:hover {
 }
 
 /*Google maps css*/
-#gmap_canvas img {
-    max-width: none !important;
-    background: none !important
+
+#gmap_canvas {
+    width: 520px;
+    height: 400px;
 }
 
-#googleMap {
+#map {
     width: 100%;
     height: 500px !important;
 }

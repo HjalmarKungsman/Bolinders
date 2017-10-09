@@ -25,23 +25,35 @@ namespace Bolinders.Core.Controllers
         private readonly ApplicationDbContext _context;
         private IHostingEnvironment _environment;
         private static IHttpContextAccessor HttpContextAccessor;
+        private IEmailSenderService _emailSender;
+        private IXmlToDbService _xmlToDb;
+        private IImageService _image;
+
+
         public static void Configure(IHttpContextAccessor httpContextAccessor)
         {
             HttpContextAccessor = httpContextAccessor;
         }
-        public VehiclesController(ApplicationDbContext context, IHostingEnvironment environment)
+        public VehiclesController(ApplicationDbContext context, 
+                                    IHostingEnvironment environment, 
+                                    IEmailSenderService emailSender, 
+                                    IXmlToDbService xmlToDb, 
+                                    IImageService image)
         {
             _context = context;
             _environment = environment;
+            _emailSender = emailSender;
+            _xmlToDb = xmlToDb;
+            _image = image;
         }
 
         //GetXml, triggs the XmlToDbService()
         //TODO: Create an once-a-day Task and remove this ViewResult
         public ViewResult GetXml()
         {
-            IEnumerable<VehicleXml> vehicleXmlList = XmlToDbService.Run();
+            string status = _xmlToDb.Run();
 
-            return View("TestTheXmlThing", vehicleXmlList);
+            return View("TestTheXmlThing", status);
         }
 
         //GET: Vehicles/List
@@ -144,7 +156,7 @@ namespace Bolinders.Core.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        //POST: ShareVehicles
+        //POST: ShareVehicle
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> ShareVehicle(Guid id, string reciever)
@@ -154,7 +166,7 @@ namespace Bolinders.Core.Controllers
             var absUrl = string.Format("{0}://{1}", Request.Scheme,
             Request.Host);
 
-            var emailSender = await EmailSenderService.SendEmailWithSharedVehicle(reciever, vehicle, absUrl);
+            var emailSender = await _emailSender.SendEmailWithSharedVehicle(reciever, vehicle, absUrl);
 
             if (emailSender == SmtpStatusCode.Ok)
             {
@@ -187,6 +199,18 @@ namespace Bolinders.Core.Controllers
                 {
                     return NotFound();
                 }
+
+                //kollar relaterade makeids på aktuellt fordon, jämför pris och tar ut max 4st. 
+                var relatedVehicles = _context.Vehicles
+                    .Include(v => v.Make)
+                    .Where(b => b.MakeId == vehicle.MakeId)
+                    .Where(b => b.Price >= vehicle.Price)
+                    .Where(b => b.Id != vehicle.Id).Take(4)
+                    .Include(v => v.Images)
+
+                    .ToList();
+
+                ViewBag.relatedVehicles = relatedVehicles;
 
 
 
@@ -249,7 +273,7 @@ namespace Bolinders.Core.Controllers
             if (ModelState.IsValid)
             {
 
-                var listOfImages = await ImageHelpers.UploadImages(vehicle.Images, _environment);
+                var listOfImages = await _image.UploadImages(vehicle.Images);
 
                 Vehicle newVehicle = new Vehicle
                 {
@@ -276,18 +300,12 @@ namespace Bolinders.Core.Controllers
                     Images = new List<Image>()
                 };
 
-                newVehicle = ImageHelpers.ImageBuilder(listOfImages, newVehicle);
+                newVehicle = _image.ImageBuilder(listOfImages, newVehicle);
 
                 if (vehicle.Equipment != null)
                 {
                     newVehicle.Equipment = vehicle.Equipment.Select(x => new Equipment(x, newVehicle)).ToList();
                 }
-                
-
-                //if (vehicle.Equipment != null)
-                //{
-                //    newVehicle = EquipmentHelpers.EquipmentBuilder(vehicle.Equipment, newVehicle);
-                //}
 
                 _context.Add(newVehicle);
                 await _context.SaveChangesAsync();
@@ -409,8 +427,8 @@ namespace Bolinders.Core.Controllers
                 }
                 if (vehicle.Images != null)
                 {
-                    var listOfImages = await ImageHelpers.UploadImages(vehicle.Images, _environment);
-                    existingVehicle = ImageHelpers.ImageBuilder(listOfImages, existingVehicle);
+                    var listOfImages = await _image.UploadImages(vehicle.Images);
+                    existingVehicle = _image.ImageBuilder(listOfImages, existingVehicle);
                 }
 
                 if (existingVehicle.Images.Count == 0 && vehicle.ImageList == null)
@@ -420,7 +438,7 @@ namespace Bolinders.Core.Controllers
                         "noimage.jpg"
                     };
 
-                    existingVehicle = ImageHelpers.ImageBuilder(fillerImage, existingVehicle);
+                    existingVehicle = _image.ImageBuilder(fillerImage, existingVehicle);
                 }
 
 
@@ -506,7 +524,7 @@ namespace Bolinders.Core.Controllers
             var imgGuid = new Guid(imageId);
             var image = await _context.Images.SingleOrDefaultAsync(m => m.Id == imgGuid);
             var directory = Path.Combine(_environment.WebRootPath, "images/uploads");
-            await ImageHelpers.RemoveImageFromDisk(directory, imagelink);
+            await _image.RemoveImageFromDisk(directory, imagelink);
             _context.Images.Remove(image);
             await _context.SaveChangesAsync();
 
