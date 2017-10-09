@@ -21,6 +21,30 @@
     <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
 
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            window.cookieconsent.initialise({
+                "palette": {
+                    "popup": {
+                        "background": "#bb0000",
+                        "text": "#ffffff"
+                    },
+                    "button": {
+                        "background": "#000000",
+                        "text": "#ffffff"
+                    }
+                },
+                "content": {
+                    "message": "Genom att fortsätta använda denna webbplatsen godkänner du användandet av cookies.",
+                    "dismiss": "Ok",
+                    "link": "Läs mer",
+                    "href": "https://www.pts.se/sv/Privat/Internet/Skydd-av-uppgifter/Fragor-och-svar-om-kakor-for-anvandare1/"
+                }
+            })
+        });
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top transparent-header">
