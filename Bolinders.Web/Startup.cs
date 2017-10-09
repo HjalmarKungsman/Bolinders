@@ -14,6 +14,8 @@ using Bolinders.Core.DataAccess;
 using Bolinders.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Bolinders.Core.Models.Entities;
+using DNTScheduler.Core;
+using Bolinders.Core;
 
 namespace Bolinders.Web
 {
@@ -21,8 +23,7 @@ namespace Bolinders.Web
     {
         public Startup(IConfiguration configuration)
         {
-
-            Configuration = configuration;
+            Configuration = configuration;              
         }
 
         public IConfiguration Configuration { get; }
@@ -32,6 +33,7 @@ namespace Bolinders.Web
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -71,6 +73,22 @@ namespace Bolinders.Web
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
             services.Configure<FtpSettings>(Configuration.GetSection("FtpSettings"));
             services.Configure<MyNewsDeskSettings>(Configuration.GetSection("MyNewsDeskSettings"));
+
+            services.AddDNTScheduler(options =>
+            {
+                //Time for importtask to run
+                var dateNow = DateTime.UtcNow;
+                var timeToRun = new DateTime(dateNow.Year, dateNow.Month, (dateNow.Day + 1), 2, 0, 0);
+
+                options.AddScheduledTask<ImportTask>(
+                    runAt: utcNow =>
+                    {   
+                        var now = utcNow;
+                        return now.Hour == timeToRun.Hour && now.Minute == timeToRun.Minute;
+                    },
+                    order: 1);
+            });
+
 
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IXmlToDbService, XmlToDbService>();
@@ -160,6 +178,7 @@ namespace Bolinders.Web
             app.Run(context => { context.Response.StatusCode = 404; return Task.FromResult(0); });
             app.Run(context => { context.Response.StatusCode = 500; return Task.FromResult(0); });
 
+            app.UseDNTScheduler();
 
             Seed.FillIfEmpty(ctx, userManager);
         }
