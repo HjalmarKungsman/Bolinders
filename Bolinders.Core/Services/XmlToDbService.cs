@@ -39,13 +39,13 @@ namespace Bolinders.Core.Services
         //public static void Run()
         {
             //Metod 1, FTP nedladdning. Pausar den, tar så himla lång tid. Gör en fake-XML istället
-            //string _xmlFile = FtpDownload();
+            string _xmlFile = FtpDownload();
 
             //Metod 2, Parsar XML-string till ett VehicleXml object
-            //List<VehicleXml> vehiclesAll = ParseXmlToObject(_xmlFile);
+            List<VehicleXml> vehiclesAll = ParseXmlToObject(_xmlFile);
 
             //Metod 2b fake. Istället för 1 och 2. Mockar en XML-string och parsar den till ett VehicleXml object
-            List<VehicleXml> vehiclesAll = ParseXmlToObjectFake();
+            //List<VehicleXml> vehiclesAll = ParseXmlToObjectFake();
 
             //Metod 3. Väljer ut alla bilar som uppdaterats sista 24 h.
             List<VehicleXml> vehiclesUpdatedLastDay = SelectUpdatedVehicles(vehiclesAll);
