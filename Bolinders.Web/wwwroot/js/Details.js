@@ -1,16 +1,30 @@
 ﻿$(document).ready(function () {
     function calculateCost() {
-        const length = parseInt($(".col-lg-6 > .LeaseCalculator form select").val());
-        const price = parseFloat($(".col-lg-6 > .LeaseCalculator form input[type=hidden]").val());
-        const payment = parseFloat($(".col-lg-6 > .LeaseCalculator form input[type=number]").val());
-        const monthlycost = ((price - payment) / length);
-        const totalcost = monthlycost * length;
-        $("span.monthlyPrice").text(monthlycost + " kr");
-        $("span.totalPrice").text(totalcost + " kr");
+        var interest = 0.045;
+        var length = parseInt($("#loanLenght").val());
+        var price = parseFloat($("#exclVatPrice").val());
+        var payment = parseFloat($("#downPayment").val());
+
+        //Loan calculator
+        var totalLoan = price - payment;
+        var totalInterest = totalLoan * interest;
+        var totalCost = totalLoan + totalInterest;
+        var monthlyCost = (totalCost / length);
+        var totalCost = totalLoan + totalInterest + payment;
+
+        //Update field
+        $("span.monthlyPrice").text(Math.round(monthlyCost).toLocaleString('sv') + " kr");
+        $("span.totalPrice").text(Math.round(totalCost).toLocaleString('sv') + " kr");
     }
-    $(".col-lg-6 > .LeaseCalculator form").on("submit", function (e) {
+    calculateCost();
+    $("#leasingCalculator").on("submit", function (e) {
         calculateCost();
         e.preventDefault();
-
+    });
+    $('#downPayment').on('input',function () {
+        calculateCost();
+    });
+    $('#loanLenght').change(function () {
+        calculateCost();
     });
 });

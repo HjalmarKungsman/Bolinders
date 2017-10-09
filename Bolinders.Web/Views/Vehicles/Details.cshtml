@@ -1,18 +1,26 @@
 ﻿@model Bolinders.Core.Models.Entities.Vehicle
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = $"{Model.Make.Name} {Model.Model} {Model.ModelDescription}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>@Model.Make.Name @Model.Model @Model.ModelDescription</h2>
+
+@if (User.Identity.IsAuthenticated)
+            {
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Ändra</a> |
+        <a asp-action="Index">Se alla</a>
+    </div>
+}
 
 <div>
     <h4>@Model.BodyType.GetDisplayName()</h4>
     <hr />
     <div class="row">
         <div class="col-lg-6">
-            <dl class="dl-horizontal">
+            <dl id="details" class="dl-horizontal">
                 <dt>
                     @Html.DisplayNameFor(model => model.RegistrationNumber)
                 </dt>
@@ -117,104 +125,18 @@
                 }
             </dl>
 
-
-
-
-            @{
-                var price = Model.Price;
-
-                if (Model.Leasable)
-                {
-                    price = (price * 0.8);
-                    < span style = "font-size:large" >@($"{price:C0}") exkl.moms </ span >< br />
+            <div id="price">
+                @{
+                    var inclVatPrice = Model.Price;
+                    if (Model.Leasable)
+                    {
+                        var exclVatPrice = (inclVatPrice * 0.8);
+                        <span style="font-size:large">@($"{exclVatPrice:C0}") exkl.moms</span><br />
+                    }
+                    <span style="font-size:large">@($"{inclVatPrice:C0}") inkl. moms</span>
                 }
-                <span style="font-size:large">@($"{Model.Price:C0}") inkl. moms</span>
-            }
-
-
-           
-            <hr />
-            <dl id="contactInformation" class="dl-horizontal">
-                <dt>Kontakta säljaren</dt>
-                <dd><a href="tel:@Model.Facility.PhoneNumber">@Model.Facility.PhoneNumber</a></dd>
-                <dt>Dela via e-post</dt>
-                <dd>
-                    <a class="hidden-xs shareButton" href="#"><span class="glyphicon glyphicon-share"></span></a>
-                    <a class="hidden-lg hidden-md hidden-sm shareButton" href="#contactInformation"><span style="font-size:x-large" class="glyphicon glyphicon-share"></span></a>
-                </dd>
-            </dl>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div>
-                    <a asp-action="Edit" asp-route-id="@Model.Id">Ändra</a> |
-                    <a asp-action="Index">Se alla</a>
-                </div>
-            }
-            <div id="shareVehicle" class="hidden">
-                <form asp-action="ShareVehicle">
-                    <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
-                    <div class="form-group">
-                        <label for="email">Vem vill du tipsa?</label>
-                        <div class="input-group">
-
-                            <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
-                            <span class="input-group-btn">
-                                <input class="share btn btn-success" type="button" value="Tipsa" />
-                            </span>
-
-                        </div>
-                        <div id="statusMessage"></div>
-                    </div>
-                </form>
-
             </div>
-            @{
-                if (Model.Leasable)
-                {
-                    var untaxedprice = (Model.Price * 0.8);
-                    var leaseprice = Math.Round(untaxedprice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
-
-                    <div class="LeaseCalculator">
-                        <label style="font-size:large">Lease Kalkylator</label>
-                        <hr />
-                        <form>
-                            <div class="form-group">
-                                <label>Kontant insats</label>
-                                <input type="number" value="@leaseprice" class="form-control" />
-                                <input type="hidden" value="@untaxedprice" class="form-control" />
-                                <small class="form-text text-muted">Standard är 20% av bilens kostnad</small>
-                            </div>
-                            <div class="form-group">
-                                <label>Längd på avbetalning</label>
-                                <select class="form-control">
-                                    <option value="12">12 månader</option>
-                                    <option value="24">24 månader</option>
-                                    <option selected="selected" value="36">36 månader</option>
-                                    <option value="48">48 månader</option>
-                                    <option value="60">60 månader</option>
-                                    <option value="72">72 månader</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Räkna</button>
-
-
-                        </form>
-                    </div>
-                    <hr />
-                    <div >
-                        <label style="font-size:large">Pris per månad:</label>
-                        <span class="monthlyPrice" style="font-size:large"></span><br />
-                        <label style="font-size:large">Total Kostnad:</label>
-                        <span class="totalPrice" style="font-size:large"></span><br />
-                        <span style="font-size:large">@($"{untaxedprice:C0}") exl. moms</span>
-                    </div>
-                }
-
-                <span style="font-size:large">@($"{Model.Price:C0}") inkl. moms</span>
-
-            }
         </div>
-
 
         <div class="col-lg-6">
             <div id="myCarousel" class="carousel slide details-slide" data-ride="carousel">
@@ -269,31 +191,123 @@
                     }
                 </ol>
             </div>
-
-    @if (ViewBag.relatedVehicles.Count != 0)
-    {
-        <div id="relatedVehicle">
-            <h1>Relaterade fordon!</h1>
-            <ul class="flex-container">
-                @foreach (var item in ViewBag.relatedVehicles)
-                {
-                    var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
-                    vehicleLinkId = vehicleLinkId.Replace(" ", "_");
-                    <li class="flex-item">
-                        <div class="item active">
-                            <a href="/bil/@vehicleLinkId"> <img src="~/images/uploads/@item.Images[0].ImageUrl" style="margin: 0 auto" alt="@item.Model" class="img-responsive" /></a>
-                        </div>
-                    </li>
-                }
-            </ul>
         </div>
-    }
+    </div>
+    <div class="row">
+        <div id="leasingcalculator" class="col-lg-6">
+            <hr />
+
+            @{
+                if (Model.Leasable)
+                {
+                    var exclVatPrice = (inclVatPrice * 0.8);
+                    var downPayment = Math.Round(exclVatPrice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
 
 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label style="font-size:large">Beräkna din leasingkostnad</label>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="LeaseCalculator">
+                                
 
+                                <form id="leasingCalculator">
+                                    <div class="form-group">
+                                        <label>Kontantinsats</label>
+                                        <input id="downPayment" type="number" value="@downPayment" class="form-control" />
+                                        <input id="exclVatPrice" type="hidden" value="@exclVatPrice" class="form-control" />
+                                        <small class="form-text text-muted">Minst 20% av totala beloppet</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Längd på avbetalning</label>
+                                        <select id="loanLenght" class="form-control">
+                                            <option value="12">12 månader</option>
+                                            <option value="24">24 månader</option>
+                                            <option selected="selected" value="36">36 månader</option>
+                                            <option value="48">48 månader</option>
+                                            <option value="60">60 månader</option>
+                                            <option value="72">72 månader</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-8">
+                            <div>
+                                <label style="font-size:large">Månadskostnad:</label>
+                                <span class="monthlyPrice" style="font-size:large"></span><br />
+                                <label style="font-size:large">Total Kostnad:</label>
+                                <span class="totalPrice" style="font-size:large"></span><br />
+                                <small class="form-text text-muted">Exkl moms</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            }
+        </div>
+        <div id="moreinfo" class="col-lg-6">
+            <hr />
+            <label style="font-size:large">Mer information</label>
+
+            <dl id="contactInformation" class="dl-horizontal">
+                <dt>Kontakta säljaren</dt>
+                <dd><a href="tel:@Model.Facility.PhoneNumber">@Model.Facility.PhoneNumber</a></dd>
+                <dt>Dela via e-post</dt>
+                <dd>
+                    <a class="hidden-xs shareButton" href="#"><span class="glyphicon glyphicon-share"></span></a>
+                    <a class="hidden-lg hidden-md hidden-sm shareButton" href="#contactInformation"><span style="font-size:x-large" class="glyphicon glyphicon-share"></span></a>
+                </dd>
+            </dl>
+
+
+            <div id="shareVehicle" class="hidden">
+                <form asp-action="ShareVehicle">
+                    <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
+                    <div class="form-group">
+                        <label for="email">Vem vill du tipsa?</label>
+                        <div class="input-group">
+
+                            <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
+                            <span class="input-group-btn">
+                                <input class="share btn btn-success" type="button" value="Tipsa" />
+                            </span>
+
+                        </div>
+                        <div id="statusMessage"></div>
+                    </div>
+                </form>
+
+            </div>
 
         </div>
     </div>
+    <div class="row">
+        <div id="realtedvehicles" class="col-lg-12">
+            @if (ViewBag.relatedVehicles.Count != 0)
+            {
+                <div id="relatedVehicle">
+                    <h1>Relaterade fordon!</h1>
+                    <ul class="flex-container">
+                        @foreach (var item in ViewBag.relatedVehicles)
+                {
+                    var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
+                    vehicleLinkId = vehicleLinkId.Replace(" ", "_");
+                            <li class="flex-item">
+                                <div class="item active">
+                                    <a href="/bil/@vehicleLinkId"> <img src="~/images/uploads/@item.Images[0].ImageUrl" style="margin: 0 auto" alt="@item.Model" class="img-responsive" /></a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+
 </div>
 <!-- The Image Modal -->
 <div id="imageModal" class="modal">
