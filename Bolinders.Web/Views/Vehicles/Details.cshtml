@@ -136,8 +136,6 @@
                     </dd>
                 }
             </dl>
-
-<<<<<<< HEAD
             <div id="price">
                 @{
                     var inclVatPrice = Model.Price;
@@ -147,18 +145,7 @@
                         <span style="font-size:large">@($"{exclVatPrice:C0}") exkl.moms</span><br />
                     }
                     <span style="font-size:large">@($"{inclVatPrice:C0}") inkl. moms</span>
-=======
 
-
-
-            @{
-                var price = Model.Price;
-
-                if (Model.Leasable)
-                {
-                    price = (price * 0.8);
-                    <span style = "font-size:large">@($"{price:C0}") exkl.moms </span><br/>
->>>>>>> a8c46ae9ba0473ee5ae5d96c3aec84dc82414c1b
                 }
             </div>
         </div>
