@@ -80,13 +80,8 @@ namespace Bolinders.Core.Controllers
         {
             switch (Id)
             {
-                case "401":
-                case "403":
                 case "404":
                 case "500":
-                case "502":
-                case "503":
-                case "504":
                     return View($"~/Views/Errors/Page{Id}.cshtml");
                 default: return DefaultError();
             }
