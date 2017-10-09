@@ -70,6 +70,7 @@ namespace Bolinders.Web
 
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
             services.Configure<FtpSettings>(Configuration.GetSection("FtpSettings"));
+            services.Configure<MyNewsDeskSettings>(Configuration.GetSection("MyNewsDeskSettings"));
 
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IXmlToDbService, XmlToDbService>();

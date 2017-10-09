@@ -11,18 +11,21 @@ using System.Net.Mail;
 using Bolinders.Core.Models.Entities;
 using Bolinders.Core.Models;
 using Microsoft.Extensions.Options;
+using Bolinders.Core.Models.SettingModels;
 
 namespace Bolinders.Core.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly MyNewsDeskSettings _myNewsDeskSettings;
         private readonly ApplicationDbContext _context;
         private IEmailSenderService _emailSender;
 
-        public HomeController(ApplicationDbContext context, IEmailSenderService emailSender)
+        public HomeController(ApplicationDbContext context, IEmailSenderService emailSender, IOptions<MyNewsDeskSettings> myNewsDeskSettings)
         {
             _context = context;
             _emailSender = emailSender;
+            _myNewsDeskSettings = myNewsDeskSettings.Value;
         }
 
         public IActionResult Index()
@@ -39,6 +42,7 @@ namespace Bolinders.Core.Controllers
             }
 
             ViewBag.Makes = logos;
+            ViewBag.MyNewsDeskSettings = _myNewsDeskSettings;
 
             return View();
         }
