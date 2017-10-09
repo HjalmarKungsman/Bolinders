@@ -174,7 +174,7 @@
                 var month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
                 var date = ('0' + dateObj.getDate()).slice(-2);
                 var year = dateObj.getFullYear();
-                var shortDate = date + '/' + month + '/' + year;
+                var shortDate = year + '-' + month + '-' + date;
                 ob.publishedAt = shortDate;
                
                 articles.push(ob)
