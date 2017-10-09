@@ -2,6 +2,7 @@
 using Bolinders.Core.Models;
 using Bolinders.Core.Models.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -13,8 +14,14 @@ namespace Bolinders.Core.Services
 {
     public class EmailSenderService
     {
+        private readonly SmtpSettings _smtpSettings;
 
-        public static async Task<SmtpStatusCode> SendEmailToFacility(string senderName, string senderEmail, string reciever, string subject, string message, string phoneNumber)
+        public EmailSenderService(IOptions<SmtpSettings> settings)
+        {
+            _smtpSettings = settings.Value;
+        }
+
+        private static SmtpClient SmtpClientBuilder()
         {
             SmtpClient client = new SmtpClient("mailcluster.loopia.se")
             {
@@ -22,8 +29,15 @@ namespace Bolinders.Core.Services
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential("bolindersbil@byteshift.se", "MSD8921%ewf13Xf")
             };
+            return client;
+        }
+
+        public static async Task<SmtpStatusCode> SendEmailToFacility(string senderName, string senderEmail, string reciever, string subject, string message, string phoneNumber)
+        {         
             try
             {
+                var client = SmtpClientBuilder();
+
                 message = message + "<br />Telefon: " + phoneNumber + "<br />Namn: " + senderName;
 
                 MailMessage mailMessage = new MailMessage();
@@ -44,14 +58,10 @@ namespace Bolinders.Core.Services
 
         public static async Task<SmtpStatusCode> SendEmailWithSharedVehicle(string reciever, Vehicle vehicle, string baseUrl)
         {
-            SmtpClient client = new SmtpClient("mailcluster.loopia.se")
-            {
-                Port = 587,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("bolindersbil@byteshift.se", "MSD8921%ewf13Xf")
-            };
             try
             {
+                var client = SmtpClientBuilder();
+
                 var message = string.Format("<h1>{1} {2} {3}</h1>" +
                 "<a href='{0}/bil/{1}-{2}-{3}-{4}'>{1} {2} {3}</a>" +
                 "<p>Bilen finns hos Bolinders Bil AB</p>", baseUrl, vehicle.Make.Name, vehicle.Model, vehicle.ModelDescription, vehicle.UrlId);
