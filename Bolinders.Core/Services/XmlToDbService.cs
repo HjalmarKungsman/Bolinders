@@ -2,7 +2,9 @@
 using Bolinders.Core.Enums;
 using Bolinders.Core.Models;
 using Bolinders.Core.Models.Entities;
+using Bolinders.Core.Models.SettingModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,14 +17,16 @@ namespace Bolinders.Core.Services
     public class XmlToDbService : IXmlToDbService
     {
         private readonly ApplicationDbContext _context;
+        private readonly Models.SettingModels.FtpSettings _ftpSettings;
         private readonly IImageService _image;
         private readonly IEmailSenderService _email;
 
-        public XmlToDbService(ApplicationDbContext context, IImageService image, IEmailSenderService email)
+        public XmlToDbService(ApplicationDbContext context, IImageService image, IEmailSenderService email, IOptions<Models.SettingModels.FtpSettings> ftpSettings)
         {
             _context = context;
             _image = image;
             _email = email;
+            _ftpSettings = ftpSettings.Value;
         }
 
         //Nu är metoden kopplad till en Controller och en View bara utvecklings skull.
@@ -52,9 +56,9 @@ namespace Bolinders.Core.Services
         private string FtpDownload()
         {
             //TODO: Flytta adress, användarnamn och lösen till appsettings.json
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://ftp.brighten.se/xml/bb-crm.xml");
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_ftpSettings.FtpServer);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
-            request.Credentials = new NetworkCredential("159616_exp", "Qwerty123");
+            request.Credentials = new NetworkCredential(_ftpSettings.UserName, _ftpSettings.Password);
 
             FtpWebResponse response = (FtpWebResponse)request.GetResponse();
             Stream responseStream = response.GetResponseStream();

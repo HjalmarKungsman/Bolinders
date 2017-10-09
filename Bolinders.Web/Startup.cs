@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Bolinders.Core.Models;
+using Bolinders.Core.Models.SettingModels;
 using Bolinders.Core.DataAccess;
 using Bolinders.Core.Services;
 using Microsoft.AspNetCore.Http;
@@ -68,6 +69,7 @@ namespace Bolinders.Web
             });
 
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
+            services.Configure<FtpSettings>(Configuration.GetSection("FtpSettings"));
 
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IXmlToDbService, XmlToDbService>();
