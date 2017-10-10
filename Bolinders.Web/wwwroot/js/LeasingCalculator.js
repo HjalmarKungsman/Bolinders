@@ -30,4 +30,12 @@
     $('#loanLenght').change(function () {
         calculateCost();
     });
+
+    //Range <=> Input
+    //$('#downPaymentRange').on('input', function () {
+    //    $('#downPayment').val($(this).val());
+    //});
+    //$('#downPayment').on('input', function () {
+    //    $('#downPaymentRange').val($(this).val());
+    //});
 });

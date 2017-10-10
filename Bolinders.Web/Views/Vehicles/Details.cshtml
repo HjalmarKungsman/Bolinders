@@ -332,40 +332,7 @@
 <script>
     $(document).ready(function () {
 
-        $('.share').on('click', function (e) {
-            e.preventDefault;
-
-            var email = $('#email').val();
-            var id = $('#vehicleId').val();
-            var data = new FormData();
-            console.log(id);
-
-            data.append("id", id);
-            data.append("reciever", email);
-
-            $.ajax({
-                method: 'POST',
-                url: '@Url.Action("ShareVehicle", "Vehicles")',
-                data: data,
-                contentType: false,
-                processData: false
-            })
-                .done(function (response) {
-                    $('#statusMessage').html("<div class='alert alert-success'><strong>Skickat! </strong>" + response + "</div>");
-                }).fail(function (response) {
-                    $('#statusMessage').html("<div class='alert alert-danger'><strong>Fel! </strong>" + response + "</div>");
-                })
-        });
-
-        $('.shareButton').on("click", function () {
-            $('#shareVehicle').toggleClass('hidden');
-
-        });
-
-
-        $('img').on('click', function () {
-
-        });
+        // Jakob, funkar denna?
 
         $('#downPaymentRange').on('input',function () {
             $('#downPayment').val($(this).val());
