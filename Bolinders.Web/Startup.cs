@@ -112,8 +112,8 @@ namespace Bolinders.Web
             }
             else
             {
+                app.UseExceptionHandler("/Home/Errors/500");
                 app.UseStatusCodePagesWithReExecute("/Home/Errors/{0}");
-                //app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
@@ -175,9 +175,6 @@ namespace Bolinders.Web
 
 
             });
-            app.Run(context => { context.Response.StatusCode = 404; return Task.FromResult(0); });
-            app.Run(context => { context.Response.StatusCode = 500; return Task.FromResult(0); });
-
             app.UseDNTScheduler();
 
             Seed.FillIfEmpty(ctx, userManager);
