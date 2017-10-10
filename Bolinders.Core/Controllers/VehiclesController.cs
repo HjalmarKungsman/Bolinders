@@ -47,15 +47,6 @@ namespace Bolinders.Core.Controllers
             _image = image;
         }
 
-        //GetXml, triggs the XmlToDbService()
-        //TODO: Create an once-a-day Task and remove this ViewResult
-        public ViewResult GetXml()
-        {
-            string status = _xmlToDb.Run();
-
-            return View("TestTheXmlThing", status);
-        }
-
         //GET: Vehicles/List
         [AllowAnonymous]
         public async Task<IActionResult> List(VehicleSearchModel formData = null, int page = 1, int pageLimit = 8)

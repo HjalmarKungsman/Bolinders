@@ -7,6 +7,6 @@ namespace Bolinders.Core.Services
 {
     public interface IXmlToDbService
     {
-        string Run();
+        void Run();
     }
 }

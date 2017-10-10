@@ -35,7 +35,7 @@ namespace Bolinders.Core.Services
         //Nu är metoden kopplad till en Controller och en View bara utvecklings skull.
         //Skall väl göras om till en void utan return som triggas från en tidsinställd Task.
 
-        public string Run()
+        public void Run()
         //public static void Run()
         {
             //Metod 1, FTP nedladdning. Pausar den, tar så himla lång tid. Gör en fake-XML istället
@@ -52,7 +52,6 @@ namespace Bolinders.Core.Services
 
             SortVehicles(vehiclesUpdatedLastDay);
 
-            return "Ok";
         }
 
         //Connects to FTP and downloads the XML-file
@@ -173,7 +172,7 @@ namespace Bolinders.Core.Services
                     existingVehicle.Leasable = true;
                 }
 
-                string justNumbers = new String(vehicle.Price.Where(Char.IsDigit).ToArray());
+                string justNumbers = new String(vehicle.Price.Where(Char.IsDigit).ToArray());//TODO , delimiter/ parsing xml to c# currency
                 existingVehicle.Price = Int32.Parse(justNumbers);
 
 
