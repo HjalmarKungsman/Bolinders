@@ -145,10 +145,11 @@
 
     <script>
         var newsSettings = new Object();
-        newsSettings.url = "@(ViewBag.MyNewsDeskSettings.Url)";
-        newsSettings.source = "@(ViewBag.MyNewsDeskSettings.Source)";
-        newsSettings.sortBy = "@(ViewBag.MyNewsDeskSettings.SortBy)";
-        newsSettings.apiKey = "@(ViewBag.MyNewsDeskSettings.ApiKey)";
+        @*//newsSettings.url = "@(ViewBag.MyNewsDeskSettings.Url)";
+        //newsSettings.source = "@(ViewBag.MyNewsDeskSettings.Source)";
+        //newsSettings.sortBy = "@(ViewBag.MyNewsDeskSettings.SortBy)";
+        //newsSettings.apiKey = "@(ViewBag.MyNewsDeskSettings.ApiKey)";*@
+        newsSettings.fullUri = "https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423";
     </script>
     <script src="~/js/MyNewsDesk.js"></script>
 
