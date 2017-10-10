@@ -227,7 +227,8 @@
                                 <form id="leasingCalculator">
                                     <div class="form-group">
                                         <label>Kontantinsats</label>
-                                        <input id="downPayment" type="number" value="@downPayment" class="form-control" />
+                                        <input id="downPayment" type="number" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
+                                        <input id="downPaymentRange" type="range" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
                                         <input id="exclVatPrice" type="hidden" value="@exclVatPrice" class="form-control" />
                                         <small class="form-text text-muted">Minst 20% av totala beloppet</small>
                                     </div>
@@ -365,6 +366,13 @@
 
         $('img').on('click', function () {
 
+        });
+
+        $('#downPaymentRange').on('input',function () {
+            $('#downPayment').val($(this).val());
+        });
+        $('#downPayment').on('input',function () {
+            $('#downPaymentRange').val($(this).val());
         });
 
     });
