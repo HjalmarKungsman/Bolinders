@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject Bolinders.Core.Models.NewsViewModel news
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bolinders Bil AB - @ViewData["Title"]</title>
+    <title>@ViewData["Title"] - Bolinders</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=1.1">
 
     <environment include="Development">
@@ -76,7 +77,6 @@
                                 <li><a asp-area="" asp-controller="Vehicles" asp-action="Create">Nytt fordon</a></li>
                             </ul>
                         </li>
-                        <li><a asp-area="" asp-controller="Vehicles" asp-action="GetXml">Testa Xml Feed</a></li>
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
@@ -145,11 +145,14 @@
     </environment>
 
     <script>
+        
         var newsSettings = new Object();
-        newsSettings.url = "@(ViewBag.MyNewsDeskSettings.Url)";
-        newsSettings.source = "@(ViewBag.MyNewsDeskSettings.Source)";
-        newsSettings.sortBy = "@(ViewBag.MyNewsDeskSettings.SortBy)";
-        newsSettings.apiKey = "@(ViewBag.MyNewsDeskSettings.ApiKey)";
+        newsSettings.url = "@(news.Url)";
+        newsSettings.source = "@(news.Source)";
+        newsSettings.sortBy = "@(news.SortBy)";
+        newsSettings.apiKey = "@(news.ApiKey)";
+        newsSettings.fullUri = "@(news.FullUri)";
+        //newsSettings.fullUri = "https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423";
     </script>
 
     <script>

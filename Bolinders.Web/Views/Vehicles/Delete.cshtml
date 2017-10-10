@@ -7,114 +7,146 @@
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this vehicle?</h3>
 <div>
-    <h4>Vehicle</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RegistrationNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RegistrationNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Model)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Model)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ModelDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ModelDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Mileage)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Mileage)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BodyType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BodyType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Colour)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Colour)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Gearbox)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Gearbox)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FuelType)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FuelType)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Horsepowers)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Horsepowers)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Used)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Used)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Leasable)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Leasable)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Facility)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Facility.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Make)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Make.Id)
-        </dd>
-    </dl>
+    <div class="col-lg-6">
+        <dl id="details" class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.RegistrationNumber)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RegistrationNumber)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Year)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Year)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Mileage)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Mileage) km
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.BodyType)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.BodyType)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Colour)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Colour)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Gearbox)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gearbox)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.FuelType)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FuelType)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Horsepowers)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Horsepowers)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Used)
+            </dt>
+            @{
+                var used = "";
+
+                if (Model.Used)
+                {
+                    used = "Ja";
+                }
+                if (!Model.Used)
+                {
+                    used = "Nej";
+                }
+            }
+            <dd>
+                @used
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Facility)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Facility.Name)
+            </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Created)
+                </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Created)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Updated)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Updated)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Leasable)
+                    </dt>
+                    <dd>
+                        @{
+                            var Leasable = "";
+
+                            if (Model.Leasable)
+                            {
+                                Leasable = "Ja";
+                            }
+                            else
+                            {
+                                Leasable = "Nej";
+                            }
+                        }
+                        @Leasable
+                    </dd>
+
+        </dl>
+        <div id="price">
+            @{
+                var inclVatPrice = Model.Price;
+                if (Model.Leasable)
+                {
+                    var exclVatPrice = (inclVatPrice * 0.8);
+                    <span style="font-size:large">@($"{exclVatPrice:C0}") exkl.moms</span><br />
+                }
+                <span style="font-size:large">@($"{inclVatPrice:C0}") inkl. moms</span>
+
+            }
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div id="myCarousel" class="carousel slide details-slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="~/images/uploads/@Model.Images[0].ImageUrl" alt="@Model.Images[0].ImageUrl" class="img-responsive myImg" />
+                </div>
+            </div>
+
+           
+            <!-- Indicators -->
+        </div>
+    </div>
+
+
+
+
+
+
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />

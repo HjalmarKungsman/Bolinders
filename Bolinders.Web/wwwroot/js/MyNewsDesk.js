@@ -2,8 +2,8 @@
 var articles = [];
 var count = 0;
 var hr;
-
-$.getJSON(newsSettings.url + "?source=" + newsSettings.source + "&sortBy=" + newsSettings.sortBy + "&apiKey=" + newsSettings.apiKey, function (data) {
+//newsSettings.url + "?source=" + newsSettings.source + "&sortBy=" + newsSettings.sortBy + "&apiKey=" + newsSettings.apiKey
+$.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423", function (data) {
     result = data;
 
     $.each(result.articles, function (i, ob) {

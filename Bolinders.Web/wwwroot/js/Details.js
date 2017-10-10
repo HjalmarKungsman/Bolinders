@@ -24,6 +24,9 @@
     $('#downPayment').on('input',function () {
         calculateCost();
     });
+    $('#downPaymentRange').on('change', function () {
+        calculateCost();
+    });
     $('#loanLenght').change(function () {
         calculateCost();
     });

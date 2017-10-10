@@ -8,7 +8,7 @@ namespace Bolinders.Core.Models.SettingModels
     {
         public MyNewsDeskSettings()
         {
-
+  
         }
         public string Url { get; set; }
         public string Source { get; set; }
