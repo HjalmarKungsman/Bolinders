@@ -20,8 +20,16 @@ paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
 
+//Start order
+gulp.task("1-LESS", ["less"]);
+gulp.task("2-CLEAN", ["clean:css", "clean:js"]);
+gulp.task("3-MINIFY", ["min:js", "min:css"]);
 
-// Compiles less to css
+
+
+
+
+// Compiles LESS to CSS
 gulp.task("less", function () {
     //return gulp.src('./wwwroot/less/main.less')
     return gulp.src([paths.less])
@@ -29,33 +37,28 @@ gulp.task("less", function () {
         .pipe(gulp.dest('wwwroot/css'));
 });
 
-// Deletes old minified js/css files
-gulp.task("clean:js", ["less"], function (cb) {
+// Clear JS
+gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
 });
 
-gulp.task("clean:css", ["clean:js"], function (cb) {
+// Clear CSS
+gulp.task("clean:css", function (cb) {
     rimraf(paths.concatCssDest, cb);
 });
 
-
-// Concats & uglifys js
-gulp.task("min:js", ["clean:css"], function () {
+// CONCATS & MINIFY JS
+gulp.task("min:js", function () {
     return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
         .pipe(concat(paths.concatJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-// Concats & uglifys css
-gulp.task("min:css", ["min:js"], function () {
+// CONCATS & MINIFY CSS
+gulp.task("min:css", function () {
     return gulp.src([paths.css, "!" + paths.minCss])
         .pipe(concat(paths.concatCssDest))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
-});
-
-// Chain
-gulp.task("START", ["min:css"], function () {
-    console.log("                           FINNISHED!")
 });

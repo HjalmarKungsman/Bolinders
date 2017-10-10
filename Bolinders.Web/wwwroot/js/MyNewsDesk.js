@@ -43,6 +43,4 @@ $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&
 
         $('#nyheter').append($('<ul class="list-unstyled" style="-webkit-padding-start: 0px; list-style: none;"><li></li></ul>').html(new_html));
     });
-
-    console.log(articles)
 });
