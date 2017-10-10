@@ -1,0 +1,30 @@
+﻿@base: #fffff0;
+@background: spin(@base, 180);
+@lighter: lighten(spin(@base, 5), 10%);
+@lighter2: lighten(spin(@base, 10), 20%);
+@darker: darken(spin(@base, -5), 10%);
+@darker2: darken(spin(@base, -10), 20%);
+
+body {
+    background-color: @background;
+}
+
+.baseColor {
+    color: @base
+}
+
+.bgLight {
+    color: @lighter
+}
+
+.bgLight2 {
+    color: @lighter2
+}
+
+.bgDark {
+    color: @darker
+}
+
+.bgDark2 {
+    color: @darker2
+}
