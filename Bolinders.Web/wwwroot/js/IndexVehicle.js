@@ -28,7 +28,7 @@
                     arrayId.push(checkboxes[i].value)
                 }
                 $.ajax({
-                    url: '@Url.Action("DeleteSelected", "Vehicles")',
+                    url: urlDelete,
                     type: 'POST',
                     traditional: true,
                     data: { selectedVehicles: arrayId },
