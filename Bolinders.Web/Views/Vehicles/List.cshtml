@@ -95,8 +95,6 @@ else
 @*Behövs ingen ingen if-sats här. Pagehelpern har en inbyggd funktion som returnerar noll ifall antalet bilar som hittade får plats på en sida. 
     Alltså är den anpassningsbar ifall man kan välja hur många bilar som ska visas på varje sida. Funktionen finns just nu med querystringen ?pageLimit=8,
     men den är inte implementerad i VehicleSearchViewModel*@ 
-@*@if (Model.Pager.TotalItems > 8)
-    {*@
     <div page-model="@Model"
          page-action="List"
          enable-page-classes="true"
@@ -104,64 +102,3 @@ else
          page-class-normal="btn-default"
          page-class-selected="btn-primary"
          class="btn-group"></div>
-@*}*@
-   
-
-
-<script>
-    $(document).ready(function () { 
-        $('.toggle-searchOptions').on('click', function () {
-
-            var up = 'fa-angle-up';
-            var down = 'fa-angle-down';
-            var span = $('.toggle-searchOptions span').first();
-        console.log(span)
-            $('#moreSearchOptions').toggleClass('hidden');
-            if (span.hasClass(down)) {
-                span.removeClass(down);
-                span.addClass(up);
-            }
-            else {
-                span.removeClass(up);
-                span.addClass(down);
-            }
-        });
-    });
-</script>
-
-<style>
-    .wrapper {
-        position: relative;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .image {
-        display: flex;
-        width: 100%;
-        height: auto;
-    }
-
-    .overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(0,0,0,0.6);
-        overflow: hidden;
-        width: 100%;
-        height: 25px;
-        transition: .5s ease;
-    }
-
-    .wrapper:hover .overlay {
-        height: 100%;
-    }
-
-    .text {
-        color: white;
-        font-size: 20px;
-        position: relative;
-        overflow: hidden;
-    }
-</style>

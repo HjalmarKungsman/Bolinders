@@ -125,8 +125,16 @@
         </div>
     </footer>
 
-    <environment exclude="Development">
-    @*<environment include="Development">*@
+    <script>
+        var newsSettings = new Object();
+        newsSettings.url = "@(news.Url)";
+        newsSettings.source = "@(news.Source)";
+        newsSettings.sortBy = "@(news.SortBy)";
+        newsSettings.apiKey = "@(news.ApiKey)";
+        newsSettings.fullUri = "@(news.FullUri)";
+        //newsSettings.fullUri = "https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423";
+    </script>
+    <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/select2/dist/js/select2.js"></script>
@@ -135,13 +143,13 @@
         <script src="~/js/ImageCarousel.js" asp-append-version="true"></script>
         <script src="~/js/Navbar.js" asp-append-version="true"></script>
         <script src="~/js/ImageModal.js" asp-append-version="true"></script>
+        <script src="~/js/ListVehicle.js" asp-append-version="true"></script>
         <script src="~/js/EditVehicle.js" asp-append-version="true"></script>
         <script src="~/js/IndexVehicle.js" asp-append-version="true"></script>
         <script src="~/js/CreateVehicle.js" asp-append-version="true"></script>
         <script src="~/js/MyNewsDesk.js" asp-append-version="true"></script>
     </environment>
-    <environment include="Development">
-        @*<environment exclude="Development">*@
+    <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
@@ -160,17 +168,6 @@
         </script>
     </environment>
 
-
-
-    <script>
-        var newsSettings = new Object();
-        newsSettings.url = "@(news.Url)";
-        newsSettings.source = "@(news.Source)";
-        newsSettings.sortBy = "@(news.SortBy)";
-        newsSettings.apiKey = "@(news.ApiKey)";
-        newsSettings.fullUri = "@(news.FullUri)";
-        //newsSettings.fullUri = "https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423";
-    </script>
 
 
     @RenderSection("Scripts", required: false)
