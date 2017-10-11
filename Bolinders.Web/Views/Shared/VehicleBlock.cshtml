@@ -16,17 +16,45 @@
     }
 }
 
+@*<div class="col-md-3">
+        <a href="/bil/@vehicleLinkId">
+            <div class="panel panel-default" style="height: 300px">
+                <div class="panel-body" style="color:black">
+                    <img class="img-responsive" src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Images.First().ImageUrl" style="height:154px;" />
+                    <h4><strong>@Model.Make.Name @Model.Model @Model.ModelDescription</strong></h4>
+                    <strong>@used</strong>
+                    <br />
+                    <span style="color: green;">@($"Pris: {Model.Price:C0}")</span>
+
+
+                </div>
+        </div></a>
+    </div>*@
+
+
+
+
 <div class="col-md-3">
-    <a href="/bil/@vehicleLinkId">
-        <div class="panel panel-default" style="height: 300px">
-            <div class="panel-body" style="color:black">
-                <img class="img-responsive" src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Images.First().ImageUrl" style="height:154px;" />               
-                <h4><strong>@Model.Make.Name @Model.Model @Model.ModelDescription</strong></h4>
-                <strong>@used</strong>
-                <br />
-                <span style="color: green;">@($"Pris: {Model.Price:C0}")</span>
-
-
+    <div class="list-wrapper">
+        <img src="~/images/uploads/@Model.Images.First().ImageUrl" alt="@Model.Make.Name @Model.Model @Model.ModelDescription" class="list-image">
+        <div class="list-overlay" style="padding: 0 5px;">
+            <div class="list-text text-center">
+                <p>@Model.Make.Name @Model.Model @Model.ModelDescription</p>
             </div>
-    </div></a>
+            <div class="">
+                <p>
+                    @used bil<br />
+                Mätarställning: @Model.Mileage km<br />
+                Drivmedel: @Model.FuelType.GetDisplayName() <br />
+            </p>
+        </div>
+        <div>
+            <strong style="font-size: large">
+                @($"Pris: {Model.Price:C0}")
+            </strong>
+            <a class="btn btn-default pull-right" href="/bil/@vehicleLinkId">Läs mer</a>
+        </div>
+
+    </div>
+</div>
 </div>

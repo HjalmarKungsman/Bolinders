@@ -9,6 +9,14 @@
 
 <div>
     <h4>@Model.BodyType.GetDisplayName()</h4>
+    @if (User.Identity.IsAuthenticated)
+            {
+        <hr />
+        <div class="text-center">
+            <a asp-action="Edit" asp-route-id="@Model.Id">Ändra</a> |
+            <a asp-action="Index">Se alla</a>
+        </div>
+    }
     <hr />
     <div class="row">
         <div class="col-lg-6">
@@ -126,7 +134,7 @@
                         }
                         @Leasable
                     </dd>
-                }
+                            }
             </dl>
             <div id="price">
                 @{
@@ -273,24 +281,18 @@
 
 
             <div id="shareVehicle" class="hidden">
-                <form asp-action="ShareVehicle">
-                    <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
-                    <div class="form-group">
-                        <label for="email">Vem vill du tipsa?</label>
-                        <div class="input-group">
-
-                            <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
-                            <span class="input-group-btn">
-                                <input class="share btn btn-success" type="button" value="Tipsa" />
-                            </span>
-
-                        </div>
-                        <div id="statusMessage"></div>
+                <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
+                <div class="form-group">
+                    <label for="email">Vem vill du tipsa?</label>
+                    <div class="input-group">
+                        <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
+                        <span class="input-group-btn">
+                            <button class="share btn btn-success">Tipsa</button>
+                        </span>
                     </div>
-                </form>
-
+                    <div id="statusMessage"></div>
+                </div>
             </div>
-
         </div>
     </div>
     <div class="row">
@@ -329,10 +331,10 @@
 
         // Jakob, funkar denna?
 
-        $('#downPaymentRange').on('input',function () {
+        $('#downPaymentRange').on('input', function () {
             $('#downPayment').val($(this).val());
         });
-        $('#downPayment').on('input',function () {
+        $('#downPayment').on('input', function () {
             $('#downPaymentRange').val($(this).val());
         });
 

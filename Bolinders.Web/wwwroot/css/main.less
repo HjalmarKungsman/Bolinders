@@ -167,6 +167,11 @@ a:hover {
     border-color: @theme-color;
     color: #fff;
 }
+.btn-default:hover {
+    background-color: @theme-color;
+    border-color: @theme-color;
+    color: #fff;
+}
 
 .btn-primary {
     background-color: @theme-color;
@@ -174,9 +179,11 @@ a:hover {
 }
 
 .btn-primary:hover {
-    background-color: #e6e6e6;
-    border-color: #adadad;
-    color: #000;
+    /*background-color: #e6e6e6;*/
+    background: none;
+    border-color: @theme-color;
+    color: #fff;
+    font-weight:800;
 }
 
 .dropdown-menu {
@@ -417,4 +424,42 @@ a:hover {
 
 .transparent-header {
     background: none !important;
+}
+
+
+//vehicle list style
+
+.list-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.list-image {
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.list-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6);
+    overflow: hidden;
+    width: 100%;
+    height: 25px;
+    transition: .5s ease;
+}
+
+.-listwrapper:hover .overlay {
+    height: 100%;
+}
+
+.list-text {
+    color: white;
+    font-size: 20px;
+    position: relative;
+    overflow: hidden;
 }

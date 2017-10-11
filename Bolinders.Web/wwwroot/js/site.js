@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     $('.share').on('click', function (e) {
-        e.preventDefault;
+        e.preventDefault();
 
         var email = $('#email').val();
         var id = $('#vehicleId').val();
@@ -25,13 +25,9 @@ $(document).ready(function () {
             })
     });
 
-    $('.shareButton').on("click", function () {
+    $('.shareButton').on("click", function (e) {
+        e.preventDefault();
         $('#shareVehicle').toggleClass('hidden');
-
-    });
-
-    // Vad är detta?!?
-    $('img').on('click', function () {
 
     });
 });
@@ -59,10 +55,14 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     function calculateCost() {
+        console.log("LAddar");
         var interest = 0.045;
         var length = parseInt($("#loanLenght").val());
-        var price = parseFloat($("#inklVatPrice").val());
+        var price = parseFloat($("#exclVatPrice").val());
         var payment = parseFloat($("#downPayment").val());
+        console.log(length);
+        console.log(price);
+        console.log(payment);
 
         //Loan calculator
         var totalLoan = price - payment;
@@ -74,6 +74,8 @@ $(document).ready(function () {
         //Update field
         $("span.monthlyPrice").text(Math.round(monthlyCost).toLocaleString('sv') + " kr");
         $("span.totalPrice").text(Math.round(totalLoanCost).toLocaleString('sv') + " kr");
+
+        console.log(monthlyCost + " = " + totalLoanCost);
     }
     calculateCost();
     $("#leasingCalculator").on("submit", function (e) {
@@ -239,7 +241,7 @@ $(document).ready(function () {
                     arrayId.push(checkboxes[i].value)
                 }
                 $.ajax({
-                    url: '@Url.Action("DeleteSelected", "Vehicles")',
+                    url: urlDelete,
                     type: 'POST',
                     traditional: true,
                     data: { selectedVehicles: arrayId },
