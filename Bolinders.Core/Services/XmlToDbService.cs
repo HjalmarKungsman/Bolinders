@@ -234,8 +234,7 @@ namespace Bolinders.Core.Services
 
                 };
 
-                string justNumbers = new String(vehicle.Price.Where(Char.IsDigit).ToArray());
-                newVehicle.Price = Int32.Parse(justNumbers);
+                newVehicle.Price = double.Parse(vehicle.Price, NumberStyles.Currency);
 
 
                 if (Enum.TryParse(vehicle.BodyType, out BodyType bodyType))
