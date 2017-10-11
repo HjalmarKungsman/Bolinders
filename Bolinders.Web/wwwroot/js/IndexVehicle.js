@@ -22,10 +22,10 @@
         $(document).on('click', '#confirmRemove', function () {
 
                 var arrayId = new Array();
-                var checkboxes = document.querySelectorAll('.selectedVehicles:checked')
+                var checkboxes = document.querySelectorAll('.selectedVehicles:checked');
 
                 for (var i = 0; i < checkboxes.length; i++) {
-                    arrayId.push(checkboxes[i].value)
+                    arrayId.push(checkboxes[i].value);
                 }
                 $.ajax({
                     url: urlDelete,

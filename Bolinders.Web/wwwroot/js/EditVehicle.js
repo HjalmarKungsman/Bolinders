@@ -42,9 +42,9 @@ $('.noRemove').on('click', function () {
 
 function deletepic(imgId, imgUrl, thiss, events) {
     $(events.path[5]).addClass('hidden');
-
+    var url = 'http://' + window.location.host;
     $.ajax({
-        url: '@Url.Action("RemoveImage", "Vehicles")',
+        url: url + '/Bilar/RemoveImage',
         type: 'POST',
         data: {
             imageId: imgId,
@@ -53,5 +53,5 @@ function deletepic(imgId, imgUrl, thiss, events) {
         error: function () {
             console.log("error");
         }
-    })
-};
+    });
+}
