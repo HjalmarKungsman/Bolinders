@@ -1,4 +1,4 @@
-.multi-item-carousel .carousel-inner > .item {
+﻿.multi-item-carousel .carousel-inner > .item {
   transition: 500ms ease-in-out left;
 }
 .multi-item-carousel .carousel-inner .active.left {
