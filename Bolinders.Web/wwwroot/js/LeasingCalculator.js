@@ -2,7 +2,7 @@
     function calculateCost() {
         var interest = 0.045;
         var length = parseInt($("#loanLenght").val());
-        var price = parseFloat($("#exclVatPrice").val());
+        var price = parseFloat($("#inklVatPrice").val());
         var payment = parseFloat($("#downPayment").val());
 
         //Loan calculator

@@ -7,13 +7,15 @@
     <title>@ViewData["Title"] - Bolinders</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico?v=1.1">
 
-    <environment include="Development">
+    <environment exclude="Development">
+    @*<environment include="Development">*@
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
         <link href="~/css/main.css" rel="stylesheet" />
         <link href="~/css/select2.css" rel="stylesheet" />
         <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     </environment>
-    <environment exclude="Development">
+    <environment include="Development">
+        @*<environment exclude="Development">*@
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -123,16 +125,23 @@
         </div>
     </footer>
 
-    <environment include="Development">
+    <environment exclude="Development">
+    @*<environment include="Development">*@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/select2/dist/js/select2.js"></script>
         <script src="~/js/LeasingCalculator.js" asp-append-version="true"></script>
-        <script src="~/js/MyNewsDesk.js" asp-append-version="true"></script>
         <script src="~/js/ShareVehicle.js" asp-append-version="true"></script>
         <script src="~/js/ImageCarousel.js" asp-append-version="true"></script>
         <script src="~/js/Navbar.js" asp-append-version="true"></script>
+        <script src="~/js/ImageModal.js" asp-append-version="true"></script>
+        <script src="~/js/EditVehicle.js" asp-append-version="true"></script>
+        <script src="~/js/IndexVehicle.js" asp-append-version="true"></script>
+        <script src="~/js/CreateVehicle.js" asp-append-version="true"></script>
+        <script src="~/js/MyNewsDesk.js" asp-append-version="true"></script>
     </environment>
-    <environment exclude="Development">
+    <environment include="Development">
+        @*<environment exclude="Development">*@
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
@@ -146,7 +155,12 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"
+                asp-fallback-src="~/lib/select2/dist/js/select2.js">
+        </script>
     </environment>
+
+
 
     <script>
         var newsSettings = new Object();

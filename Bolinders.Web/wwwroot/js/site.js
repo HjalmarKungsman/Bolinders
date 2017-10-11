@@ -61,7 +61,7 @@ $(document).ready(function () {
     function calculateCost() {
         var interest = 0.045;
         var length = parseInt($("#loanLenght").val());
-        var price = parseFloat($("#exclVatPrice").val());
+        var price = parseFloat($("#inklVatPrice").val());
         var payment = parseFloat($("#downPayment").val());
 
         //Loan calculator
@@ -98,6 +98,144 @@ $(document).ready(function () {
     //    $('#downPaymentRange').val($(this).val());
     //});
 });
+$(document).ready(function () {
+    $(window).scroll(function () {
+        if ($(this).scrollTop() <= 25) {
+            $('.navbar').addClass('transparent-header');
+        }
+        else {
+            $('.navbar').removeClass('transparent-header');
+        }
+    });
+
+    $('.navbar-toggle').on("click", function () {
+        if ($('.navbar-collaspse').hasClass('in')) {
+            $('.navbar').addClass('transparent-header');
+        }
+        else {
+            $('.navbar').removeClass('transparent-header');
+        }
+    })
+
+});
+var modal = document.getElementById('imageModal');
+var modalImg = document.getElementById("modalImage");
+
+$('.myImg').on('click', function () {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+})
+
+$(modal).on('click', function () {
+    modal.style.display = "none";
+});
+
+$('close').on('click', function () {
+    modal.style.display = "none";
+});
+$(document).ready(function () {
+    //$('.equipment-list-item').on('click', function () {
+    //    this.remove(this);
+    //});
+
+    //$('.newEquipmentItem').on('blur', function () {
+    //    //TODO Fix or remove
+    //    $('.newEquipment').val($('.newEquipmentItem').val());
+    //    $('.newEquipment').val();
+
+    //});
+
+});
+$('.equipment').select2({
+    tags: true
+});
+
+var test = true;
+$('.imgDeleteBox').on('click', function () {
+    if (test) {
+        $('.noRemove', this).removeClass('hidden');
+        $('.yesRemove', this).removeClass('hidden');
+        $('.fa-trash', this).addClass('hidden');
+        $('.imgDeleteBox').addClass('red');
+        test = false;
+    }
+});
+$('.imgDeleteBox').hover(function () {
+    $('.noRemove', this).addClass('hidden');
+    $('.yesRemove', this).addClass('hidden');
+    $('.fa-trash', this).removeClass('hidden');
+    $('.imgDeleteBox').removeClass('red');
+    test = true;
+});
+$('.noRemove').on('click', function () {
+    var thiss = this.parentElement;
+    $('.noRemove', thiss).addClass('hidden');
+    $('.yesRemove', thiss).addClass('hidden');
+    $('.fa-trash').removeClass('hidden');
+    $('.imgDeleteBox').removeClass('red');
+});
+
+function deletepic(imgId, imgUrl, thiss, events) {
+    $(events.path[5]).addClass('hidden');
+
+    $.ajax({
+        url: '@Url.Action("RemoveImage", "Vehicles")',
+        type: 'POST',
+        data: {
+            imageId: imgId,
+            imagelink: imgUrl
+        },
+        error: function () {
+            console.log("error");
+        }
+    })
+};
+ $(document).ready(function () {
+
+        var content = '<p>Är du säker?</p> <a id="confirmRemove" ><i class="fa fa-check" style="font-size:36px;"></i></a><a id="noRemove" class="tab"><i class="fa fa-close" style="font-size:36px"></i></a>';
+
+        $('#deleteButton').popover({
+            animation: true,
+            content: content,
+            html: true,
+            placement: 'auto right'
+        });
+
+        $('.selectedVehicles').on('change', function () {
+            if ($('.selectedVehicles:checked').length > 0) {
+                $('#deleteButton').removeClass('disabled');
+            }
+            else {
+                $('#deleteButton').addClass('disabled');
+                $('#deleteButton').popover('hide');
+            }
+        });
+        
+        $(document).on('click', '#confirmRemove', function () {
+
+                var arrayId = new Array();
+                var checkboxes = document.querySelectorAll('.selectedVehicles:checked')
+
+                for (var i = 0; i < checkboxes.length; i++) {
+                    arrayId.push(checkboxes[i].value)
+                }
+                $.ajax({
+                    url: '@Url.Action("DeleteSelected", "Vehicles")',
+                    type: 'POST',
+                    traditional: true,
+                    data: { selectedVehicles: arrayId },
+                    error: function () {
+                        console.log("error");
+                    }
+                }).done(function () {
+                    location.reload();
+                });
+
+             });
+        $(document).on('click', '#noRemove', function () {
+            $('#deleteButton').popover('hide');
+        });
+    });
 var result = [];
 var articles = [];
 var count = 0;
@@ -143,40 +281,4 @@ $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&
 
         $('#nyheter').append($('<ul class="list-unstyled" style="-webkit-padding-start: 0px; list-style: none;"><li></li></ul>').html(new_html));
     });
-});
-
-$(document).ready(function () {
-    $(window).scroll(function () {
-        if ($(this).scrollTop() <= 25) {
-            $('.navbar').addClass('transparent-header');
-        }
-        else {
-            $('.navbar').removeClass('transparent-header');
-        }
-    });
-
-    $('.navbar-toggle').on("click", function () {
-        if ($('.navbar-collaspse').hasClass('in')) {
-            $('.navbar').addClass('transparent-header');
-        }
-        else {
-            $('.navbar').removeClass('transparent-header');
-        }
-    })
-
-});
-var modal = document.getElementById('imageModal');
-var modalImg = document.getElementById("modalImage");
-
-$('.myImg').on('click', function () {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-})
-
-$(modal).on('click', function () {
-    modal.style.display = "none";
-});
-
-$('close').on('click', function () {
-    modal.style.display = "none";
 });

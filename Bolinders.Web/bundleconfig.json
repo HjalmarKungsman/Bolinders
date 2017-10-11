@@ -15,9 +15,11 @@
       "wwwroot/js/ShareVehicle.js",
       "wwwroot/js/ImageCarousel.js",
       "wwwroot/js/LeasingCalculator.js",
-      "wwwroot/js/MyNewsDesk.js",
       "wwwroot/js/Navbar.js",
-      "wwwroot/js/ImageModal.js"
+      "wwwroot/js/ImageModal.js",
+      "wwwroot/js/EditVehicle.js",
+      "wwwroot/js/IndexVehicle.js",
+      "wwwroot/js/MyNewsDesk.js"
     ]
   },
   {
