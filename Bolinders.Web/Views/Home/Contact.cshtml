@@ -49,13 +49,14 @@
                     @foreach (var c in ViewBag.Contacts)
             {
                         <li>
-                            <b>Bolinders bil @c.Name </b>
+                            <label style="font-size:large">Bolinders Bil @c.Name </label>
                             <p>
                                 @c.Address @c.City
                                 <br>
                                 Telefon: @c.PhoneNumber
                                 <br>
-                                E-post: <a href="mailto:@{@c.Email}">@c.Email</a>
+                                @c.Email
+                                <br /><br />
                             </p>
                         </li>
     }
