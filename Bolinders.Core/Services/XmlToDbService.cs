@@ -99,7 +99,7 @@ namespace Bolinders.Core.Services
         {
             TimeSpan epochTicks = new TimeSpan(new DateTime(1970, 1, 1).Ticks);
             // Fake-XML:en s upate värden är satta till typ i torsdags eller fredags. Ändra bara AddDays(-1) till -5 så levererar den här metoden ett litet urval...
-            TimeSpan unixTicks = new TimeSpan(DateTime.UtcNow.AddDays(-5).Ticks) - epochTicks;
+            TimeSpan unixTicks = new TimeSpan(DateTime.UtcNow.AddDays(-1).Ticks) - epochTicks;
             //TODO: Gör om så den inte jämför från Nu till minus 24h utan istället jämför idag klockan 01:00:0000 och minus 24h. Risken finns ju att den ena dagen triggas 01:00:0001 och andra dagaen triggas den 01:00:0077. Alltså skulle det finnas utrymme för att en bil faller emellan...
 
 
