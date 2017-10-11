@@ -69,11 +69,11 @@ $(document).ready(function () {
         var totalInterest = totalLoan * interest;
         var totalCost = totalLoan + totalInterest;
         var monthlyCost = (totalCost / length);
-        var totalCost = totalLoan + totalInterest + payment;
+        var totalLoanCost = totalLoan + totalInterest + payment;
 
         //Update field
         $("span.monthlyPrice").text(Math.round(monthlyCost).toLocaleString('sv') + " kr");
-        $("span.totalPrice").text(Math.round(totalCost).toLocaleString('sv') + " kr");
+        $("span.totalPrice").text(Math.round(totalLoanCost).toLocaleString('sv') + " kr");
     }
     calculateCost();
     $("#leasingCalculator").on("submit", function (e) {
@@ -190,6 +190,25 @@ function deletepic(imgId, imgUrl, thiss, events) {
         }
     })
 };
+$(document).ready(function () {
+    $('.toggle-searchOptions').on('click', function () {
+
+        var up = 'fa-angle-up';
+        var down = 'fa-angle-down';
+        var span = $('.toggle-searchOptions span').first();
+        console.log(span)
+        $('#moreSearchOptions').toggleClass('hidden');
+        if (span.hasClass(down)) {
+            span.removeClass(down);
+            span.addClass(up);
+        }
+        else {
+            span.removeClass(up);
+            span.addClass(down);
+        }
+    });
+});
+
  $(document).ready(function () {
 
         var content = '<p>Är du säker?</p> <a id="confirmRemove" ><i class="fa fa-check" style="font-size:36px;"></i></a><a id="noRemove" class="tab"><i class="fa fa-close" style="font-size:36px"></i></a>';

@@ -10,11 +10,11 @@
         var totalInterest = totalLoan * interest;
         var totalCost = totalLoan + totalInterest;
         var monthlyCost = (totalCost / length);
-        var totalCost = totalLoan + totalInterest + payment;
+        var totalLoanCost = totalLoan + totalInterest + payment;
 
         //Update field
         $("span.monthlyPrice").text(Math.round(monthlyCost).toLocaleString('sv') + " kr");
-        $("span.totalPrice").text(Math.round(totalCost).toLocaleString('sv') + " kr");
+        $("span.totalPrice").text(Math.round(totalLoanCost).toLocaleString('sv') + " kr");
     }
     calculateCost();
     $("#leasingCalculator").on("submit", function (e) {

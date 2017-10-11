@@ -18,6 +18,7 @@
       "wwwroot/js/Navbar.js",
       "wwwroot/js/ImageModal.js",
       "wwwroot/js/EditVehicle.js",
+      "wwwroot/js/ListVehicle.js",
       "wwwroot/js/IndexVehicle.js",
       "wwwroot/js/MyNewsDesk.js"
     ]
