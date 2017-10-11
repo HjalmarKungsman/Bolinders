@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -59,7 +60,6 @@ namespace Bolinders.Core.Services
         //Connects to FTP and downloads the XML-file
         private string FtpDownload()
         {
-            //TODO: Flytta adress, användarnamn och lösen till appsettings.json
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_ftpSettings.FtpServer);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.Credentials = new NetworkCredential(_ftpSettings.UserName, _ftpSettings.Password);
@@ -174,8 +174,8 @@ namespace Bolinders.Core.Services
                     existingVehicle.Leasable = true;
                 }
 
-                string justNumbers = new String(vehicle.Price.Where(Char.IsDigit).ToArray());//TODO , delimiter/ parsing xml to c# currency
-                existingVehicle.Price = Int32.Parse(justNumbers);
+
+                existingVehicle.Price = double.Parse(vehicle.Price, NumberStyles.Currency);
 
 
                 var downloadedImages = _image.DownloadImagesFromURL(listOfImages);
