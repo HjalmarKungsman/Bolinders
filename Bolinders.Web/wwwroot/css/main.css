@@ -383,7 +383,7 @@ a:hover {
   height: 25px;
   transition: .5s ease;
 }
-.-listwrapper:hover .overlay {
+.list-wrapper:hover .list-overlay {
   height: 100%;
 }
 .list-text {

@@ -6,14 +6,14 @@ $(document).ready(function () {
         var email = $('#email').val();
         var id = $('#vehicleId').val();
         var data = new FormData();
-        console.log(id);
+        var url = 'http://' + window.location.host;
 
         data.append("id", id);
         data.append("reciever", email);
 
         $.ajax({
             method: 'POST',
-            url: '@Url.Action("ShareVehicle", "Vehicles")',
+            url: url + '/Bilar/ShareVehicle/',
             data: data,
             contentType: false,
             processData: false
@@ -22,7 +22,7 @@ $(document).ready(function () {
                 $('#statusMessage').html("<div class='alert alert-success'><strong>Skickat! </strong>" + response + "</div>");
             }).fail(function (response) {
                 $('#statusMessage').html("<div class='alert alert-danger'><strong>Fel! </strong>" + response + "</div>");
-            })
+            });
     });
 
     $('.shareButton').on("click", function (e) {
@@ -117,7 +117,7 @@ $(document).ready(function () {
         else {
             $('.navbar').removeClass('transparent-header');
         }
-    })
+    });
 
 });
 var modal = document.getElementById('imageModal');
@@ -126,7 +126,7 @@ var modalImg = document.getElementById("modalImage");
 $('.myImg').on('click', function () {
     modal.style.display = "block";
     modalImg.src = this.src;
-})
+});
 
 $(modal).on('click', function () {
     modal.style.display = "none";
@@ -179,9 +179,9 @@ $('.noRemove').on('click', function () {
 
 function deletepic(imgId, imgUrl, thiss, events) {
     $(events.path[5]).addClass('hidden');
-
+    var url = 'http://' + window.location.host;
     $.ajax({
-        url: '@Url.Action("RemoveImage", "Vehicles")',
+        url: url + '/Bilar/RemoveImage',
         type: 'POST',
         data: {
             imageId: imgId,
@@ -190,15 +190,15 @@ function deletepic(imgId, imgUrl, thiss, events) {
         error: function () {
             console.log("error");
         }
-    })
-};
+    });
+}
 $(document).ready(function () {
     $('.toggle-searchOptions').on('click', function () {
 
         var up = 'fa-angle-up';
         var down = 'fa-angle-down';
         var span = $('.toggle-searchOptions span').first();
-        console.log(span)
+ 
         $('#moreSearchOptions').toggleClass('hidden');
         if (span.hasClass(down)) {
             span.removeClass(down);
@@ -235,10 +235,10 @@ $(document).ready(function () {
         $(document).on('click', '#confirmRemove', function () {
 
                 var arrayId = new Array();
-                var checkboxes = document.querySelectorAll('.selectedVehicles:checked')
+                var checkboxes = document.querySelectorAll('.selectedVehicles:checked');
 
                 for (var i = 0; i < checkboxes.length; i++) {
-                    arrayId.push(checkboxes[i].value)
+                    arrayId.push(checkboxes[i].value);
                 }
                 $.ajax({
                     url: urlDelete,
@@ -278,7 +278,7 @@ $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&
         var shortDate = year + '-' + month + '-' + date;
         ob.publishedAt = shortDate;
 
-        articles.push(ob)
+        articles.push(ob);
     });
 
     articles.sort(function (a, b) {
@@ -298,7 +298,7 @@ $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&
             + "<p>" + obj.description + "</p>"
             + '<span class="small">' + obj.publishedAt + '</span>'
             + '<a class="pull-right target=" _blank href="' + obj.url + '">' + "Läs mer!" + '</a>'
-            + (count < 3 ? '<hr />' : '')
+            + (count < 3 ? '<hr />' : '');
 
         $('#nyheter').append($('<ul class="list-unstyled" style="-webkit-padding-start: 0px; list-style: none;"><li></li></ul>').html(new_html));
     });

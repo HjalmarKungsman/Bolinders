@@ -19,7 +19,7 @@ $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&
         var shortDate = year + '-' + month + '-' + date;
         ob.publishedAt = shortDate;
 
-        articles.push(ob)
+        articles.push(ob);
     });
 
     articles.sort(function (a, b) {
@@ -39,7 +39,7 @@ $.getJSON("https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&
             + "<p>" + obj.description + "</p>"
             + '<span class="small">' + obj.publishedAt + '</span>'
             + '<a class="pull-right target=" _blank href="' + obj.url + '">' + "Läs mer!" + '</a>'
-            + (count < 3 ? '<hr />' : '')
+            + (count < 3 ? '<hr />' : '');
 
         $('#nyheter').append($('<ul class="list-unstyled" style="-webkit-padding-start: 0px; list-style: none;"><li></li></ul>').html(new_html));
     });

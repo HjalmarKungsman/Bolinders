@@ -44,17 +44,17 @@
             <div class="">
                 <p>
                     @used bil<br />
-                Mätarställning: @Model.Mileage km<br />
-                Drivmedel: @Model.FuelType.GetDisplayName() <br />
-            </p>
-        </div>
-        <div>
-            <strong style="font-size: large">
-                @($"Pris: {Model.Price:C0}")
-            </strong>
-            <a class="btn btn-default pull-right" href="/bil/@vehicleLinkId">Läs mer</a>
-        </div>
+                    Mätarställning: @Model.Mileage km<br />
+                    Drivmedel: @Model.FuelType.GetDisplayName() <br />
+                </p>
+            </div>
+            <div>
+                <strong style="font-size: large">
+                    @($"Pris: {Model.Price:C0}")
+                </strong>
+                <a class="btn btn-default pull-right" href="/bil/@vehicleLinkId">Läs mer</a>
+            </div>
 
+        </div>
     </div>
-</div>
 </div>

@@ -15,6 +15,6 @@
         else {
             $('.navbar').removeClass('transparent-header');
         }
-    })
+    });
 
 });
