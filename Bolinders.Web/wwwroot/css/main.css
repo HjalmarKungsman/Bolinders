@@ -84,7 +84,7 @@ h4 {
   line-height: 100px;
 }
 .table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: #777;
+  background-color: rgba(187, 0, 0, 0.3);
   border: none;
 }
 .table > thead > tr > th {

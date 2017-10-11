@@ -1,7 +1,8 @@
 ﻿@theme-color: #bb0000;
 @theme-background-color: #000;
 @theme-font-color: #fff;
-@theme-color-75: fade(@theme-color, 75%); 
+@theme-color-75: fade(@theme-color, 75%);
+@theme-color-30: fade(@theme-color, 30%); 
 
 body {
     background-color: @theme-background-color;
@@ -100,10 +101,9 @@ h1, h2, h3, h4 {
     line-height: 100px;
 }
 
-
 //table
 .table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #777;
+    background-color: @theme-color-30;
     border: none;
 }
 
