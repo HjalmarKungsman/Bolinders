@@ -79,7 +79,7 @@ namespace Bolinders.Web
                 //Time for importtask to run
                 var dateNow = DateTime.UtcNow;
                 //var timeToRun = new DateTime(dateNow.Year, dateNow.Month, (dateNow.Day + 1), 2, 0, 0);
-                var timeToRun = new DateTime(dateNow.Year, dateNow.Month, (dateNow.Day), 11, 21, 0);
+                var timeToRun = new DateTime(dateNow.Year, dateNow.Month, (dateNow.Day), 14, 36, 0);
 
                 options.AddScheduledTask<ImportTask>(
                     runAt: utcNow =>

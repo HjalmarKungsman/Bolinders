@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bolinders.Core.Services
 {
@@ -35,7 +36,7 @@ namespace Bolinders.Core.Services
         //Nu är metoden kopplad till en Controller och en View bara utvecklings skull.
         //Skall väl göras om till en void utan return som triggas från en tidsinställd Task.
 
-        public void Run()
+        public async Task Run()
         //public static void Run()
         {
             //Metod 1, FTP nedladdning. Pausar den, tar så himla lång tid. Gör en fake-XML istället
@@ -50,7 +51,8 @@ namespace Bolinders.Core.Services
             //Metod 3. Väljer ut alla bilar som uppdaterats sista 24 h.
             List<VehicleXml> vehiclesUpdatedLastDay = SelectUpdatedVehicles(vehiclesAll);
 
-            SortVehicles(vehiclesUpdatedLastDay);
+            await SortVehicles(vehiclesUpdatedLastDay);
+            return;
 
         }
 
@@ -106,7 +108,7 @@ namespace Bolinders.Core.Services
             return vehiclesUpdatedLastDay;
         }
 
-        private void SortVehicles(List<VehicleXml> vehicles)
+        private async Task SortVehicles(List<VehicleXml> vehicles)
         {
             List<Guid> addedVehicles = new List<Guid>();
             List<VehicleXml> vehiclesToRemove = new List<VehicleXml>();
@@ -134,7 +136,7 @@ namespace Bolinders.Core.Services
                 var directory = Path.Combine(_environment.WebRootPath, "images/uploads");
                 foreach (var image in existingVehicle.Images)
                 {
-                    _image.RemoveImageFromDisk(directory, image.ImageUrl);
+                   await _image.RemoveImageFromDisk(directory, image.ImageUrl);
                     _context.Images.Remove(image);
                 }
                 
@@ -195,7 +197,7 @@ namespace Bolinders.Core.Services
                 _context.Entry(existingVehicle).State = EntityState.Modified;
                 _context.Entry(existingVehicle).Property(x => x.UrlId).IsModified = false;   
             }
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             //removes already updated vehicles
             foreach (var item in vehiclesToRemove)
@@ -288,10 +290,11 @@ namespace Bolinders.Core.Services
                 _context.Add(newVehicle);
                 addedVehicles.Add(newVehicle.Id);
             }
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             _email.SendImportNotification(addedVehicles);
 
+            return;
         }
 
         private DateTime FromUnixTime(long unixTime)
