@@ -559,6 +559,10 @@ h4 {
   /*background-size: cover;*/
   height: 50%;
 }
+.navbar-inverse .navbar-nav > li > a:focus,
+.navbar-inverse .navbar-nav > li > a:hover {
+  color: #bb0000;
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -654,7 +658,7 @@ a:hover {
   color: #fff;
 }
 .btn-default:hover {
-  background-color: #bb0000;
+  background-color: rgba(187, 0, 0, 0.3);
   border-color: #bb0000;
   color: #fff;
 }
@@ -663,22 +667,26 @@ a:hover {
   border-color: #bb0000;
 }
 .btn-primary:hover {
-  /*background-color: #e6e6e6;*/
   background: none;
   border-color: #bb0000;
   color: #fff;
-  font-weight: 800;
 }
 .dropdown-menu {
   background: #000;
-  border: 1px solid #ffffff;
+  border: 1px solid #bb0000;
+  padding: 0px;
+  border-bottom: none;
+}
+.dropdown-menu > li {
+  border-bottom: 1px solid #bb0000;
 }
 .dropdown-menu > li > a {
   color: #fff;
 }
-.navbar-inverse .navbar-nav > li > a:hover,
-.navbar-inverse .navbar-nav > li > a:focus {
-  color: #bb0000;
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover {
+  background-color: rgba(187, 0, 0, 0.3);
+  color: #fff;
 }
 .navbar-inverse .navbar-nav > li > a {
   color: #fff;
@@ -887,6 +895,8 @@ a:hover {
   position: relative;
   width: 100%;
   margin-bottom: 20px;
+  height: 175px;
+  overflow: hidden;
 }
 .list-image {
   display: flex;

@@ -20,37 +20,42 @@
     <hr />
     <div class="row">
         <div class="col-lg-6">
-            <dl id="details" class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.RegistrationNumber)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.RegistrationNumber)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Year)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Year)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Mileage)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Mileage) km
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.BodyType)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.BodyType)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Colour)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Colour)
-                </dd>
+            <div class="col-lg-6">
+                <dl id="details">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RegistrationNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.RegistrationNumber)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Year)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Year)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Mileage)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Mileage) km
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.BodyType)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.BodyType)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Colour)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Colour)
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-lg-6">
+            <dl>
                 <dt>
                     @Html.DisplayNameFor(model => model.Gearbox)
                 </dt>
@@ -93,50 +98,55 @@
                 <dd>
                     @Html.DisplayFor(model => model.Facility.Name)
                 </dd>
-                <dt>Utrustning</dt>
-                <dd>
-                    <div class="equipment-list">
-                        @foreach (var item in Model.Equipment)
-                        {
-                            <div class="equipment-list-item">@item.Value</div>
-                        }
-                    </div>
-                </dd>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Created)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Created)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Updated)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Updated)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Leasable)
-                    </dt>
-                    <dd>
-                        @{
-                            var Leasable = "";
-
-                            if (Model.Leasable)
-                            {
-                                Leasable = "Ja";
-                            }
-                            else
-                            {
-                                Leasable = "Nej";
-                            }
-                        }
-                        @Leasable
-                    </dd>
-                            }
             </dl>
-            <div id="price">
+        </div>
+            <div class="col-lg-6">
+                <dl>
+                    <dt>Utrustning</dt>
+                    <dd>
+                        <div class="equipment-list">
+                            @foreach (var item in Model.Equipment)
+                            {
+                                <div class="equipment-list-item">@item.Value</div>
+                            }
+                        </div>
+                    </dd>
+                    @if (User.Identity.IsAuthenticated)
+            {
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Created)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Created)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Updated)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Updated)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Leasable)
+                        </dt>
+                        <dd>
+                            @{
+                                var Leasable = "";
+
+                                if (Model.Leasable)
+                                {
+                                    Leasable = "Ja";
+                                }
+                                else
+                                {
+                                    Leasable = "Nej";
+                                }
+                            }
+                            @Leasable
+                        </dd>
+                                }
+                </dl>
+            </div>
+            <div class="col-lg-6" id="price">
                 @{
                     var inclVatPrice = Model.Price;
                     if (Model.Leasable)
@@ -149,6 +159,8 @@
                 }
             </div>
         </div>
+
+
 
         <div class="col-lg-6">
             <div id="myCarousel" class="carousel slide details-slide" data-ride="carousel">
@@ -284,7 +296,7 @@
                 <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
                 <div class="form-group">
                     <label for="email">Vem vill du tipsa?</label>
-                    <div class="input-group">
+                    <div class="input-group col-lg-6">
                         <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
                         <span class="input-group-btn">
                             <button class="share btn btn-success">Tipsa</button>
@@ -296,13 +308,13 @@
         </div>
     </div>
     <div class="row">
-        <div id="realtedvehicles" class="col-lg-12">
-            <hr />
+        <div id="realtedvehicles" class="col-lg-12">    
             @if (ViewBag.relatedVehicles.Count != 0)
             {
+                <hr />
                 <div id="relatedVehicle">
                     <label style="font-size:large">Relaterade fordon</label>
-                    <ul class="flex-container">
+                    <ul class="flex-container" style="justify-content:flex-start">
                         @foreach (var item in ViewBag.relatedVehicles)
                 {
                     var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
