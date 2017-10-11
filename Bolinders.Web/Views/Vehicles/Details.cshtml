@@ -141,8 +141,8 @@
                     var inclVatPrice = Model.Price;
                     if (Model.Leasable)
                     {
-                        var exclVatPrice = (inclVatPrice * 0.8);
-                        <span style="font-size:large">@($"{exclVatPrice:C0}") exkl.moms</span><br />
+                        var exclVatPrices = (inclVatPrice * 0.8);
+                        <span style="font-size:large">@($"{exclVatPrices:C0}") exkl.moms</span><br />
                     }
                     <span style="font-size:large">@($"{inclVatPrice:C0}") inkl. moms</span>
 
@@ -210,15 +210,13 @@
             <hr />
 
             @{
-                if (Model.Leasable)
-                {
-                    var exclVatPrice = (inclVatPrice * 0.8);
+                    var exclVatPrice = (inclVatPrice);
                     var downPayment = Math.Round(exclVatPrice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
 
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <label style="font-size:large">Beräkna din leasingkostnad</label>
+                            <label style="font-size:large">Beräkna din Billånskostnad</label>
                         </div>
                         <div class="col-lg-4">
                             <div class="LeaseCalculator">
@@ -253,14 +251,10 @@
                                 <span class="monthlyPrice" style="font-size:large"></span><br />
                                 <label style="font-size:large">Total Kostnad:</label>
                                 <span class="totalPrice" style="font-size:large"></span><br />
-                                <small class="form-text text-muted">Exkl moms</small>
                             </div>
                         </div>
                     </div>
                 }
-
-
-            }
         </div>
         <div id="moreinfo" class="col-lg-6">
             <hr />
