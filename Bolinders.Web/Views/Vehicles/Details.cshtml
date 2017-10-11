@@ -322,7 +322,6 @@
     <img class="modal-content" id="modalImage">
 </div>
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     $(document).ready(function () {
 
@@ -335,23 +334,5 @@
             $('#downPaymentRange').val($(this).val());
         });
 
-    });
-</script>
-
-<script>
-    var modal = document.getElementById('imageModal');
-    var modalImg = document.getElementById("modalImage");
-
-    $('.myImg').on('click', function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-    })
-
-    $(modal).on('click', function () {
-        modal.style.display = "none";
-    });
-
-    $('close').on('click', function () {
-        modal.style.display = "none";
     });
 </script>
