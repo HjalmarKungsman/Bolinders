@@ -128,6 +128,8 @@
         <script src="~/js/LeasingCalculator.js" asp-append-version="true"></script>
         <script src="~/js/MyNewsDesk.js" asp-append-version="true"></script>
         <script src="~/js/ShareVehicle.js" asp-append-version="true"></script>
+        <script src="~/js/ImageCarousel.js" asp-append-version="true"></script>
+        <script src="~/js/Navbar.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -146,7 +148,6 @@
     </environment>
 
     <script>
-        
         var newsSettings = new Object();
         newsSettings.url = "@(news.Url)";
         newsSettings.source = "@(news.Source)";
@@ -156,56 +157,6 @@
         //newsSettings.fullUri = "https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=c28affb30c8842d78eedfd209f451423";
     </script>
 
-    <script>
-        // Instantiate the Bootstrap carousel
-        $('.multi-item-carousel').carousel({
-            interval: false
-        });
-
-        // for every slide in carousel, copy the next slide's item in the slide.
-        // Do the same for the next, next item.
-        $('.multi-item-carousel .item').each(function () {
-            var next = $(this).next();
-            if (!next.length) {
-                next = $(this).siblings(':first');
-            }
-            next.children(':first-child').clone().appendTo($(this));
-
-            if (next.next().length > 0) {
-                next.next().children(':first-child').clone().appendTo($(this));
-            } else {
-                $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
-            }
-        });
-
-    </script>
-    <style>
-        .transparent-header {
-            background: none !important;
-        }
-    </style>
-    <script>
-        $(document).ready(function () {
-            $(window).scroll(function () {
-                if ($(this).scrollTop() <= 25) {
-                    $('.navbar').addClass('transparent-header');
-                }
-                else {
-                    $('.navbar').removeClass('transparent-header');
-                }
-            });
-
-            $('.navbar-toggle').on("click", function () {
-                if ($('.navbar-collaspse').hasClass('in')) {
-                    $('.navbar').addClass('transparent-header');
-                }
-                else {
-                    $('.navbar').removeClass('transparent-header');
-                }
-            })
-
-        });
-    </script>
 
     @RenderSection("Scripts", required: false)
 
