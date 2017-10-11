@@ -7,16 +7,16 @@
 
 <h2>@Model.Make.Name @Model.Model @Model.ModelDescription</h2>
 
-@if (User.Identity.IsAuthenticated)
-            {
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Ändra</a> |
-        <a asp-action="Index">Se alla</a>
-    </div>
-}
-
 <div>
     <h4>@Model.BodyType.GetDisplayName()</h4>
+    @if (User.Identity.IsAuthenticated)
+            {
+        <hr />
+        <div class="text-center">
+            <a asp-action="Edit" asp-route-id="@Model.Id">Ändra</a> |
+            <a asp-action="Index">Se alla</a>
+        </div>
+    }
     <hr />
     <div class="row">
         <div class="col-lg-6">
@@ -134,7 +134,7 @@
                         }
                         @Leasable
                     </dd>
-                }
+                            }
             </dl>
             <div id="price">
                 @{
@@ -210,51 +210,51 @@
             <hr />
 
             @{
-                    var exclVatPrice = (inclVatPrice);
-                    var downPayment = Math.Round(exclVatPrice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
+                var exclVatPrice = (inclVatPrice);
+                var downPayment = Math.Round(exclVatPrice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
 
 
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <label style="font-size:large">Beräkna din Billånskostnad</label>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="LeaseCalculator">
-                                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label style="font-size:large">Beräkna din Billånskostnad</label>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="LeaseCalculator">
 
-                                <form id="leasingCalculator">
-                                    <div class="form-group">
-                                        <label>Kontantinsats</label>
-                                        <input id="downPayment" type="number" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
-                                        <input id="downPaymentRange" type="range" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
-                                        <input id="exclVatPrice" type="hidden" value="@exclVatPrice" class="form-control" />
-                                        <small class="form-text text-muted">Minst 20% av totala beloppet</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Längd på avbetalning</label>
-                                        <select id="loanLenght" class="form-control">
-                                            <option value="12">12 månader</option>
-                                            <option value="24">24 månader</option>
-                                            <option selected="selected" value="36">36 månader</option>
-                                            <option value="48">48 månader</option>
-                                            <option value="60">60 månader</option>
-                                            <option value="72">72 månader</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-8">
-                            <div>
-                                <label style="font-size:large">Månadskostnad:</label>
-                                <span class="monthlyPrice" style="font-size:large"></span><br />
-                                <label style="font-size:large">Total Kostnad:</label>
-                                <span class="totalPrice" style="font-size:large"></span><br />
-                            </div>
+
+                            <form id="leasingCalculator">
+                                <div class="form-group">
+                                    <label>Kontantinsats</label>
+                                    <input id="downPayment" type="number" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
+                                    <input id="downPaymentRange" type="range" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
+                                    <input id="exclVatPrice" type="hidden" value="@exclVatPrice" class="form-control" />
+                                    <small class="form-text text-muted">Minst 20% av totala beloppet</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Längd på avbetalning</label>
+                                    <select id="loanLenght" class="form-control">
+                                        <option value="12">12 månader</option>
+                                        <option value="24">24 månader</option>
+                                        <option selected="selected" value="36">36 månader</option>
+                                        <option value="48">48 månader</option>
+                                        <option value="60">60 månader</option>
+                                        <option value="72">72 månader</option>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                }
+
+                    <div class="col-lg-8">
+                        <div>
+                            <label style="font-size:large">Månadskostnad:</label>
+                            <span class="monthlyPrice" style="font-size:large"></span><br />
+                            <label style="font-size:large">Total Kostnad:</label>
+                            <span class="totalPrice" style="font-size:large"></span><br />
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
         <div id="moreinfo" class="col-lg-6">
             <hr />
@@ -272,24 +272,18 @@
 
 
             <div id="shareVehicle" class="hidden">
-                <form asp-action="ShareVehicle">
-                    <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
-                    <div class="form-group">
-                        <label for="email">Vem vill du tipsa?</label>
-                        <div class="input-group">
-
-                            <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
-                            <span class="input-group-btn">
-                                <input class="share btn btn-success" type="button" value="Tipsa" />
-                            </span>
-
-                        </div>
-                        <div id="statusMessage"></div>
+                <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
+                <div class="form-group">
+                    <label for="email">Vem vill du tipsa?</label>
+                    <div class="input-group">
+                        <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
+                        <span class="input-group-btn">
+                            <button class="share btn btn-success">Tipsa</button>
+                        </span>
                     </div>
-                </form>
-
+                    <div id="statusMessage"></div>
+                </div>
             </div>
-
         </div>
     </div>
     <div class="row">
@@ -297,8 +291,9 @@
             @if (ViewBag.relatedVehicles.Count != 0)
             {
                 <div id="relatedVehicle">
-                    <h1>Relaterade fordon!</h1>
-                    <ul class="flex-container">
+                    <h1>Relaterade fordon</h1>
+                    <hr />
+                    <ul class="flex-container" style="justify-content: flex-start">
                         @foreach (var item in ViewBag.relatedVehicles)
                 {
                     var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
@@ -328,10 +323,10 @@
 
         // Jakob, funkar denna?
 
-        $('#downPaymentRange').on('input',function () {
+        $('#downPaymentRange').on('input', function () {
             $('#downPayment').val($(this).val());
         });
-        $('#downPayment').on('input',function () {
+        $('#downPayment').on('input', function () {
             $('#downPaymentRange').val($(this).val());
         });
 

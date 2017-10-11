@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     $('.share').on('click', function (e) {
-        e.preventDefault;
+        e.preventDefault();
 
         var email = $('#email').val();
         var id = $('#vehicleId').val();
@@ -25,13 +25,9 @@ $(document).ready(function () {
             })
     });
 
-    $('.shareButton').on("click", function () {
+    $('.shareButton').on("click", function (e) {
+        e.preventDefault();
         $('#shareVehicle').toggleClass('hidden');
-
-    });
-
-    // Vad är detta?!?
-    $('img').on('click', function () {
 
     });
 });

@@ -167,6 +167,11 @@ a:hover {
     border-color: @theme-color;
     color: #fff;
 }
+.btn-default:hover {
+    background-color: @theme-color;
+    border-color: @theme-color;
+    color: #fff;
+}
 
 .btn-primary {
     background-color: @theme-color;
@@ -174,9 +179,11 @@ a:hover {
 }
 
 .btn-primary:hover {
-    background-color: #e6e6e6;
-    border-color: #adadad;
-    color: #000;
+    /*background-color: #e6e6e6;*/
+    background: none;
+    border-color: @theme-color;
+    color: #fff;
+    font-weight:800;
 }
 
 .dropdown-menu {
