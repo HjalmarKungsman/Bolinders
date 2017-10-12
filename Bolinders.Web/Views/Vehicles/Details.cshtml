@@ -141,8 +141,8 @@
                     var inclVatPrice = Model.Price;
                     if (Model.Leasable)
                     {
-                        var exclVatPrices = (inclVatPrice * 0.8);
-                        <span style="font-size:large">@($"{exclVatPrices:C0}") exkl.moms</span><br />
+                        var exclVatPrice = (inclVatPrice * 0.8);
+                        <span style="font-size:large">@($"{exclVatPrice:C0}") exkl.moms</span><br />
                     }
                     <span style="font-size:large">@($"{inclVatPrice:C0}") inkl. moms</span>
 
@@ -210,6 +210,8 @@
             <hr />
 
             @{
+                if (Model.Leasable)
+                {
                     var exclVatPrice = (inclVatPrice);
                     var downPayment = Math.Round(exclVatPrice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
 
@@ -254,6 +256,7 @@
                             </div>
                         </div>
                     </div>
+                    }
                 }
         </div>
         <div id="moreinfo" class="col-lg-6">
