@@ -9,7 +9,7 @@ namespace Bolinders.Core.Services
 {
     public interface IImageService
     {
-        List<string> DownloadImagesFromURL(List<string> images);
+        Task<List<string>> DownloadImagesFromURL(List<string> images);
         Task<List<string>> UploadImages(ICollection<IFormFile> images);
         Task RemoveImageFromDisk(string directory, string fileName);
         Vehicle ImageBuilder(List<string> listOfImages, Vehicle vehicle);

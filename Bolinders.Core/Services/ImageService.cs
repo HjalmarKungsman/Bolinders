@@ -24,7 +24,7 @@ namespace Bolinders.Core.Services
             _environment = env;
         }
 
-        public List<string> DownloadImagesFromURL(List<string> images)
+        public async Task<List<string>> DownloadImagesFromURL(List<string> images)
         {
             var uploadDirectory = Path.Combine(_environment.WebRootPath, "images/uploads");
             List<string> fileNames = new List<string>();
@@ -47,8 +47,9 @@ namespace Bolinders.Core.Services
                 }
                 var resizedImage = ImageResizer(newImageName);
                 fileNames.Add(resizedImage);
-                RemoveImageFromDisk(uploadDirectory, newImageName);
+                await RemoveImageFromDisk(uploadDirectory, newImageName);
             }
+
             return fileNames;
         }
         
