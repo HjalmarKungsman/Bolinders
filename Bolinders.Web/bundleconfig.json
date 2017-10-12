@@ -1,35 +1,26 @@
 [
   {
-    "outputFileName": "wwwroot/js/site.min.js",
-    "inputFiles": [
-      "wwwroot/js/site.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    }
-  },
-  {
-    "outputFileName": "wwwroot/js/site.js",
-    "inputFiles": [
-      "wwwroot/js/ShareVehicle.js",
-      "wwwroot/js/ImageCarousel.js",
-      "wwwroot/js/LeasingCalculator.js",
-      "wwwroot/js/Navbar.js",
-      "wwwroot/js/ImageModal.js",
-      "wwwroot/js/EditVehicle.js",
-      "wwwroot/js/ListVehicle.js",
-      "wwwroot/js/IndexVehicle.js",
-      "wwwroot/js/MyNewsDesk.js"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/css/bundle.css",
     "inputFiles": [
       "wwwroot/css/select2.css",
       "wwwroot/css/font-awesome.min.css",
       "wwwroot/css/imageCarousel.css",
       "wwwroot/css/main.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bundle.js",
+    "inputFiles": [
+      "wwwroot/js/ShareVehicle.js",
+      "wwwroot/js/CreateVehicle.js",
+      "wwwroot/js/EditVehicle.js",
+      "wwwroot/js/ImageCarousel.js",
+      "wwwroot/js/ImageModal.js",
+      "wwwroot/js/IndexVehicle.js",
+      "wwwroot/js/LeasingCalculator.js",
+      "wwwroot/js/ListVehicle.js",
+      "wwwroot/js/MyNewsDesk.js",
+      "wwwroot/js/Navbar.js"
     ]
   }
 ]
