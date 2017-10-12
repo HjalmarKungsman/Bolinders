@@ -79,7 +79,6 @@ namespace Bolinders.Core.Controllers
 
             return View();
         }
-
         public IActionResult Errors(string Id)
         {
             switch (Id)
@@ -87,19 +86,14 @@ namespace Bolinders.Core.Controllers
                 case "404":
                 case "500":
                     return View($"~/Views/Errors/Page{Id}.cshtml");
-                default: return DefaultError();
+                default: return Error();
             }
 
         }
-
-        public IActionResult DefaultError()
-        {
-            return View("~/Views/Shared/Error.cshtml");
-        }
-
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var feature = this.HttpContext.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+            return View("~/Views/Shared/Error.cshtml", feature?.Error);
         }
     }
 }
