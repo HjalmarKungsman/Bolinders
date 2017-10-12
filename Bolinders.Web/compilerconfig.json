@@ -1,14 +1,10 @@
 ﻿[
   {
-    "outputFile": "wwwroot/less/imageCarousel.css",
-    "inputFile": "wwwroot/less/imageCarousel.less"
-  },
-  {
-    "outputFile": "wwwroot/less/main.css",
-    "inputFile": "wwwroot/less/main.less"
-  },
-  {
     "outputFile": "wwwroot/css/main.css",
     "inputFile": "wwwroot/css/main.less"
+  },
+  {
+    "outputFile": "wwwroot/css/imageCarousel.css",
+    "inputFile": "wwwroot/css/imageCarousel.less"
   }
 ]
