@@ -15,10 +15,15 @@
         <div id="map"></div>
         <style id="map"></style>
             <script type='text/javascript'>
-            function init_map() {
-
-                                var myOptions = {
-                                    zoom: 8, center: new google.maps.LatLng(57.4959123, 13.0902289),
+                function init_map() {
+                    var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+                    console.log(width)
+                    var zoom = 8;
+                    if (width < 400) {
+                        zoom = 7;
+                    }
+                    var myOptions = {
+                        zoom: zoom, center: new google.maps.LatLng(57.4959123, 13.0902289),
                                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 }; map = new google.maps.Map(document.getElementById("map"), myOptions);
 
