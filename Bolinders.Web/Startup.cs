@@ -114,7 +114,7 @@ namespace Bolinders.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Errors/500");
+                app.UseExceptionHandler("/Home/Error");
                 app.UseStatusCodePagesWithReExecute("/Home/Errors/{0}");
             }
 
