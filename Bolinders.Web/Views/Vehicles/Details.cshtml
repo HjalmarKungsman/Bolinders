@@ -223,7 +223,7 @@
             @{
                 if (Model.Leasable)
                 {
-                    var exclVatPrice = (inclVatPrice * 0.8);
+                    var exclVatPrice = Math.Round(inclVatPrice * 0.8);
                     var downPayment = Math.Round(exclVatPrice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
 
                     <div id="leasingcalculator" class="col-md-6">
