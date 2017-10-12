@@ -25,7 +25,7 @@ namespace Bolinders.Core
                 return;
             }
 
-            _xmlToDb.Run();
+            await _xmlToDb.Run();
 
             await Task.Delay(TimeSpan.FromMinutes(3)).ConfigureAwait(false);
         }

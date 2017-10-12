@@ -24,6 +24,12 @@ namespace Bolinders.Core.Enums
         [Display(Name = "Övrigt")]
         B8,
         [Display(Name = "Transportbil")]
-        B9
+        B9,
+        [Display(Name = "Småbil")]
+        B10,
+        [Display(Name = "Familjebuss")]
+        B11,
+        [Display(Name = "Yrkesfordon")]
+        B12
     }
 }

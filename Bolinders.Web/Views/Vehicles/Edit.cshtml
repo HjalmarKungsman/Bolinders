@@ -133,76 +133,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Spara" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Tillbakae</a>
 </div>
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        //$('.equipment-list-item').on('click', function () {
-        //    this.remove(this);
-        //});
-
-        //$('.newEquipmentItem').on('blur', function () {
-        //    //TODO Fix or remove
-        //    $('.newEquipment').val($('.newEquipmentItem').val());
-        //    $('.newEquipment').val();
-
-        //});
-
-    });
-    $('.equipment').select2({
-        tags: true
-    });
-
-    var test = true;
-    $('.imgDeleteBox').on('click', function () {
-        if (test) {
-            $('.noRemove', this).removeClass('hidden');
-            $('.yesRemove', this).removeClass('hidden');
-            $('.fa-trash', this).addClass('hidden');
-            $('.imgDeleteBox').addClass('red');
-            test = false;
-        }
-    });
-    $('.imgDeleteBox').hover(function () {
-        $('.noRemove', this).addClass('hidden');
-        $('.yesRemove', this).addClass('hidden');
-        $('.fa-trash', this).removeClass('hidden');
-        $('.imgDeleteBox').removeClass('red');
-        test = true;
-    });
-    $('.noRemove').on('click', function () {
-        var thiss = this.parentElement;
-        $('.noRemove', thiss).addClass('hidden');
-        $('.yesRemove', thiss).addClass('hidden');
-        $('.fa-trash').removeClass('hidden');
-        $('.imgDeleteBox').removeClass('red');
-    });
-
-    function deletepic(imgId, imgUrl, thiss, events) {
-        $(events.path[5]).addClass('hidden');
-
-            $.ajax({
-                url: '@Url.Action("RemoveImage", "Vehicles")',
-            type: 'POST',
-            data: { imageId: imgId,
-                    imagelink: imgUrl},
-            error: function () {
-                    console.log("error");
-                }
-            })
-        };
-</script>
-
-
-

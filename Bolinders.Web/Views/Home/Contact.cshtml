@@ -49,13 +49,14 @@
                     @foreach (var c in ViewBag.Contacts)
             {
                         <li>
-                            <b>Bolinders bil @c.Name </b>
+                            <label style="font-size:large">Bolinders Bil @c.Name </label>
                             <p>
                                 @c.Address @c.City
                                 <br>
                                 Telefon: @c.PhoneNumber
                                 <br>
-                                E-post: <a href="mailto:@{@c.Email}">@c.Email</a>
+                                @c.Email
+                                <br /><br />
                             </p>
                         </li>
     }
@@ -68,7 +69,6 @@
     <div class="col-md-6">
         <h2>Kontakta oss direkt!</h2>
         <hr />
-        <p>@ViewBag.Success</p>
         @{
             if (ViewBag.Success != null)
             {
@@ -113,7 +113,7 @@
                 <textarea asp-for="Message" class="form-control" placeholder="Meddelande..." required></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-success pull-right">Skicka</button>
+            <button type="submit" class="btn btn-default pull-right">Skicka</button>
         </form>
     </div>
 </div>

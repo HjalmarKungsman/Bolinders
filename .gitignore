@@ -297,3 +297,6 @@ __pycache__/
 Bolinders.Web/appsettings.json
 Bolinders.Web/appsettings.json
 Bolinders.Core/Migrations/**
+Bolinders.Web/appsettings.json
+*.jpeg
+*.jpg
