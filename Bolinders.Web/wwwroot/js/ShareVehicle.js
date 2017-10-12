@@ -6,7 +6,7 @@
         var email = $('#email').val();
         var id = $('#vehicleId').val();
         var data = new FormData();
-        var url = 'http://' + window.location.host;
+        var url = window.location.protocol + '//' + window.location.host;
 
         data.append("id", id);
         data.append("reciever", email);

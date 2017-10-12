@@ -21,11 +21,11 @@
     transform: none !important;
   }
 }
-.multi-item-carousel .carousel-control.left,
-.multi-item-carousel .carousel-control.right {
+.multi-item-carousel .carousel-control-brand.left,
+.multi-item-carousel .carousel-control-brand.right {
   background-image: none!important;
 }
-.carousel-control {
+.carousel-control-brand {
   color: #777;
   width: 0%;
 }

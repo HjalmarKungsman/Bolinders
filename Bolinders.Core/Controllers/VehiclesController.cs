@@ -394,7 +394,7 @@ namespace Bolinders.Core.Controllers
                 existingVehicle.MakeId = vehicle.MakeId;
                 existingVehicle.Mileage = vehicle.Mileage;
                 existingVehicle.Model = vehicle.Model;
-                existingVehicle.ModelDescription = existingVehicle.ModelDescription;
+                existingVehicle.ModelDescription = vehicle.ModelDescription;
                 existingVehicle.Price = vehicle.Price;
                 existingVehicle.Used = vehicle.Used;
                 existingVehicle.Year = vehicle.Year;
