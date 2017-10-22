@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Start";
+}
+
+<style>
+    h1, h2, h3, h4 {
+        text-align: center;
+        font-family: 'Russo One', sans-serif;
+    }
+</style>
+<link href="~/css/imageCarousel.css" rel="stylesheet" />
+
+<div class="row">
+    <div class="col-lg-12" style="margin-bottom: 10%;">
+        <div class="col-md-6 col-md-offset-3" style="margin-top:20%">
+            <form method="post" asp-action="list" asp-controller="vehicles" asp-route-page="">
+                <input type="hidden" id="page" name="page" value="1" />
+                <div class="form-group">
+                    <input type="hidden" id="page" name="page" value="1" />
+                    <h2>Vad för bil söker du?</h2>
+
+                    @*hidden on mobile*@
+                    <div class="input-group hidden-xs" style="display: inline-flex">
+                        <input type="text" class="form-control input-lg" id="searchText" name="searchText" placeholder="Söktext" value="@ViewBag.SearchText" />
+                        <select class="form-control selectpicker input-lg" style="max-width:190px" id="used" name="used">
+                            <option value="null" title="Alla bilar">Alla bilar</option>
+                            <option value="false" title="Nya">Nya bilar</option>
+                            <option value="true" title="Begagnade">Begagnade bilar</option>
+                        </select>
+                        <span class="input-group-btn">
+                            @*<button type="submit" class="btn btn-default input-lg" style="background-color: white; border-color: #a0a0a0; color: #000;">Sök</button>*@
+                            <button type="submit" class="btn btn-primary input-lg">Sök</button>
+                        </span>
+                    </div>
+
+                    @*hidden on larger then mobile*@
+                    <div class="hidden-md hidden-lg hidden-md">
+                        <div class="form-group">
+                            <input type="text" class="form-control input-lg" id="searchText" name="searchText" placeholder="Söktext" value="@ViewBag.SearchText" />
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control selectpicker input-lg" id="used" name="used">
+                                <option value="null" title="Alla bilar">Alla</option>
+                                <option value="false" title="Nya">Nya</option>
+                                <option value="true" title="Begagnade">Begagnade</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success input-lg pull-right" style="width: 100%">Sök</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top:30%;">
+    <div class="col-md-4">
+        <h2>Nya bilar</h2>
+        <hr />
+        <a href="/bilar/nya"><img class="img-responsive" style="filter: grayscale(100%)" src="~/images/newcar.jpg" alt="Nya bilar" /></a>
+    </div>
+    <div class="col-md-4">
+        <h2>Begagnade bilar</h2>
+        <hr />
+        <a href="/bilar/begagnade/"><img class="img-responsive" style="filter: grayscale(100%)" src="~/images/usedcar.jpg" alt="Begagnade bilar" /></a>
+    </div>
+    <div class="col-md-4">
+        <h2>Kontakta Oss</h2>
+        <hr />
+        <a href="/kontakt/"><img class="img-responsive" style="filter: grayscale(100%)" src="~/images/contact.jpg" alt="Begagnade bilar" /></a>
+    </div>
+
+</div>
+<div class="row" style="margin-top:0%; margin-bottom:5%;">
+    <div class="col-md-12">
+        <h2>Bilmärken i lager</h2>
+        <hr />
+        <div class="carousel slide multi-item-carousel" id="theCarousel">
+            <div class="carousel-inner">
+                @for (int i = 0; i < ViewBag.Makes.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <div class="item active">
+                            <div class="col-xs-4">
+                                <a href="bilar/sida/1?make=@ViewBag.Makes[i].Id"><img src="~/images/vehiclelogotypes/@ViewBag.Makes[i].LogotypeFileName" style="margin: 0 auto" alt="@ViewBag.Makes[i].Name" class="img-responsive" /></a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <div class="col-xs-4">
+                                <a href="bilar/sida/1?make=@ViewBag.Makes[i].Id"><img src="~/images/vehiclelogotypes/@ViewBag.Makes[i].LogotypeFileName" style="margin: 0 auto" alt="@ViewBag.Makes[i].Name" class="img-responsive" /></a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <a class="left carousel-control carousel-control-brand" href="#theCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+            <a class="right carousel-control carousel-control-brand" href="#theCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $("body").addClass("main-front");
+    </script>
+</div>

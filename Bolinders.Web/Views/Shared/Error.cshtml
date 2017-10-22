@@ -1,0 +1,11 @@
+﻿@model Exception
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger" style="font-size:8em;">Något gick fel...</h1>
+
+@if (Model != null)
+{
+   <p class="text-danger" style="text-align:center;">@Html.ValueFor(model => model.Message)</p>
+}
