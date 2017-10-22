@@ -1,0 +1,26 @@
+[
+  {
+    "outputFileName": "wwwroot/css/bundle.css",
+    "inputFiles": [
+      "wwwroot/css/select2.css",
+      "wwwroot/css/font-awesome.min.css",
+      "wwwroot/css/imageCarousel.css",
+      "wwwroot/css/main.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/bundle.js",
+    "inputFiles": [
+      "wwwroot/js/ShareVehicle.js",
+      "wwwroot/js/CreateVehicle.js",
+      "wwwroot/js/EditVehicle.js",
+      "wwwroot/js/ImageCarousel.js",
+      "wwwroot/js/ImageModal.js",
+      "wwwroot/js/IndexVehicle.js",
+      "wwwroot/js/LeasingCalculator.js",
+      "wwwroot/js/ListVehicle.js",
+      "wwwroot/js/MyNewsDesk.js",
+      "wwwroot/js/Navbar.js"
+    ]
+  }
+]

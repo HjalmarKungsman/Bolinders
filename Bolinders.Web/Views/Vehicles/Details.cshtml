@@ -1,0 +1,352 @@
+﻿@model Bolinders.Core.Models.Entities.Vehicle
+
+@{
+    ViewData["Title"] = $"{Model.Make.Name} {Model.Model} {Model.ModelDescription}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Make.Name @Model.Model @Model.ModelDescription</h2>
+
+<div>
+    <h4>@Model.BodyType.GetDisplayName()</h4>
+    @if (User.Identity.IsAuthenticated)
+            {
+        <hr />
+        <div class="text-center">
+            <a asp-action="Edit" asp-route-id="@Model.Id">Ändra</a> |
+            <a asp-action="Index">Se alla</a>
+        </div>
+    }
+    <hr />
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="col-lg-6">
+                <dl id="details">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RegistrationNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.RegistrationNumber)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Year)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Year)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Mileage)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Mileage) km
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.BodyType)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.BodyType)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Colour)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Colour)
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-lg-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Gearbox)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Gearbox)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FuelType)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FuelType)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Horsepowers)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Horsepowers)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Used)
+                </dt>
+                @{
+                    var used = "";
+
+                    if (Model.Used)
+                    {
+                        used = "Ja";
+                    }
+                    if (!Model.Used)
+                    {
+                        used = "Nej";
+                    }
+                }
+                <dd>
+                    @used
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Facility)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Facility.Name)
+                </dd>
+            </dl>
+        </div>
+            <div class="col-lg-6">
+                <dl>
+                    <dt>Utrustning</dt>
+                    <dd>
+                        <div class="equipment-list">
+                            @foreach (var item in Model.Equipment)
+                            {
+                                <div class="equipment-list-item">@item.Value</div>
+                            }
+                        </div>
+                    </dd>
+                    @if (User.Identity.IsAuthenticated)
+            {
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Created)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Created)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Updated)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Updated)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Leasable)
+                        </dt>
+                        <dd>
+                            @{
+                                var Leasable = "";
+
+                                if (Model.Leasable)
+                                {
+                                    Leasable = "Ja";
+                                }
+                                else
+                                {
+                                    Leasable = "Nej";
+                                }
+                            }
+                            @Leasable
+                        </dd>
+                                }
+                </dl>
+            </div>
+            <div class="col-lg-6" id="price">
+                @{
+                    var inclVatPrice = Model.Price;
+                    if (Model.Leasable)
+                    {
+                        var exclVatPrice = (inclVatPrice * 0.8);
+                        <span style="font-size:large">@($"{exclVatPrice:C0}") exkl.moms</span><br />
+                    }
+                    <span style="font-size:large">@($"{inclVatPrice:C0}") inkl. moms</span>
+
+                }
+            </div>
+        </div>
+
+
+
+        <div class="col-lg-6">
+            <div id="myCarousel" class="carousel slide details-slide" data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    @for (int i = 0; i < @Model.Images.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <div class="item active">
+                                @*<a href="~/images/uploads/@Model.Images[i].ImageUrl">*@
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
+                                @*</a>*@
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="item">
+                                @*<a href="~/images/uploads/@Model.Images[i].ImageUrl">*@
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" alt="@Model.Images[i].ImageUrl" class="img-responsive myImg" />
+                                @*</a>*@
+                            </div>
+                        }
+                    }
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    @for (int i = 0; i < @Model.Images.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@i" class="active">
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
+                            </li>
+                        }
+                        else
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@i">
+                                <img src="~/images/uploads/@Model.Images[i].ImageUrl" style="margin: 0 auto" alt="@Model.Images[i].ImageUrl" class="img-responsive" />
+                            </li>
+                        }
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+
+            @{
+                if (Model.Leasable)
+                {
+                    var exclVatPrice = Math.Round(inclVatPrice * 0.8);
+                    var downPayment = Math.Round(exclVatPrice * 0.2).ToString(new System.Globalization.NumberFormatInfo());
+
+                    <div id="leasingcalculator" class="col-md-6">
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label style="font-size:large">Beräkna din Billånskostnad</label>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="LeaseCalculator">
+
+
+                                    <form id="leasingCalculator">
+                                        <div class="form-group">
+                                            <label>Kontantinsats</label>
+                                            <input id="downPayment" type="number" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
+                                            <input id="downPaymentRange" type="range" value="@downPayment" max="@exclVatPrice" min="@downPayment" class="form-control" />
+                                            <input id="exclVatPrice" type="hidden" value="@exclVatPrice" class="form-control" />
+                                            <small class="form-text text-muted">Minst 20% av totala beloppet</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Längd på avbetalning</label>
+                                            <select id="loanLenght" class="form-control">
+                                                <option value="12">12 månader</option>
+                                                <option value="24">24 månader</option>
+                                                <option selected="selected" value="36">36 månader</option>
+                                                <option value="48">48 månader</option>
+                                                <option value="60">60 månader</option>
+                                                <option value="72">72 månader</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <div>
+                                    <label style="font-size:large">Månadskostnad:</label>
+                                    <span class="monthlyPrice" style="font-size:large"></span><br />
+                                    <label style="font-size:large">Total Kostnad:</label>
+                                    <span class="totalPrice" style="font-size:large"></span><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                }
+            
+                    
+        <div id="moreinfo" class="col-lg-6">
+            <hr />
+            <label style="font-size:large">Mer information</label>
+
+            <dl id="contactInformation" class="dl-horizontal">
+                <dt>Kontakta säljaren</dt>
+                <dd><a href="tel:@Model.Facility.PhoneNumber">@Model.Facility.PhoneNumber</a></dd>
+                <dt>Dela via e-post</dt>
+                <dd>
+                    <a class="hidden-xs shareButton" href="#"><span class="glyphicon glyphicon-share"></span></a>
+                    <a class="hidden-lg hidden-md hidden-sm shareButton" href="#contactInformation"><span style="font-size:x-large" class="glyphicon glyphicon-share"></span></a>
+                </dd>
+            </dl>
+
+
+            <div id="shareVehicle" class="hidden">
+                <input id="vehicleId" type="hidden" name="id" value="@Model.Id" />
+                <div class="form-group">
+                    <label for="email">Vem vill du tipsa?</label>
+                    <div class="input-group col-lg-6">
+                        <input id="email" class="form-control" type="email" name="reciever" placeholder="E-post" />
+                        <span class="input-group-btn">
+                            <button class="share btn btn-default">Tipsa</button>
+                        </span>
+                    </div>
+                    <div id="statusMessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="realtedvehicles" class="col-lg-12">    
+            @if (ViewBag.relatedVehicles.Count != 0)
+            {
+                <hr />
+                <div id="relatedVehicle">
+                    <label style="font-size:large">Relaterade fordon</label>
+                    <ul class="flex-container" style="justify-content:flex-start">
+                        @foreach (var item in ViewBag.relatedVehicles)
+                {
+                    var vehicleLinkId = @item.Make.Name + "-" + @item.Model + "-" + @item.ModelDescription + "-" + @item.UrlId;
+                    vehicleLinkId = vehicleLinkId.Replace(" ", "_");
+                            <li class="flex-item">
+                                <div class="item active">
+                                    <a href="/bil/@vehicleLinkId"> <img src="~/images/uploads/@item.Images[0].ImageUrl" style="margin: 0 auto" alt="@item.Model" class="img-responsive" /></a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+<!-- The Image Modal -->
+<div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        // Jakob, funkar denna?
+
+        $('#downPaymentRange').on('input', function () {
+            $('#downPayment').val($(this).val());
+        });
+        $('#downPayment').on('input', function () {
+            $('#downPaymentRange').val($(this).val());
+        });
+
+    });
+</script>

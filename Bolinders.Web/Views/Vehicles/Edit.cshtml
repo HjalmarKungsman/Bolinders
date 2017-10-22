@@ -1,0 +1,146 @@
+﻿@model Bolinders.Core.Models.ViewModels.VehicleEditViewModel
+
+@{
+    ViewData["Title"] = "Ändra";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ändra fordon</h2>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="RegistrationNumber" class="control-label"></label>
+                    <input asp-for="RegistrationNumber" class="form-control" />
+                    <span asp-validation-for="RegistrationNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MakeId" class="control-label"></label>
+                    <select asp-for="MakeId" class="form-control" asp-items="ViewBag.MakeId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Model" class="control-label"></label>
+                    <input asp-for="Model" class="form-control" />
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ModelDescription" class="control-label"></label>
+                    <input asp-for="ModelDescription" class="form-control" />
+                    <span asp-validation-for="ModelDescription" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Year" class="control-label"></label>
+                    <input asp-for="Year" class="form-control" />
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Mileage" class="control-label"></label>
+                    <input asp-for="Mileage" class="form-control" />
+                    <span asp-validation-for="Mileage" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BodyType" class="control-label"></label>
+                    <select asp-for="BodyType" asp-items="Html.GetEnumSelectList<Bolinders.Core.Enums.BodyType>()" class="form-control"> </select>
+                    <span asp-validation-for="BodyType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Colour" class="control-label"></label>
+                    <input asp-for="Colour" class="form-control" />
+                    <span asp-validation-for="Colour" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Gearbox" class="control-label"></label>
+                    <select asp-for="Gearbox" asp-items="Html.GetEnumSelectList<Bolinders.Core.Enums.Gearbox>()" class="form-control"> </select>
+                    <span asp-validation-for="Gearbox" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FuelType" class="control-label"></label>
+                    <select asp-for="FuelType" asp-items="Html.GetEnumSelectList<Bolinders.Core.Enums.FuelType>()" class="form-control"> </select>
+                    <span asp-validation-for="FuelType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Horsepowers" class="control-label"></label>
+                    <input asp-for="Horsepowers" class="form-control" />
+                    <span asp-validation-for="Horsepowers" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FacilityId" class="control-label"></label>
+                    <select asp-for="FacilityId" class="form-control" asp-items="ViewBag.FacilityId"></select>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Used" /> @Html.DisplayNameFor(model => model.Used)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="Leasable" /> @Html.DisplayNameFor(model => model.Leasable)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EquipmentString" class="control-label"></label>
+                    <select asp-for="EquipmentString" class="form-control equipment" multiple="multiple">
+                        @foreach (var item in Model.EquipmentString)
+                        {
+                            <option value="@item">@item</option>
+                        }
+
+                    </select>
+                </div>
+                <div class="form-group hidden">
+                    <label asp-for="Created" class="control-label"></label>
+                    <input asp-for="Created" class="form-control" />
+                    <span asp-validation-for="Created" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Images">Bilder</label>
+                    <input asp-for="Images" id="files" class="form-control-file" type="file" aria-describedby="fileHelp" multiple />
+                    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+                </div>
+                <div class="currentImages">
+                    @foreach (var img in Model.ImageList)
+                    {
+                        <div class="imgDeleteBox">
+                            <img src="~/images/uploads/@img.ImageUrl" alt="Image" class="images" width="254" height="176" />
+                            <div class="imgMiddle">
+                                <div class="imgText">
+                                    <div>
+                                        <p class="noRemove hidden"><strong>Är du säker?</strong></p>
+                                        <a class="yesRemove hidden" onclick="deletepic('@img.Id','@img.ImageUrl', this, event)"><i class="fa fa-check" style="font-size:45px "></i></a>
+                                        <a class="noRemove hidden"><i class="fa fa-close" style="font-size:45px"></i></a>
+                                    </div>
+                                    <i class="fa fa-trash" style="font-size:100px"></i>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Spara" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Tillbakae</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>

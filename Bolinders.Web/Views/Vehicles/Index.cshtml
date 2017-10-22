@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Bolinders.Core.Models.Entities.Vehicle>
+
+@{
+    ViewData["Title"] = "Alla fordon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<a class="btn btn-default" asp-action="Create">Nytt fordon</a>
+
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Make), @Html.DisplayNameFor(model => model.Model), Beskrivning
+            </th>
+            <th>
+                År
+            </th>
+            <th  class="nowrap text-right">
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BodyType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Colour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FuelType)
+            </th>
+            <th>
+                Beg
+            </th>
+            <th>
+                Leas
+            </th>
+            <th class="nowrap">
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+            <th>
+                Ort
+            </th>
+            <th class="nowrap">
+                Editor
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="table-bordered">
+                    <input type="checkbox" class="selectedVehicles" value="@item.Id">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make.Name) @Html.DisplayFor(modelItem => item.Model) @Html.DisplayFor(modelItem => item.ModelDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td class="nowrap text-right">
+                    @($"{item.Price:N0}")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BodyType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Colour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuelType)
+                </td>
+                <td>
+                    @if (item.Used == true)
+                    {<i class="fa fa-check" style="font-size:25px; color:lightgreen"></i>}
+                    else
+                    {<i class="fa fa-close" style="font-size:25px; color:darkred"></i>}
+                </td>
+                <td>
+                    @if (item.Leasable == true)
+                    {<i class="fa fa-check" style="font-size:25px; color:lightgreen"></i>}
+                    else
+                    {<i class="fa fa-close" style="font-size:25px; color:darkred"></i>}
+                </td>
+                <td class="nowrap">
+                    @item.Created.ToShortDateString()
+                </td>
+                <td class="nowrap">
+                    @item.Updated.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Facility.Name)
+                </td>
+                <td class="table-bordered">
+                    <a asp-action="Edit" asp-route-id="@item.Id"><span title="Edit" class="glyphicon glyphicon-edit"></span></a>&nbsp
+                    <a asp-action="Details" asp-route-id="@item.Id"><span title="Details" class="glyphicon glyphicon-list-alt"></span></a>&nbsp
+                    <a asp-action="Delete" asp-route-id="@item.Id"><span title="Delete" class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-danger disabled" id="deleteButton">Delete Selected</a>
+<script>
+    var urlDelete = '@Url.Action("DeleteSelected", "Vehicles")'
+</script>

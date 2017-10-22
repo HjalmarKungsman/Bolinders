@@ -3,6 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# ASP.NET Core appsettings
+appsettings.json
+appsettings.production.json
+appsettings.development.json
+Bolinders.Web/appsettings.json
+**/DataAccess/ApplicationDbContextFactory.cs
+
 # User-specific files
 *.suo
 *.user
@@ -286,3 +293,10 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+Bolinders.Web/appsettings.json
+Bolinders.Web/appsettings.json
+Bolinders.Core/Migrations/**
+Bolinders.Web/appsettings.json
+*.jpeg
+*.jpg
